@@ -3,10 +3,9 @@
 
 #include <QtWidgets>
 
-KirisEkle::KirisEkle(int tip, QWidget *parent)
+KirisEkle::KirisEkle(QWidget *parent)
     : QDialog(parent)
 {
-    _tip = tip;
     btnEkle = new QPushButton(tr("Ekle"));
     btnIptal = new QPushButton(tr("İptal"));
 
@@ -40,5 +39,6 @@ void KirisEkle::ekleButonunaTiklandi()
     bool ok;
     uzunluk = txtUzunluk->text().toInt(&ok);
     cisimModeli = new CisimModeli(_tip,0,0,0,uzunluk,0,0);
+    emit cisiModeliAta(cisimModeli);
     QDialog::reject();
 }

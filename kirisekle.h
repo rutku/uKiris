@@ -17,12 +17,15 @@ class KirisEkle : public QDialog
     Q_OBJECT
 
 public:
-    KirisEkle(int tip, QWidget *parent = 0);
+    KirisEkle(QWidget *parent = 0);
     int uzunlukAl() { return uzunluk; }
     CisimModeli *cisimModeliAl() { return cisimModeli; }
+    void tipAta(int tip) { _tip = tip; }
 
 private slots:
     void ekleButonunaTiklandi();
+signals:
+    void cisiModeliAta(CisimModeli *cisimModeli);
 
 private:
     QLabel *lblUzunluk;

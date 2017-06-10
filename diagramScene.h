@@ -6,6 +6,7 @@
 
 #include <QGraphicsScene>
 #include <QDebug>
+
 QT_BEGIN_NAMESPACE
 class QGraphicsSceneMouseEvent;
 class QMenu;
@@ -30,12 +31,13 @@ public:
 
 public slots:
     void kipAta(Mode kip);
-    void cisimTipiAta(CisimOgesi::CisimTipi type);
+    void cisimTipiAta(DiagramItem::CisimTipi type);
     void cisimModeliAta(CisimModeli *cm);
 
 signals:
-    void cisimGirildi(CisimOgesi *cisim);
-    void cisimSecildi(CisimOgesi *cisim);
+    void cisimGirildi(DiagramItem *cisim);
+    void cisimSecildi(DiagramItem *cisim);
+    void tabloyaCisimEkle(CisimModeli *cisimModeli);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
@@ -44,10 +46,9 @@ protected:
 
 private:
     bool cisimDegisti(int tip);
-    void cisimEkle();
-    CisimOgesi::CisimTipi cisimTipim;
+    DiagramItem::CisimTipi cisimTipim;
     CisimModeli *cisimModeli;
-    CisimOgesi *cisimOgesi;
+    DiagramItem *cisimOgesi;
     QMenu *cisimMenum;
     Mode kipim;
     bool solButonAsagida;

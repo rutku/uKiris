@@ -17,11 +17,15 @@ class MesnetEkle : public QDialog
     Q_OBJECT
 
 public:
-    MesnetEkle(int tip, QWidget *parent = 0);
+    MesnetEkle(QWidget *parent = 0);
     CisimModeli *cisimModeliAl() { return cisimModeli; }
+    void tipAta(int tip) { _tip = tip; }
 
 private slots:
     void ekleButonunaTiklandi();
+
+signals:
+    void cisiModeliAta(CisimModeli *cisimModeli);
 
 private:
     QLabel *lblNokta;

@@ -13,7 +13,7 @@ class QPolygonF;
 class QPen;
 QT_END_NAMESPACE
 
-class CisimOgesi : public QObject, public QGraphicsItem
+class DiagramItem : public QObject, public QGraphicsItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
@@ -23,10 +23,10 @@ public:
     enum CisimTipi {Kiris, SabitMesnet, HareketliMesnet, AnkastreMesnet,
                     TekilYuk, YayiliYuk, Moment};
 
-    CisimOgesi(CisimTipi cisimTipi, CisimModeli *cisimModeli, QGraphicsItem *parent = nullptr);
-    CisimOgesi(QGraphicsItem *parent = nullptr);
+    DiagramItem(CisimTipi cisimTipi, CisimModeli *cisimModeli, QGraphicsItem *parent = nullptr);
+    DiagramItem(QGraphicsItem *parent = nullptr);
 
-    virtual ~CisimOgesi();
+    virtual ~DiagramItem();
 
     CisimTipi cisimTipi() const { return cisimTipim;  }
     int xAl() const { return x; }

@@ -1,5 +1,4 @@
 #include "diagramScene.h"
-#include "kirisCismi.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QInputDialog>
@@ -9,8 +8,9 @@ DiagramScene::DiagramScene(QMenu *itemMenu, QObject *parent)
 {
     cisimMenum = itemMenu;
     kipim = CisimTasi;
-    cisimTipim = CisimOgesi::Kiris;
+    cisimTipim = DiagramItem::Kiris;
     cisimRengim  = Qt::white;
+
 }
 
 void DiagramScene::kipAta(DiagramScene::Mode kip)
@@ -18,7 +18,7 @@ void DiagramScene::kipAta(DiagramScene::Mode kip)
     kipim = kip;
 }
 
-void DiagramScene::cisimTipiAta(CisimOgesi::CisimTipi type)
+void DiagramScene::cisimTipiAta(DiagramItem::CisimTipi type)
 {
     cisimTipim = type;
 }
@@ -36,9 +36,10 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     switch (kipim) {
     case CisimGir:
-        cisimOgesi = new CisimOgesi(cisimTipim,cisimModeli);
+        cisimOgesi = new DiagramItem(cisimTipim,cisimModeli);
         addItem(cisimOgesi);
         emit cisimGirildi(cisimOgesi);
+        emit tabloyaCisimEkle(cisimModeli);
         break;
     default:
         ;
@@ -54,7 +55,7 @@ void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     foreach (QGraphicsItem *cisim, items(Qt::AscendingOrder)) {
-        CisimOgesi *_cisim = qgraphicsitem_cast<CisimOgesi *>(cisim);
+        DiagramItem *_cisim = qgraphicsitem_cast<DiagramItem *>(cisim);
 
         qDebug() << "Cisim : " << _cisim->scenePos() << " Tipi : " << _cisim->cisimTipi();
     }
@@ -70,10 +71,5 @@ bool DiagramScene::cisimDegisti(int tip)
         }
     }
     return false;
-}
-
-void DiagramScene::cisimEkle()
-{
-
 }
 

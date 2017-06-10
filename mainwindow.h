@@ -10,6 +10,7 @@ class KirisEkle;
 class MesnetEkle;
 class CisimlerinTabloModeli;
 class TabloWidget;
+class CisimModeli;
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -35,13 +36,13 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 private slots:
-    void cisimGirildi(CisimOgesi *cisim);
-    void cisimSecildi(CisimOgesi *cisim);
+    void cisimGirildi(DiagramItem *cisim);
+    void cisimSecildi(DiagramItem *cisim);
     void butonGrubuTiklandi(int id);
     void cisimSil();
     void isaretciGrubuTiklandi(int id);
     void sceneOlcegiDegisti(const QString &olcek);
-    void cisimEkle(CisimOgesi *cisim);
+    void cisimEkle(DiagramItem *cisim);
 
 private:
     void aracKutusuOlustur();
@@ -52,10 +53,13 @@ private:
 
 
     QWidget *cisimHucresiOlustur(const QString &Yazi,
-                                  CisimOgesi::CisimTipi tip);
+                                  DiagramItem::CisimTipi tip);
     DiagramScene *scene;
     QGraphicsView *view;
     TabloWidget *cisimTablosu;
+    CisimModeli *cisimModeli;
+    KirisEkle *kirisEkle;
+    MesnetEkle *mesnetEkle;
 
     QAction *cikisEylemi;
     QAction *ekleEylemi;

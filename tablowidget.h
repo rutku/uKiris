@@ -3,6 +3,8 @@
 
 #include "QTableWidget"
 
+class CisimModeli;
+
 QT_BEGIN_NAMESPACE
 class QTableWidgetItem;
 
@@ -10,10 +12,13 @@ QT_END_NAMESPACE
 
 class TabloWidget : public QTableWidget
 {
+    Q_OBJECT
+
 public:
     TabloWidget(QWidget *parent = 0);
-    void cisimEkle(int tip, int noktaKonumu,int noktaYuku,int baslangicKonumu,
-                    int bitisKonumu, int baslangicYuku,int bitisYuku);
+
+public slots:
+    void cisimEkle(CisimModeli *cisimModeli);
 
 private:
 

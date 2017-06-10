@@ -1,9 +1,9 @@
 #include "mesnetekle.h"
 #include <QtWidgets>
 
-MesnetEkle::MesnetEkle(int tip, QWidget *parent)
+MesnetEkle::MesnetEkle(QWidget *parent)
+    : QDialog(parent)
 {
-    _tip = tip;
     btnEkle = new QPushButton(tr("Ekle"));
     btnIptal = new QPushButton(tr("İptal"));
 
@@ -38,5 +38,6 @@ void MesnetEkle::ekleButonunaTiklandi()
     bool ok;
     int konum = txtNokta->text().toInt(&ok);
     cisimModeli = new CisimModeli(_tip,konum,0,0,0,0,0);
+    emit cisiModeliAta(cisimModeli);
     QDialog::reject();
 }

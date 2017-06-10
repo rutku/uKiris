@@ -3,30 +3,30 @@
 
 #include <QPainter>
 
-CisimOgesi::CisimOgesi(CisimTipi cisimTipi,CisimModeli *cisimModeli, QGraphicsItem *parent)
+DiagramItem::DiagramItem(CisimTipi cisimTipi,CisimModeli *cisimModeli, QGraphicsItem *parent)
     :QGraphicsItem(parent)
 {
     cisimTipim = cisimTipi;
     cisimModelim = cisimModeli;
 }
 
-CisimOgesi::CisimOgesi(QGraphicsItem *parent)
+DiagramItem::DiagramItem(QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
 
 }
 
-CisimOgesi::~CisimOgesi()
+DiagramItem::~DiagramItem()
 {
 
 }
 
-QRectF CisimOgesi::boundingRect() const
+QRectF DiagramItem::boundingRect() const
 {
     return bound;
 }
 
-void CisimOgesi::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void DiagramItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
@@ -48,7 +48,7 @@ void CisimOgesi::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     setPos(xAl(),yAl());
 }
 
-QPolygonF CisimOgesi::kirisCiz()
+QPolygonF DiagramItem::kirisCiz()
 {
     QPolygonF kirisim;
 
@@ -68,7 +68,7 @@ QPolygonF CisimOgesi::kirisCiz()
     return kirisim;
 }
 
-QPolygonF CisimOgesi::sabitMesnetCiz()
+QPolygonF DiagramItem::sabitMesnetCiz()
 {
     QPolygonF sabitMesnetim;
     x = cisimModelim->noktaKonumuAl();
@@ -81,7 +81,7 @@ QPolygonF CisimOgesi::sabitMesnetCiz()
     return sabitMesnetim;
 }
 
-QPolygonF CisimOgesi::hareketliMesnetCiz()
+QPolygonF DiagramItem::hareketliMesnetCiz()
 {
     QPolygonF hareketliMesnetim;
     x = cisimModelim->noktaKonumuAl();

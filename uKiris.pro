@@ -25,7 +25,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    cisimekle.cpp \
     kirisekle.cpp \
     cisimmodeli.cpp \
     mesnetekle.cpp \
@@ -34,7 +33,6 @@ SOURCES += main.cpp\
     diagramScene.cpp
 
 HEADERS  += mainwindow.h \
-    cisimekle.h \
     kirisekle.h \
     cisimmodeli.h \
     mesnetekle.h \

@@ -19,6 +19,8 @@ MainWindow::MainWindow(QWidget *parent)
     scene = new DiagramScene(cisimMenusu,this);
     scene->setSceneRect(-scene->width(),-scene->height(),scene->width()*2,scene->height()*2);
 
+    kirisEkle = new KirisEkle(this);
+    mesnetEkle = new MesnetEkle(this);
 
     cisimTablosu = new TabloWidget(this);
     cisimTablosu->setFixedHeight(200);
@@ -31,10 +33,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     cisimTablosu->setHorizontalHeaderLabels(cisimTabloBasligi);
 
-    connect(scene, SIGNAL(cisimGirildi(CisimOgesi*)),
-            this, SLOT(cisimGirildi(CisimOgesi*)));
-    connect(scene, SIGNAL(cisimSecildi(CisimOgesi*)),
-            this, SLOT(cisimSecildi(CisimOgesi*)));
+    connect(scene, SIGNAL(cisimGirildi(DiagramItem*)),
+            this, SLOT(cisimGirildi(DiagramItem*)));
+    connect(scene, SIGNAL(cisimSecildi(DiagramItem*)),
+            this, SLOT(cisimSecildi(DiagramItem*)));
+    connect(kirisEkle,SIGNAL(cisiModeliAta(CisimModeli*)),
+            scene,SLOT(cisimModeliAta(CisimModeli*)));
+    connect(mesnetEkle,SIGNAL(cisiModeliAta(CisimModeli*)),
+            scene,SLOT(cisimModeliAta(CisimModeli*)));
+    connect(scene,SIGNAL(tabloyaCisimEkle(CisimModeli*)),
+            cisimTablosu,SLOT(cisimEkle(CisimModeli*)));
+
 
     aracCubuguOlustur();
 
@@ -62,7 +71,7 @@ MainWindow::~MainWindow()
 
 }
 
-void MainWindow::cisimSecildi(CisimOgesi *cisim)
+void MainWindow::cisimSecildi(DiagramItem *cisim)
 {
     Q_UNUSED(cisim)
 }
@@ -76,33 +85,30 @@ void MainWindow::butonGrubuTiklandi(int id)
         }
     }
 
-    KirisEkle k(CisimOgesi::CisimTipi(id),this);
-    MesnetEkle m(CisimOgesi::CisimTipi(id),this);
-
-    switch (CisimOgesi::CisimTipi(id)) {
-    case CisimOgesi::Kiris:
-        k.exec();
-        scene->cisimModeliAta(k.cisimModeliAl());
+    switch (DiagramItem::CisimTipi(id)) {
+    case DiagramItem::Kiris:
+        kirisEkle->tipAta(id);
+        kirisEkle->exec();
         break;
-    case CisimOgesi::SabitMesnet:
-        m.exec();
-        scene->cisimModeliAta(m.cisimModeliAl());
+    case DiagramItem::SabitMesnet:
+        mesnetEkle->tipAta(id);
+        mesnetEkle->exec();
         break;
-    case CisimOgesi::HareketliMesnet:
-        m.exec();
-        scene->cisimModeliAta(m.cisimModeliAl());
+    case DiagramItem::HareketliMesnet:
+        mesnetEkle->tipAta(id);
+        mesnetEkle->exec();
         break;
-    case CisimOgesi::AnkastreMesnet:
-        m.exec();
-        scene->cisimModeliAta(m.cisimModeliAl());
+    case DiagramItem::AnkastreMesnet:
+        mesnetEkle->tipAta(id);
+        mesnetEkle->exec();
         break;
     default:
         break;
     }
 
 
-    qDebug() << "ID : " << id << " Tip : " << CisimOgesi::CisimTipi(id);
-    scene->cisimTipiAta(CisimOgesi::CisimTipi(id));//Buton ID si DiagramType dan alınıyor.
+    qDebug() << "ID : " << id << " Tip : " << DiagramItem::CisimTipi(id);
+    scene->cisimTipiAta(DiagramItem::CisimTipi(id));//Buton ID si DiagramType dan alınıyor.
     scene->kipAta(DiagramScene::CisimGir);
 
 }
@@ -123,12 +129,11 @@ void MainWindow::isaretciGrubuTiklandi(int id)
 
 }
 
-void MainWindow::cisimGirildi(CisimOgesi *cisim)
+void MainWindow::cisimGirildi(DiagramItem *cisim)
 {
     scene->kipAta(DiagramScene::Mode(DiagramScene::CisimTasi));
     butonGrubu->button(cisim->cisimTipi())->setChecked(false);
     qDebug() << "Eklenen Cisim : " << cisim->pos();
-    cisimTablosu->cisimEkle(cisim->cisimTipi(),0,0,0,0,0,0);
 }
 
 void MainWindow::sceneOlcegiDegisti(const QString &olcek)
@@ -140,7 +145,7 @@ void MainWindow::sceneOlcegiDegisti(const QString &olcek)
     view->scale(yeniOlcek,yeniOlcek);
 }
 
-void MainWindow::cisimEkle(CisimOgesi *cisim)
+void MainWindow::cisimEkle(DiagramItem *cisim)
 {
     qDebug() << "Eklenen Cisim " << cisim->pos();
 }
@@ -153,9 +158,9 @@ void MainWindow::aracKutusuOlustur()
     connect(butonGrubu,SIGNAL(buttonClicked(int)),
             this,SLOT(butonGrubuTiklandi(int)));
     QGridLayout *katman = new QGridLayout;
-    katman->addWidget(cisimHucresiOlustur(tr("Kiriş"),CisimOgesi::Kiris),0,0);
-    katman->addWidget(cisimHucresiOlustur(tr("Sabit Mesnet"),CisimOgesi::SabitMesnet),0,1);
-    katman->addWidget(cisimHucresiOlustur(tr("Hareketli Mesnet"),CisimOgesi::HareketliMesnet),1,0);
+    katman->addWidget(cisimHucresiOlustur(tr("Kiriş"),DiagramItem::Kiris),0,0);
+    katman->addWidget(cisimHucresiOlustur(tr("Sabit Mesnet"),DiagramItem::SabitMesnet),0,1);
+    katman->addWidget(cisimHucresiOlustur(tr("Hareketli Mesnet"),DiagramItem::HareketliMesnet),1,0);
 
     katman->setRowStretch(2, 10);
     katman->setColumnStretch(1,10);
@@ -202,7 +207,7 @@ void MainWindow::cisimBilgisiGir(int id)
 }
 
 
-QWidget *MainWindow::cisimHucresiOlustur(const QString &yazi, CisimOgesi::CisimTipi tip)
+QWidget *MainWindow::cisimHucresiOlustur(const QString &yazi, DiagramItem::CisimTipi tip)
 {
     QToolButton *buton = new QToolButton;
     buton->setIconSize(QSize(50,50));
