@@ -4,10 +4,11 @@
 #include "QTableWidget"
 
 class CisimModeli;
+class DiagramItem;
 
 QT_BEGIN_NAMESPACE
 class QTableWidgetItem;
-
+class QMouseEvent;
 QT_END_NAMESPACE
 
 class TabloWidget : public QTableWidget
@@ -19,6 +20,9 @@ public:
 
 public slots:
     void tabloyaCisimEkle(CisimModeli *cisimModeli);
+
+protected:
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 private:
 

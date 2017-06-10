@@ -77,13 +77,6 @@ void MainWindow::cisimSecildi(DiagramItem *cisim)
 
 void MainWindow::butonGrubuTiklandi(int id)
 {
-    QList<QAbstractButton *> butonlar = butonGrubu->buttons();
-    foreach (QAbstractButton *buton, butonlar) {
-        if (butonGrubu->button(id) != buton) {
-            buton->setChecked(false);
-        }
-    }
-
     scene->kipAta(DiagramScene::CisimGir);
     switch (DiagramItem::CisimTipi(id)) {
     case DiagramItem::Kiris:
@@ -106,7 +99,6 @@ void MainWindow::butonGrubuTiklandi(int id)
         break;
     }
     butonGrubu->button(id)->setChecked(false);
-
 }
 
 void MainWindow::cisimSil()
