@@ -3,10 +3,10 @@
 
 #include <QPainter>
 
-DiagramItem::DiagramItem(CisimTipi cisimTipi,CisimModeli *cisimModeli, QGraphicsItem *parent)
+DiagramItem::DiagramItem(CisimModeli *cisimModeli, QGraphicsItem *parent)
     :QGraphicsItem(parent)
 {
-    cisimTipim = cisimTipi;
+    cisimTipim = CisimTipi(cisimModeli->tipAl());
     cisimModelim = cisimModeli;
 }
 

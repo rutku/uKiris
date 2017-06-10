@@ -23,7 +23,7 @@ public:
     enum CisimTipi {Kiris, SabitMesnet, HareketliMesnet, AnkastreMesnet,
                     TekilYuk, YayiliYuk, Moment};
 
-    DiagramItem(CisimTipi cisimTipi, CisimModeli *cisimModeli, QGraphicsItem *parent = nullptr);
+    DiagramItem(CisimModeli *cisimModeli, QGraphicsItem *parent = nullptr);
     DiagramItem(QGraphicsItem *parent = nullptr);
 
     virtual ~DiagramItem();

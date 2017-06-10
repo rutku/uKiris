@@ -31,7 +31,6 @@ public:
 
 public slots:
     void kipAta(Mode kip);
-    void cisimTipiAta(DiagramItem::CisimTipi type);
     void cisimModeliAta(CisimModeli *cm);
 
 signals:
@@ -46,7 +45,6 @@ protected:
 
 private:
     bool cisimDegisti(int tip);
-    DiagramItem::CisimTipi cisimTipim;
     CisimModeli *cisimModeli;
     DiagramItem *cisimOgesi;
     QMenu *cisimMenum;

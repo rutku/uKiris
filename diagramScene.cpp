@@ -8,7 +8,6 @@ DiagramScene::DiagramScene(QMenu *itemMenu, QObject *parent)
 {
     cisimMenum = itemMenu;
     kipim = CisimTasi;
-    cisimTipim = DiagramItem::Kiris;
     cisimRengim  = Qt::white;
 
 }
@@ -16,11 +15,6 @@ DiagramScene::DiagramScene(QMenu *itemMenu, QObject *parent)
 void DiagramScene::kipAta(DiagramScene::Mode kip)
 {
     kipim = kip;
-}
-
-void DiagramScene::cisimTipiAta(DiagramItem::CisimTipi type)
-{
-    cisimTipim = type;
 }
 
 void DiagramScene::cisimModeliAta(CisimModeli *cm)
@@ -36,7 +30,7 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     switch (kipim) {
     case CisimGir:
-        cisimOgesi = new DiagramItem(cisimTipim,cisimModeli);
+        cisimOgesi = new DiagramItem(cisimModeli);
         addItem(cisimOgesi);
         emit cisimGirildi(cisimOgesi);
         emit tabloyaCisimEkle(cisimModeli);

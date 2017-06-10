@@ -1,6 +1,5 @@
 #include "cisimmodeli.h"
 #include "diagramScene.h"
-#include "cisimekle.h"
 #include "mainwindow.h"
 #include "kirisekle.h"
 #include "mesnetekle.h"
@@ -106,9 +105,6 @@ void MainWindow::butonGrubuTiklandi(int id)
         break;
     }
 
-
-    qDebug() << "ID : " << id << " Tip : " << DiagramItem::CisimTipi(id);
-    scene->cisimTipiAta(DiagramItem::CisimTipi(id));//Buton ID si DiagramType dan alınıyor.
     scene->kipAta(DiagramScene::CisimGir);
 
 }
