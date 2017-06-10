@@ -1,6 +1,5 @@
 #include "cisimmodeli.h"
-#include "diagramitem.h"
-#include "diagramscene.h"
+#include "diagramScene.h"
 #include "cisimekle.h"
 #include "mainwindow.h"
 #include "kirisekle.h"

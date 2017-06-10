@@ -1,8 +1,7 @@
 #ifndef DIAGRAMSCENE_H
 #define DIAGRAMSCENE_H
 
-#include "cisimogesi.h"
-#include "diagramitem.h"
+#include "diagramItem.h"
 #include "cisimmodeli.h"
 
 #include <QGraphicsScene>

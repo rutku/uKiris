@@ -1,4 +1,4 @@
-#include "diagramscene.h"
+#include "diagramScene.h"
 #include "kirisCismi.h"
 
 #include <QGraphicsSceneMouseEvent>

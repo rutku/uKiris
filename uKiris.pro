@@ -25,21 +25,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    diagramscene.cpp \
     cisimekle.cpp \
-    kirisCismi.cpp \
     kirisekle.cpp \
     cisimmodeli.cpp \
-    cisimogesi.cpp \
     mesnetekle.cpp \
-    tablowidget.cpp
+    tablowidget.cpp \
+    diagramItem.cpp \
+    diagramScene.cpp
 
 HEADERS  += mainwindow.h \
-    diagramscene.h \
     cisimekle.h \
-    kirisCismi.h \
     kirisekle.h \
     cisimmodeli.h \
-    cisimogesi.h \
     mesnetekle.h \
-    tablowidget.h
+    tablowidget.h \
+    diagramItem.h \
+    diagramScene.h

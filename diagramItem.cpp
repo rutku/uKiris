@@ -1,4 +1,4 @@
-#include "cisimogesi.h"
+#include "diagramItem.h"
 #include "cisimmodeli.h"
 
 #include <QPainter>
@@ -55,15 +55,6 @@ QPolygonF CisimOgesi::kirisCiz()
     cisimModelim->tipAta(Kiris);
     x = cisimModelim->bitisKonumuAl();
     y = 0;
-
-//    kirisim << QPointF(-x, -10) << QPointF(x, -10)
-//              << QPointF(x,-5) << QPointF((x-10),-5)
-//              << QPointF((x-10),0) << QPointF((x-10),5)
-//              << QPointF(x,5)
-//              << QPointF(x, 10) << QPointF(-x, 10)
-//              << QPointF(-x,5) << QPointF(-(x-10),5)
-//              << QPointF(-(x-10),0) << QPointF(-(x-10),-5)
-//              << QPointF(-x,-5) << QPointF(-x, -10);
 
     kirisim << QPointF(-x, -10) << QPointF(0,-10)
               << QPointF(0,-5) << QPointF(-10,-5)

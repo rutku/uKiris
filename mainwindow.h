@@ -2,8 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "diagramitem.h"
-#include "cisimogesi.h"
+#include "diagramItem.h"
 
 class DiagramScene;
 class Cisim;
