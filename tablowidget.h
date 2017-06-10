@@ -18,7 +18,7 @@ public:
     TabloWidget(QWidget *parent = 0);
 
 public slots:
-    void cisimEkle(CisimModeli *cisimModeli);
+    void tabloyaCisimEkle(CisimModeli *cisimModeli);
 
 private:
 

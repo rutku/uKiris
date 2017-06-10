@@ -36,12 +36,12 @@ MainWindow::MainWindow(QWidget *parent)
             this, SLOT(cisimGirildi(DiagramItem*)));
     connect(scene, SIGNAL(cisimSecildi(DiagramItem*)),
             this, SLOT(cisimSecildi(DiagramItem*)));
-    connect(kirisEkle,SIGNAL(cisiModeliAta(CisimModeli*)),
-            scene,SLOT(cisimModeliAta(CisimModeli*)));
-    connect(mesnetEkle,SIGNAL(cisiModeliAta(CisimModeli*)),
-            scene,SLOT(cisimModeliAta(CisimModeli*)));
+    connect(kirisEkle,SIGNAL(cisimEkle(CisimModeli*)),
+            scene,SLOT(cisimEkle(CisimModeli*)));
+    connect(mesnetEkle,SIGNAL(cisimEkle(CisimModeli*)),
+            scene,SLOT(cisimEkle(CisimModeli*)));
     connect(scene,SIGNAL(tabloyaCisimEkle(CisimModeli*)),
-            cisimTablosu,SLOT(cisimEkle(CisimModeli*)));
+            cisimTablosu,SLOT(tabloyaCisimEkle(CisimModeli*)));
 
 
     aracCubuguOlustur();
@@ -84,6 +84,7 @@ void MainWindow::butonGrubuTiklandi(int id)
         }
     }
 
+    scene->kipAta(DiagramScene::CisimGir);
     switch (DiagramItem::CisimTipi(id)) {
     case DiagramItem::Kiris:
         kirisEkle->tipAta(id);
@@ -104,8 +105,7 @@ void MainWindow::butonGrubuTiklandi(int id)
     default:
         break;
     }
-
-    scene->kipAta(DiagramScene::CisimGir);
+    butonGrubu->button(id)->setChecked(false);
 
 }
 
@@ -129,7 +129,6 @@ void MainWindow::cisimGirildi(DiagramItem *cisim)
 {
     scene->kipAta(DiagramScene::Mode(DiagramScene::CisimTasi));
     butonGrubu->button(cisim->cisimTipi())->setChecked(false);
-    qDebug() << "Eklenen Cisim : " << cisim->pos();
 }
 
 void MainWindow::sceneOlcegiDegisti(const QString &olcek)
@@ -139,11 +138,6 @@ void MainWindow::sceneOlcegiDegisti(const QString &olcek)
     view->resetMatrix();
     view->translate(eskiMatriks.dx(),eskiMatriks.dy());
     view->scale(yeniOlcek,yeniOlcek);
-}
-
-void MainWindow::cisimEkle(DiagramItem *cisim)
-{
-    qDebug() << "Eklenen Cisim " << cisim->pos();
 }
 
 void MainWindow::aracKutusuOlustur()

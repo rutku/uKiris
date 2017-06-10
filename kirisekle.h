@@ -25,7 +25,7 @@ public:
 private slots:
     void ekleButonunaTiklandi();
 signals:
-    void cisiModeliAta(CisimModeli *cisimModeli);
+    void cisimEkle(CisimModeli *cisimModeli);
 
 private:
     QLabel *lblUzunluk;

@@ -42,7 +42,6 @@ private slots:
     void cisimSil();
     void isaretciGrubuTiklandi(int id);
     void sceneOlcegiDegisti(const QString &olcek);
-    void cisimEkle(DiagramItem *cisim);
 
 private:
     void aracKutusuOlustur();

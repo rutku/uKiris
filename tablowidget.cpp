@@ -7,7 +7,7 @@ TabloWidget::TabloWidget(QWidget *parent)
 
 }
 
-void TabloWidget::cisimEkle(CisimModeli *cisimModeli)
+void TabloWidget::tabloyaCisimEkle(CisimModeli *cisimModeli)
 {
     insertRow(rowCount());
     setItem(rowCount() - 1,0,new QTableWidgetItem(tr("%1").arg(cisimModeli->tipAl())));

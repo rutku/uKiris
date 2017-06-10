@@ -31,7 +31,7 @@ public:
 
 public slots:
     void kipAta(Mode kip);
-    void cisimModeliAta(CisimModeli *cm);
+    void cisimEkle(CisimModeli *_cisimModeli = nullptr);
 
 signals:
     void cisimGirildi(DiagramItem *cisim);
@@ -45,8 +45,8 @@ protected:
 
 private:
     bool cisimDegisti(int tip);
-    CisimModeli *cisimModeli;
-    DiagramItem *cisimOgesi;
+    CisimModeli *cisimModeli = nullptr;
+    DiagramItem *diagramItem = nullptr;
     QMenu *cisimMenum;
     Mode kipim;
     bool solButonAsagida;

@@ -39,6 +39,6 @@ void KirisEkle::ekleButonunaTiklandi()
     bool ok;
     uzunluk = txtUzunluk->text().toInt(&ok);
     cisimModeli = new CisimModeli(_tip,0,0,0,uzunluk,0,0);
-    emit cisiModeliAta(cisimModeli);
+    emit cisimEkle(cisimModeli);
     QDialog::reject();
 }

@@ -17,9 +17,21 @@ void DiagramScene::kipAta(DiagramScene::Mode kip)
     kipim = kip;
 }
 
-void DiagramScene::cisimModeliAta(CisimModeli *cm)
+void DiagramScene::cisimEkle(CisimModeli *_cisimModeli)
 {
-    cisimModeli = cm;
+    if (_cisimModeli == nullptr) {
+        return;
+    }
+    switch (kipim) {
+    case CisimGir:
+        diagramItem = new DiagramItem(_cisimModeli);
+        addItem(diagramItem);
+        emit cisimGirildi(diagramItem);
+        emit tabloyaCisimEkle(_cisimModeli);
+        break;
+    default:
+        ;
+    }
 }
 
 void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -28,16 +40,6 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    switch (kipim) {
-    case CisimGir:
-        cisimOgesi = new DiagramItem(cisimModeli);
-        addItem(cisimOgesi);
-        emit cisimGirildi(cisimOgesi);
-        emit tabloyaCisimEkle(cisimModeli);
-        break;
-    default:
-        ;
-    }
     QGraphicsScene::mousePressEvent(mouseEvent);
 }
 
