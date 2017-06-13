@@ -36,12 +36,11 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 private slots:
-    void cisimGirildi(DiagramItem *cisim);
-    void cisimSecildi(DiagramItem *cisim);
     void butonGrubuTiklandi(int id);
     void cisimSil();
     void isaretciGrubuTiklandi(int id);
     void sceneOlcegiDegisti(const QString &olcek);
+    void cisimDuzenle(CisimModeli *_cisimModeli);
 
 private:
     void aracKutusuOlustur();

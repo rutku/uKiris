@@ -51,7 +51,7 @@ void TabloWidget::mouseDoubleClickEvent(QMouseEvent *event)
         return;
     }
 
-    qDebug() << cisimModelListesi.at(selectedItems().first()->row())->tipAl();
+    emit cisimDuzenle(cisimModelListesi.at(selectedItems().first()->row()));
 
     QTableWidget::mouseDoubleClickEvent(event);
 }

@@ -26,7 +26,12 @@ void DiagramScene::cisimEkle(CisimModeli *_cisimModeli)
     case CisimGir:
         diagramItem = new DiagramItem(_cisimModeli);
         addItem(diagramItem);
-        emit cisimGirildi(diagramItem);
+        emit tabloyaCisimEkle(_cisimModeli);
+        break;
+    case CisimDuzenle:
+        //Cisim taşıma işi
+        diagramItem = new DiagramItem(_cisimModeli);
+        addItem(diagramItem);
         emit tabloyaCisimEkle(_cisimModeli);
         break;
     default:
@@ -57,15 +62,5 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
 
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
-}
-
-bool DiagramScene::cisimDegisti(int tip)
-{
-    foreach (QGraphicsItem *cisim, selectedItems()) {
-        if (cisim->type() == tip) {
-            return true;
-        }
-    }
-    return false;
 }
 

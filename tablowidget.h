@@ -20,6 +20,8 @@ public:
 
 public slots:
     void tabloyaCisimEkle(CisimModeli *cisimModeli);
+signals:
+    void cisimDuzenle(CisimModeli *_cisimModeli);
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;

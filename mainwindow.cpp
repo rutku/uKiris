@@ -32,16 +32,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     cisimTablosu->setHorizontalHeaderLabels(cisimTabloBasligi);
 
-    connect(scene, SIGNAL(cisimGirildi(DiagramItem*)),
-            this, SLOT(cisimGirildi(DiagramItem*)));
-    connect(scene, SIGNAL(cisimSecildi(DiagramItem*)),
-            this, SLOT(cisimSecildi(DiagramItem*)));
     connect(kirisEkle,SIGNAL(cisimEkle(CisimModeli*)),
             scene,SLOT(cisimEkle(CisimModeli*)));
     connect(mesnetEkle,SIGNAL(cisimEkle(CisimModeli*)),
             scene,SLOT(cisimEkle(CisimModeli*)));
     connect(scene,SIGNAL(tabloyaCisimEkle(CisimModeli*)),
             cisimTablosu,SLOT(tabloyaCisimEkle(CisimModeli*)));
+    connect(cisimTablosu,SIGNAL(cisimDuzenle(CisimModeli*)),
+            this,SLOT(cisimDuzenle(CisimModeli*)));
 
 
     aracCubuguOlustur();
@@ -70,17 +68,11 @@ MainWindow::~MainWindow()
 
 }
 
-void MainWindow::cisimSecildi(DiagramItem *cisim)
-{
-    Q_UNUSED(cisim)
-}
-
 void MainWindow::butonGrubuTiklandi(int id)
 {
     scene->kipAta(DiagramScene::CisimGir);
     switch (DiagramItem::CisimTipi(id)) {
     case DiagramItem::Kiris:
-        kirisEkle->tipAta(id);
         kirisEkle->exec();
         break;
     case DiagramItem::SabitMesnet:
@@ -117,12 +109,6 @@ void MainWindow::isaretciGrubuTiklandi(int id)
 
 }
 
-void MainWindow::cisimGirildi(DiagramItem *cisim)
-{
-    scene->kipAta(DiagramScene::Mode(DiagramScene::CisimTasi));
-    butonGrubu->button(cisim->cisimTipi())->setChecked(false);
-}
-
 void MainWindow::sceneOlcegiDegisti(const QString &olcek)
 {
     double yeniOlcek = olcek.left(olcek.indexOf(tr("%"))).toDouble() / 100.0;
@@ -130,6 +116,31 @@ void MainWindow::sceneOlcegiDegisti(const QString &olcek)
     view->resetMatrix();
     view->translate(eskiMatriks.dx(),eskiMatriks.dy());
     view->scale(yeniOlcek,yeniOlcek);
+}
+
+void MainWindow::cisimDuzenle(CisimModeli *_cisimModeli)
+{
+    scene->kipAta(DiagramScene::CisimDuzenle);
+    switch (_cisimModeli->tipAl()) {
+    case DiagramItem::Kiris:
+        kirisEkle->cisimModeliAta(_cisimModeli);
+        kirisEkle->exec();
+        break;
+    case DiagramItem::SabitMesnet:
+        mesnetEkle->tipAta(_cisimModeli->tipAl());
+        mesnetEkle->exec();
+        break;
+    case DiagramItem::HareketliMesnet:
+        mesnetEkle->tipAta(_cisimModeli->tipAl());
+        mesnetEkle->exec();
+        break;
+    case DiagramItem::AnkastreMesnet:
+        mesnetEkle->tipAta(_cisimModeli->tipAl());
+        mesnetEkle->exec();
+        break;
+    default:
+        break;
+    }
 }
 
 void MainWindow::aracKutusuOlustur()

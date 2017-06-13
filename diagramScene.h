@@ -22,7 +22,7 @@ class DiagramScene : public QGraphicsScene
     Q_OBJECT
 
 public:
-    enum Mode { CisimGir, CisimTasi};
+    enum Mode { CisimGir, CisimDuzenle, CisimTasi};
 
     explicit DiagramScene(QMenu *itemMenu, QObject *parent = 0);
     QFont font() const { return fontum; }
@@ -34,8 +34,6 @@ public slots:
     void cisimEkle(CisimModeli *_cisimModeli = nullptr);
 
 signals:
-    void cisimGirildi(DiagramItem *cisim);
-    void cisimSecildi(DiagramItem *cisim);
     void tabloyaCisimEkle(CisimModeli *cisimModeli);
 
 protected:
@@ -44,7 +42,6 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
 
 private:
-    bool cisimDegisti(int tip);
     CisimModeli *cisimModeli = nullptr;
     DiagramItem *diagramItem = nullptr;
     QMenu *cisimMenum;

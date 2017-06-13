@@ -11,16 +11,16 @@ class QTextEdit;
 class QLineEdit;
 QT_END_NAMESPACE
 
-
 class KirisEkle : public QDialog
 {
     Q_OBJECT
 
 public:
+    enum Mode {Ekle, Duzelt};
     KirisEkle(QWidget *parent = 0);
     int uzunlukAl() { return uzunluk; }
     CisimModeli *cisimModeliAl() { return cisimModeli; }
-    void tipAta(int tip) { _tip = tip; }
+    void cisimModeliAta(CisimModeli *_cisimModeli);
 
 private slots:
     void ekleButonunaTiklandi();
@@ -33,7 +33,6 @@ private:
     QPushButton *btnEkle;
     QPushButton *btnIptal;
     CisimModeli *cisimModeli;
-    int _tip;
     int uzunluk;
 };
 

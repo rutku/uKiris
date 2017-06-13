@@ -1,5 +1,6 @@
 #include "kirisekle.h"
 #include "cisimmodeli.h"
+#include "diagramItem.h"
 
 #include <QtWidgets>
 
@@ -33,12 +34,19 @@ KirisEkle::KirisEkle(QWidget *parent)
     setWindowTitle(tr("Kiriş Ekle"));
 }
 
+void KirisEkle::cisimModeliAta(CisimModeli *_cisimModeli)
+{
+    cisimModeli = _cisimModeli;
+    txtUzunluk->setText(tr("%1").arg(cisimModeli->bitisKonumuAl()));
+}
+
 
 void KirisEkle::ekleButonunaTiklandi()
 {
     bool ok;
     uzunluk = txtUzunluk->text().toInt(&ok);
-    cisimModeli = new CisimModeli(_tip,0,0,0,uzunluk,0,0);
+    qDebug() << "Uzunluk " << uzunluk;
+    cisimModeli = new CisimModeli(DiagramItem::Kiris,0,0,0,uzunluk,0,0);
     emit cisimEkle(cisimModeli);
     QDialog::reject();
 }
