@@ -2,12 +2,15 @@
 #include "cisimmodeli.h"
 
 #include <QPainter>
+#include <QMetaEnum>
 
 DiagramItem::DiagramItem(CisimModeli *cisimModeli, QGraphicsItem *parent)
     :QGraphicsItem(parent)
 {
     cisimTipim = CisimTipi(cisimModeli->tipAl());
     cisimModelim = cisimModeli;
+
+
 }
 
 DiagramItem::DiagramItem(QGraphicsItem *parent)

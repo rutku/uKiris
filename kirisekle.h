@@ -32,9 +32,9 @@ private:
     QLineEdit *txtUzunluk;
     QPushButton *btnEkle;
     QPushButton *btnIptal;
+    CisimModeli *cisimModeli;
     int _tip;
     int uzunluk;
-    CisimModeli *cisimModeli;
 };
 
 #endif // KIRISEKEL_H

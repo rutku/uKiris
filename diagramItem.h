@@ -29,9 +29,11 @@ public:
     virtual ~DiagramItem();
 
     CisimTipi cisimTipi() const { return cisimTipim;  }
+
     int xAl() const { return x; }
     int yAl() const { return y; }
     int type() const override { return Tip; }
+    QMap<int,QString> tipIsmiAl() { return tipIsmim; }
 
 protected:
     virtual QRectF boundingRect() const override;
@@ -46,6 +48,7 @@ private:
     int x;
     int y;
 
+    QMap<int,QString> tipIsmim;
     QPolygonF kirisCiz();
     QPolygonF sabitMesnetCiz();
     QPolygonF hareketliMesnetCiz();

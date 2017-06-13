@@ -36,6 +36,7 @@ MesnetEkle::MesnetEkle(QWidget *parent)
 void MesnetEkle::ekleButonunaTiklandi()
 {
     bool ok;
+
     int konum = txtNokta->text().toInt(&ok);
     cisimModeli = new CisimModeli(_tip,konum,0,0,0,0,0);
     emit cisimEkle(cisimModeli);

@@ -25,7 +25,7 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 private:
-
+    QList<CisimModeli*> cisimModelListesi;
 };
 
 #endif // TABLOWIDGET_H
