@@ -53,6 +53,8 @@ private:
     QPolygonF kirisCiz();
     QPolygonF sabitMesnetCiz();
     QPolygonF hareketliMesnetCiz();
+    QPolygonF ankastreMesnetCiz();
+
 
 };
 

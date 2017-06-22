@@ -37,7 +37,7 @@ KirisEkle::KirisEkle(QWidget *parent)
 
 KirisEkle::~KirisEkle()
 {
-    delete cisimModeli;
+//    delete cisimModeli;
 }
 
 void KirisEkle::cisimModeliAta(CisimModeli *_cisimModeli)

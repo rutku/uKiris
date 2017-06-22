@@ -174,6 +174,7 @@ void MainWindow::aracKutusuOlustur()
     katman->addWidget(cisimHucresiOlustur(tr("Kiriş"),DiagramItem::Kiris),0,0);
     katman->addWidget(cisimHucresiOlustur(tr("Sabit Mesnet"),DiagramItem::SabitMesnet),0,1);
     katman->addWidget(cisimHucresiOlustur(tr("Hareketli Mesnet"),DiagramItem::HareketliMesnet),1,0);
+    katman->addWidget(cisimHucresiOlustur(tr("Ankastre Mesnet"),DiagramItem::AnkastreMesnet),1,1);
 
     katman->setRowStretch(2, 10);
     katman->setColumnStretch(1,10);

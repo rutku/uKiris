@@ -35,7 +35,7 @@ MesnetEkle::MesnetEkle(QWidget *parent)
 
 MesnetEkle::~MesnetEkle()
 {
-    delete cisimModeli;
+//    delete cisimModeli;
 }
 
 void MesnetEkle::ekleButonunaTiklandi()
@@ -50,7 +50,6 @@ void MesnetEkle::ekleButonunaTiklandi()
         break;
     case DiagramScene::CisimDuzenle:
         cisimModeli->noktaKonumuAta(konum);
-        qDebug() << "No : " << cisimModeli->noktaKonumuAl();
         emit cisimEkle(cisimModeli);
         break;
     default:

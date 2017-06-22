@@ -34,7 +34,7 @@ void DiagramScene::cisimEkle(CisimModeli *_cisimModeli)
     default:
         ;
     }
-    update(0,0,0,0);
+    QGraphicsScene::update(0,0,0,0);
 }
 
 void DiagramScene::cisimBul(CisimModeli *_cisimModeli)
