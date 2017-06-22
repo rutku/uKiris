@@ -32,9 +32,11 @@ public:
 public slots:
     void kipAta(Mode kip);
     void cisimEkle(CisimModeli *_cisimModeli = nullptr);
+    void cisimBul(CisimModeli *_cisimModeli = nullptr);
 
 signals:
     void tabloyaCisimEkle(CisimModeli *cisimModeli);
+    void tabloyuGuncelle(CisimModeli *cisimModeli);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) override;

@@ -2,6 +2,7 @@
 #define MESNETEKLE_H
 
 #include "cisimmodeli.h"
+#include "diagramScene.h"
 
 #include <QDialog>
 
@@ -18,7 +19,10 @@ class MesnetEkle : public QDialog
 
 public:
     MesnetEkle(QWidget *parent = 0);
+    ~MesnetEkle();
     CisimModeli *cisimModeliAl() { return cisimModeli; }
+    void cisimModeliAta(CisimModeli *_cisimModeli) { cisimModeli = _cisimModeli; }
+    void kipAta(DiagramScene::Mode kip) { kipim = kip; }
     void tipAta(int tip) { _tip = tip; }
 
 private slots:
@@ -34,6 +38,7 @@ private:
     QPushButton *btnIptal;
     int _tip;
     CisimModeli *cisimModeli;
+    DiagramScene::Mode kipim;
 };
 
 #endif // MESNETEKLE_H

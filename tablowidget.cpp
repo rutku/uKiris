@@ -17,32 +17,17 @@ void TabloWidget::tabloyaCisimEkle(CisimModeli *cisimModeli)
 {
 
     cisimModelListesi.append(cisimModeli);
-
     insertRow(rowCount());
-
-    setItem(rowCount() - 1,0,new QTableWidgetItem(cisimModeli->tipIsmiAl()));
-    switch (cisimModeli->tipAl()) {
-    case DiagramItem::Kiris:
-        setItem(rowCount() - 1,3,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangciKonumuAl())));
-        setItem(rowCount() - 1,4,new QTableWidgetItem(tr("%1").arg(cisimModeli->bitisKonumuAl())));
-        break;
-    case DiagramItem::SabitMesnet:
-        setItem(rowCount() - 1,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
-        break;
-    case DiagramItem::HareketliMesnet:
-        setItem(rowCount() - 1,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
-        break;
-    case DiagramItem::AnkastreMesnet:
-        setItem(rowCount() - 1,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
-        break;
-    default:
-        break;
-    }
-
+    tabloyaEkle(rowCount()-1,cisimModeli);
 //    setItem(rowCount() - 1,2,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaYukuAl())));
 //    setItem(rowCount() - 1,5,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangicYukuAl())));
 //    setItem(rowCount() - 1,6,new QTableWidgetItem(tr("%1").arg(cisimModeli->bitisYukuAl())));
 
+}
+
+void TabloWidget::tabloyuGuncelle(CisimModeli *cisimModeli)
+{   
+    tabloyaEkle(selectedItems().first()->row(),cisimModeli);
 }
 
 void TabloWidget::mouseDoubleClickEvent(QMouseEvent *event)
@@ -50,9 +35,30 @@ void TabloWidget::mouseDoubleClickEvent(QMouseEvent *event)
     if (selectedItems().isEmpty()) {
         return;
     }
-
     emit cisimDuzenle(cisimModelListesi.at(selectedItems().first()->row()));
 
     QTableWidget::mouseDoubleClickEvent(event);
+}
+
+void TabloWidget::tabloyaEkle(int satir, CisimModeli *cisimModeli)
+{
+    setItem(satir,0,new QTableWidgetItem(cisimModeli->tipIsmiAl()));
+    switch (cisimModeli->tipAl()) {
+    case DiagramItem::Kiris:
+        setItem(satir,3,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangciKonumuAl())));
+        setItem(satir,4,new QTableWidgetItem(tr("%1").arg(cisimModeli->bitisKonumuAl())));
+        break;
+    case DiagramItem::SabitMesnet:
+        setItem(satir,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
+        break;
+    case DiagramItem::HareketliMesnet:
+        setItem(satir,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
+        break;
+    case DiagramItem::AnkastreMesnet:
+        setItem(satir,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
+        break;
+    default:
+        break;
+    }
 }
 

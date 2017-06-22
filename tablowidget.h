@@ -20,6 +20,7 @@ public:
 
 public slots:
     void tabloyaCisimEkle(CisimModeli *cisimModeli);
+    void tabloyuGuncelle(CisimModeli *cisimModeli);
 signals:
     void cisimDuzenle(CisimModeli *_cisimModeli);
 
@@ -28,6 +29,9 @@ protected:
 
 private:
     QList<CisimModeli*> cisimModelListesi;
+    int simdikiSatir;
+    int simdikiSutun;
+    void tabloyaEkle(int satir,CisimModeli *cisimModeli);
 };
 
 #endif // TABLOWIDGET_H

@@ -33,12 +33,28 @@ MesnetEkle::MesnetEkle(QWidget *parent)
 
 }
 
+MesnetEkle::~MesnetEkle()
+{
+    delete cisimModeli;
+}
+
 void MesnetEkle::ekleButonunaTiklandi()
 {
     bool ok;
 
     int konum = txtNokta->text().toInt(&ok);
-    cisimModeli = new CisimModeli(_tip,konum,0,0,0,0,0);
-    emit cisimEkle(cisimModeli);
+    switch (kipim) {
+    case DiagramScene::CisimGir:
+        cisimModeli = new CisimModeli(_tip,konum,0,0,0,0,0);
+        emit cisimEkle(cisimModeli);
+        break;
+    case DiagramScene::CisimDuzenle:
+        cisimModeli->noktaKonumuAta(konum);
+        qDebug() << "No : " << cisimModeli->noktaKonumuAl();
+        emit cisimEkle(cisimModeli);
+        break;
+    default:
+        break;
+    }
     QDialog::reject();
 }

@@ -29,14 +29,24 @@ void DiagramScene::cisimEkle(CisimModeli *_cisimModeli)
         emit tabloyaCisimEkle(_cisimModeli);
         break;
     case CisimDuzenle:
-        //Cisim taşıma işi
-        diagramItem = new DiagramItem(_cisimModeli);
-        addItem(diagramItem);
-        emit tabloyaCisimEkle(_cisimModeli);
+        emit tabloyuGuncelle(_cisimModeli);
         break;
     default:
         ;
     }
+    update(0,0,0,0);
+}
+
+void DiagramScene::cisimBul(CisimModeli *_cisimModeli)
+{
+    foreach (QGraphicsItem *cisim, items(Qt::AscendingOrder)) {
+        DiagramItem *_cisim = qgraphicsitem_cast<DiagramItem *>(cisim);
+
+        if (_cisim->cisimModeliAl() == _cisimModeli) {
+            qDebug() << "Cisim : " << _cisim->scenePos() << " Tipi : " << _cisim->cisimTipi();
+        }
+    }
+
 }
 
 void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -58,7 +68,7 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     foreach (QGraphicsItem *cisim, items(Qt::AscendingOrder)) {
         DiagramItem *_cisim = qgraphicsitem_cast<DiagramItem *>(cisim);
 
-        qDebug() << "Cisim : " << _cisim->scenePos() << " Tipi : " << _cisim->cisimTipi();
+        qDebug() << "Cisim : " << _cisim->cisimModeliAl()->bitisKonumuAl() << " Tipi : " << _cisim->cisimTipi();
     }
 
     QGraphicsScene::mouseReleaseEvent(mouseEvent);

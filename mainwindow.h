@@ -3,8 +3,8 @@
 
 #include <QMainWindow>
 #include "diagramItem.h"
+#include "diagramScene.h"
 
-class DiagramScene;
 class Cisim;
 class KirisEkle;
 class MesnetEkle;
@@ -76,6 +76,8 @@ private:
 
     QButtonGroup *butonGrubu;
     QButtonGroup *isaretciTipiGrubu;
+
+    DiagramScene::Mode kipim;
 };
 
 #endif // MAINWINDOW_H

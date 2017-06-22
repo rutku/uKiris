@@ -9,7 +9,7 @@
 #include <QtWidgets>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : QMainWindow(parent), kipim(DiagramScene::CisimGir)
 {
     eylemlerOlustur();
     aracKutusuOlustur();
@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     cisimTablosu->setFixedHeight(200);
     cisimTablosu->setColumnCount(7);
 
+
     QStringList cisimTabloBasligi;
     cisimTabloBasligi << tr("Tip") << tr("Nokta\nKonumu (m)") << tr("Nokta Kuvveti\nkN veya kN-m")
                       <<tr("Başlangıç\nNoktası(m)")<<tr("Bitiş\nNoktası(m)")
@@ -38,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent)
             scene,SLOT(cisimEkle(CisimModeli*)));
     connect(scene,SIGNAL(tabloyaCisimEkle(CisimModeli*)),
             cisimTablosu,SLOT(tabloyaCisimEkle(CisimModeli*)));
+    connect(scene,SIGNAL(tabloyuGuncelle(CisimModeli*)),
+            cisimTablosu,SLOT(tabloyuGuncelle(CisimModeli*)));
     connect(cisimTablosu,SIGNAL(cisimDuzenle(CisimModeli*)),
             this,SLOT(cisimDuzenle(CisimModeli*)));
 
@@ -65,25 +68,35 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    delete scene;
+    delete view;
+    delete cisimTablosu;
+    delete cisimModeli;
+    delete kirisEkle;
+    delete mesnetEkle;
 
 }
 
 void MainWindow::butonGrubuTiklandi(int id)
 {
-    scene->kipAta(DiagramScene::CisimGir);
+    scene->kipAta(kipim);
     switch (DiagramItem::CisimTipi(id)) {
     case DiagramItem::Kiris:
+        kirisEkle->kipAta(kipim);
         kirisEkle->exec();
         break;
     case DiagramItem::SabitMesnet:
+        mesnetEkle->kipAta(kipim);
         mesnetEkle->tipAta(id);
         mesnetEkle->exec();
         break;
     case DiagramItem::HareketliMesnet:
+        mesnetEkle->kipAta(kipim);
         mesnetEkle->tipAta(id);
         mesnetEkle->exec();
         break;
     case DiagramItem::AnkastreMesnet:
+        mesnetEkle->kipAta(kipim);
         mesnetEkle->tipAta(id);
         mesnetEkle->exec();
         break;
@@ -123,18 +136,25 @@ void MainWindow::cisimDuzenle(CisimModeli *_cisimModeli)
     scene->kipAta(DiagramScene::CisimDuzenle);
     switch (_cisimModeli->tipAl()) {
     case DiagramItem::Kiris:
+        kirisEkle->kipAta(DiagramScene::CisimDuzenle);
         kirisEkle->cisimModeliAta(_cisimModeli);
         kirisEkle->exec();
         break;
     case DiagramItem::SabitMesnet:
+        mesnetEkle->kipAta(DiagramScene::CisimDuzenle);
+        mesnetEkle->cisimModeliAta(_cisimModeli);
         mesnetEkle->tipAta(_cisimModeli->tipAl());
         mesnetEkle->exec();
         break;
     case DiagramItem::HareketliMesnet:
+        mesnetEkle->kipAta(DiagramScene::CisimDuzenle);
+        mesnetEkle->cisimModeliAta(_cisimModeli);
         mesnetEkle->tipAta(_cisimModeli->tipAl());
         mesnetEkle->exec();
         break;
     case DiagramItem::AnkastreMesnet:
+        mesnetEkle->kipAta(DiagramScene::CisimDuzenle);
+        mesnetEkle->cisimModeliAta(_cisimModeli);
         mesnetEkle->tipAta(_cisimModeli->tipAl());
         mesnetEkle->exec();
         break;

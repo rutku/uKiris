@@ -29,6 +29,7 @@ public:
     virtual ~DiagramItem();
 
     CisimTipi cisimTipi() const { return cisimTipim;  }
+    CisimModeli *cisimModeliAl() { return cisimModelim; }
 
     int xAl() const { return x; }
     int yAl() const { return y; }
