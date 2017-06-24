@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>simgeler/ankastreMesnet.png</file>
+        <file>simgeler/hareketliMesnet.png</file>
+        <file>simgeler/sabitMesnet.png</file>
+        <file>simgeler/kiris.png</file>
+        <file>simgeler/moment.png</file>
+        <file>simgeler/tekilKuvvet.png</file>
+        <file>simgeler/yayiliKuvvet.png</file>
+    </qresource>
+</RCC>

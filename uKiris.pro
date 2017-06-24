@@ -39,3 +39,6 @@ HEADERS  += mainwindow.h \
     tablowidget.h \
     diagramItem.h \
     diagramScene.h
+
+RESOURCES += \
+    simgeler.qrc

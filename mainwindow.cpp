@@ -170,22 +170,34 @@ void MainWindow::aracKutusuOlustur()
 
     connect(butonGrubu,SIGNAL(buttonClicked(int)),
             this,SLOT(butonGrubuTiklandi(int)));
-    QGridLayout *katman = new QGridLayout;
-    katman->addWidget(cisimHucresiOlustur(tr("Kiriş"),DiagramItem::Kiris),0,0);
-    katman->addWidget(cisimHucresiOlustur(tr("Sabit Mesnet"),DiagramItem::SabitMesnet),0,1);
-    katman->addWidget(cisimHucresiOlustur(tr("Hareketli Mesnet"),DiagramItem::HareketliMesnet),1,0);
-    katman->addWidget(cisimHucresiOlustur(tr("Ankastre Mesnet"),DiagramItem::AnkastreMesnet),1,1);
+    QGridLayout *elemanlarKatmani = new QGridLayout;
+    elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Kiriş"),DiagramItem::Kiris,":/simgeler/kiris.png"),0,0);
+    elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Sabit Mesnet"),DiagramItem::SabitMesnet,":/simgeler/sabitMesnet.png"),0,1);
+    elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Hareketli Mesnet"),DiagramItem::HareketliMesnet,":/simgeler/hareketliMesnet.png"),1,0);
+    elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Ankastre Mesnet"),DiagramItem::AnkastreMesnet,":/simgeler/ankastreMesnet.png"),1,1);
 
-    katman->setRowStretch(2, 10);
-    katman->setColumnStretch(1,10);
+    elemanlarKatmani->setRowStretch(2, 10);
+    elemanlarKatmani->setColumnStretch(1,10);
 
-    QWidget *cisimWidget = new QWidget;
-    cisimWidget->setLayout(katman);
+    QWidget *elemanlarWidget = new QWidget;
+    elemanlarWidget->setLayout(elemanlarKatmani);
+
+    QGridLayout *kuvvetlerKatmani = new QGridLayout;
+    kuvvetlerKatmani->addWidget(cisimHucresiOlustur(tr("Tekil Kuvvet"),DiagramItem::TekilKuvvet,":/simgeler/tekilKuvvet.png"),0,0);
+    kuvvetlerKatmani->addWidget(cisimHucresiOlustur(tr("Yayılı Kuvvet"),DiagramItem::YayiliKuvvet,":/simgeler/yayiliKuvvet.png"),0,1);
+    kuvvetlerKatmani->addWidget(cisimHucresiOlustur(tr("Moment"),DiagramItem::Moment,":/simgeler/moment.png"),1,0);
+
+    kuvvetlerKatmani->setRowStretch(2,10);
+    kuvvetlerKatmani->setColumnStretch(1,10);
+
+    QWidget *kuvvetlerWidget = new QWidget;
+    kuvvetlerWidget->setLayout(kuvvetlerKatmani);
 
     aracKutusu = new QToolBox;
     aracKutusu->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Ignored));
-    aracKutusu->setMinimumWidth(cisimWidget->sizeHint().width());
-    aracKutusu->addItem(cisimWidget,tr("Elemanlar"));
+    aracKutusu->setMinimumWidth(elemanlarWidget->sizeHint().width());
+    aracKutusu->addItem(elemanlarWidget,tr("Elemanlar"));
+    aracKutusu->addItem(kuvvetlerWidget,tr("Kuvvetler"));
 
 }
 
@@ -197,7 +209,6 @@ void MainWindow::eylemlerOlustur()
 void MainWindow::menulerOlustur()
 {
     dosyaMenusu = menuBar()->addMenu(tr("&Dosya"));
-    dosyaMenusu->addAction(cikisEylemi);
 
     cisimMenusu = menuBar()->addMenu(tr("&Cisim"));
 
@@ -221,9 +232,10 @@ void MainWindow::cisimBilgisiGir(int id)
 }
 
 
-QWidget *MainWindow::cisimHucresiOlustur(const QString &yazi, DiagramItem::CisimTipi tip)
+QWidget *MainWindow::cisimHucresiOlustur(const QString &yazi, DiagramItem::CisimTipi tip, const QString &simge)
 {
     QToolButton *buton = new QToolButton;
+    buton->setIcon(QIcon(simge));
     buton->setIconSize(QSize(50,50));
     buton->setCheckable(true);
     butonGrubu->addButton(buton,int(tip));

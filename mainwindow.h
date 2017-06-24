@@ -51,17 +51,13 @@ private:
 
 
     QWidget *cisimHucresiOlustur(const QString &Yazi,
-                                  DiagramItem::CisimTipi tip);
+                                  DiagramItem::CisimTipi tip, const QString &simge);
     DiagramScene *scene;
     QGraphicsView *view;
     TabloWidget *cisimTablosu;
     CisimModeli *cisimModeli;
     KirisEkle *kirisEkle;
     MesnetEkle *mesnetEkle;
-
-    QAction *cikisEylemi;
-    QAction *ekleEylemi;
-    QAction *silEylemi;
 
     QMenu *dosyaMenusu;
     QMenu *cisimMenusu;
