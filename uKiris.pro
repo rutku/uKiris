@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     diagramItem.cpp \
     diagramScene.cpp \
     tekilkuvvetekle.cpp \
-    yayilikuvvetekle.cpp
+    yayilikuvvetekle.cpp \
+    momentEkle.cpp
 
 HEADERS  += mainwindow.h \
     kirisekle.h \
@@ -42,7 +43,8 @@ HEADERS  += mainwindow.h \
     diagramItem.h \
     diagramScene.h \
     tekilkuvvetekle.h \
-    yayilikuvvetekle.h
+    yayilikuvvetekle.h \
+    momentEkle.h
 
 RESOURCES += \
     simgeler.qrc

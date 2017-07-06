@@ -11,6 +11,7 @@ CisimModeli::CisimModeli(int tip, int noktaKonumu, int noktaKuvveti, int baslang
     _bitisKonumu = bitisKonumu;
     _baslangicKuvveti = baslangicKuvveti;
     _bitisKuvveti = bitisKuvveti;
+    _moment = moment;
     tipIsmim[DiagramItem::Kiris] = tr("Kiriş");
     tipIsmim[DiagramItem::SabitMesnet] = tr("Sabit Mesnet");
     tipIsmim[DiagramItem::HareketliMesnet] = tr("Hareketli Mesnet");

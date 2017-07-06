@@ -76,8 +76,8 @@ YayiliKuvvetEkle::YayiliKuvvetEkle(QWidget *parent)
 
     setLayout(anaKatman);
     setWindowTitle(tr("Yayılı Kuvvet"));
-    setFixedHeight(400);
-    setFixedWidth(300);
+    setFixedHeight(300);
+    setFixedWidth(270);
 }
 
 YayiliKuvvetEkle::~YayiliKuvvetEkle()

@@ -19,6 +19,7 @@ public:
     int bitisKonumuAl() const { return _bitisKonumu; }
     int baslangicKuvvetiAl() const { return _baslangicKuvveti; }
     int bitisKuvvetiAl() const { return _bitisKuvveti; }
+    int momentAl() const { return _moment; }
 
     void tipIsmiAta(QString tipIsmi) { _tipIsmi = tipIsmi; }
     void tipAta(int tip) { _tip = tip; }
@@ -28,6 +29,7 @@ public:
     void bitisKonumuAta(int bitisKonumu ) { _bitisKonumu = bitisKonumu; }
     void baslangicKuvvetiAta(int baslangicKuvveti ) { _baslangicKuvveti = baslangicKuvveti; }
     void bitisKuvvetiAta(int bitisKuvveti ) { _bitisKuvveti = bitisKuvveti; }
+    void momentAta(int moment) { _moment = moment; }
 private:
     QString _tipIsmi;
     int _tip;

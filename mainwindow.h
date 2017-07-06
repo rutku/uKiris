@@ -10,6 +10,7 @@ class KirisEkle;
 class MesnetEkle;
 class TekilKuvvetEkle;
 class YayiliKuvvetEkle;
+class MomentEkle;
 class CisimlerinTabloModeli;
 class TabloWidget;
 class CisimModeli;
@@ -62,6 +63,7 @@ private:
     MesnetEkle *mesnetEkle;
     TekilKuvvetEkle *tekilKuvvetEkle;
     YayiliKuvvetEkle *yayiliKuvvetEkle;
+    MomentEkle *momentEkle;
 
     QMenu *dosyaMenusu;
     QMenu *cisimMenusu;

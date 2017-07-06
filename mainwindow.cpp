@@ -7,6 +7,7 @@
 #include "cisimmodeli.h"
 #include "tablowidget.h"
 #include "yayilikuvvetekle.h"
+#include "momentEkle.h"
 
 #include <QtWidgets>
 
@@ -24,17 +25,17 @@ MainWindow::MainWindow(QWidget *parent)
     mesnetEkle = new MesnetEkle(this);
     tekilKuvvetEkle  = new TekilKuvvetEkle(this);
     yayiliKuvvetEkle = new YayiliKuvvetEkle(this);
+    momentEkle = new MomentEkle(this);
 
     cisimTablosu = new TabloWidget(this);
-    cisimTablosu->setFixedHeight(200);
-    cisimTablosu->setColumnCount(7);
-
-
     QStringList cisimTabloBasligi;
     cisimTabloBasligi << tr("Tip") << tr("Nokta\nKonumu (m)") << tr("Nokta Kuvveti\nkN veya kN-m")
                       <<tr("Başlangıç\nNoktası(m)")<<tr("Bitiş\nNoktası(m)")
-                     <<tr("Başlangıç\nKuvveti(kN/m)")<<tr("Bitiş\nKuvveti(kN/m)");
+                     <<tr("Başlangıç\nKuvveti(kN/m)")<<tr("Bitiş\nKuvveti(kN/m)")
+                    <<tr("Moment\n(kN.m)");
 
+    cisimTablosu->setFixedHeight(200);
+    cisimTablosu->setColumnCount(cisimTabloBasligi.size());
     cisimTablosu->setHorizontalHeaderLabels(cisimTabloBasligi);
 
     connect(kirisEkle,SIGNAL(cisimEkle(CisimModeli*)),
@@ -44,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(tekilKuvvetEkle,SIGNAL(cisimEkle(CisimModeli*)),
             scene,SLOT(cisimEkle(CisimModeli*)));
     connect(yayiliKuvvetEkle,SIGNAL(cisimEkle(CisimModeli*)),
+            scene,SLOT(cisimEkle(CisimModeli*)));
+    connect(momentEkle,SIGNAL(cisimEkle(CisimModeli*)),
             scene,SLOT(cisimEkle(CisimModeli*)));
     connect(scene,SIGNAL(tabloyaCisimEkle(CisimModeli*)),
             cisimTablosu,SLOT(tabloyaCisimEkle(CisimModeli*)));
@@ -70,7 +73,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     setCentralWidget(widget);
 
-    setWindowTitle(tr("uKiriş 1.0"));
+    setWindowTitle(tr("uKiriş"));
     setUnifiedTitleAndToolBarOnMac(true);
 }
 
@@ -83,6 +86,7 @@ MainWindow::~MainWindow()
     delete mesnetEkle;
     delete tekilKuvvetEkle;
     delete yayiliKuvvetEkle;
+    delete momentEkle;
 
 }
 
@@ -118,7 +122,8 @@ void MainWindow::butonGrubuTiklandi(int id)
         yayiliKuvvetEkle->exec();
         break;
     case DiagramItem::Moment:
-        //TODO:Moment Butonu
+        momentEkle->kipAta(kipim);
+        momentEkle->exec();
         break;
     default:
         break;
@@ -189,7 +194,9 @@ void MainWindow::cisimDuzenle(CisimModeli *_cisimModeli)
         yayiliKuvvetEkle->exec();
         break;
     case DiagramItem::Moment:
-        //TODO:Momentin düzeltilmesi
+        momentEkle->kipAta(DiagramScene::CisimDuzenle);
+        momentEkle->cisimModeliAta(_cisimModeli);
+        momentEkle->exec();
         break;
     default:
         break;

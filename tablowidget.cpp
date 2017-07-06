@@ -19,10 +19,6 @@ void TabloWidget::tabloyaCisimEkle(CisimModeli *cisimModeli)
     cisimModelListesi.append(cisimModeli);
     insertRow(rowCount());
     tabloyaEkle(rowCount()-1,cisimModeli);
-//    setItem(rowCount() - 1,2,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaYukuAl())));
-//    setItem(rowCount() - 1,5,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangicYukuAl())));
-//    setItem(rowCount() - 1,6,new QTableWidgetItem(tr("%1").arg(cisimModeli->bitisYukuAl())));
-
 }
 
 void TabloWidget::tabloyuGuncelle(CisimModeli *cisimModeli)
@@ -61,7 +57,14 @@ void TabloWidget::tabloyaEkle(int satir, CisimModeli *cisimModeli)
         setItem(satir,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
         setItem(satir,2,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKuvvetiAl())));
     case DiagramItem::YayiliKuvvet:
-//        setItem(satir,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->)));
+        setItem(satir,3,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangciKonumuAl())));
+        setItem(satir,4,new QTableWidgetItem(tr("%1").arg(cisimModeli->bitisKonumuAl())));
+        setItem(satir,5,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangicKuvvetiAl())));
+        setItem(satir,6,new QTableWidgetItem(tr("%1").arg(cisimModeli->bitisKuvvetiAl())));
+        break;
+    case DiagramItem::Moment:
+        setItem(satir,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
+        setItem(satir,7,new QTableWidgetItem(tr("%1").arg(cisimModeli->momentAl())));
         break;
     default:
         break;
