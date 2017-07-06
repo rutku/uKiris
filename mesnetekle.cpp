@@ -45,7 +45,7 @@ void MesnetEkle::ekleButonunaTiklandi()
     int konum = txtNokta->text().toInt(&ok);
     switch (kipim) {
     case DiagramScene::CisimGir:
-        cisimModeli = new CisimModeli(_tip,konum,0,0,0,0,0);
+        cisimModeli = new CisimModeli(_tip,konum,0,0,0,0,0,0);
         emit cisimEkle(cisimModeli);
         break;
     case DiagramScene::CisimDuzenle:

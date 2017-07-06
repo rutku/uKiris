@@ -3,8 +3,10 @@
 #include "mainwindow.h"
 #include "kirisekle.h"
 #include "mesnetekle.h"
+#include "tekilkuvvetekle.h"
 #include "cisimmodeli.h"
 #include "tablowidget.h"
+#include "yayilikuvvetekle.h"
 
 #include <QtWidgets>
 
@@ -20,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     kirisEkle = new KirisEkle(this);
     mesnetEkle = new MesnetEkle(this);
+    tekilKuvvetEkle  = new TekilKuvvetEkle(this);
+    yayiliKuvvetEkle = new YayiliKuvvetEkle(this);
 
     cisimTablosu = new TabloWidget(this);
     cisimTablosu->setFixedHeight(200);
@@ -36,6 +40,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(kirisEkle,SIGNAL(cisimEkle(CisimModeli*)),
             scene,SLOT(cisimEkle(CisimModeli*)));
     connect(mesnetEkle,SIGNAL(cisimEkle(CisimModeli*)),
+            scene,SLOT(cisimEkle(CisimModeli*)));
+    connect(tekilKuvvetEkle,SIGNAL(cisimEkle(CisimModeli*)),
+            scene,SLOT(cisimEkle(CisimModeli*)));
+    connect(yayiliKuvvetEkle,SIGNAL(cisimEkle(CisimModeli*)),
             scene,SLOT(cisimEkle(CisimModeli*)));
     connect(scene,SIGNAL(tabloyaCisimEkle(CisimModeli*)),
             cisimTablosu,SLOT(tabloyaCisimEkle(CisimModeli*)));
@@ -71,9 +79,10 @@ MainWindow::~MainWindow()
     delete scene;
     delete view;
     delete cisimTablosu;
-    delete cisimModeli;
     delete kirisEkle;
     delete mesnetEkle;
+    delete tekilKuvvetEkle;
+    delete yayiliKuvvetEkle;
 
 }
 
@@ -99,6 +108,17 @@ void MainWindow::butonGrubuTiklandi(int id)
         mesnetEkle->kipAta(kipim);
         mesnetEkle->tipAta(id);
         mesnetEkle->exec();
+        break;
+    case DiagramItem::TekilKuvvet:
+        tekilKuvvetEkle->kipAta(kipim);
+        tekilKuvvetEkle->exec();
+        break;
+    case DiagramItem::YayiliKuvvet:
+        yayiliKuvvetEkle->kipAta(kipim);
+        yayiliKuvvetEkle->exec();
+        break;
+    case DiagramItem::Moment:
+        //TODO:Moment Butonu
         break;
     default:
         break;
@@ -157,6 +177,19 @@ void MainWindow::cisimDuzenle(CisimModeli *_cisimModeli)
         mesnetEkle->cisimModeliAta(_cisimModeli);
         mesnetEkle->tipAta(_cisimModeli->tipAl());
         mesnetEkle->exec();
+        break;
+    case DiagramItem::TekilKuvvet:
+        tekilKuvvetEkle->kipAta(DiagramScene::CisimDuzenle);
+        tekilKuvvetEkle->cisimModeliAta(_cisimModeli);
+        tekilKuvvetEkle->exec();
+        break;
+    case DiagramItem::YayiliKuvvet:
+        yayiliKuvvetEkle->kipAta(DiagramScene::CisimDuzenle);
+        yayiliKuvvetEkle->cisimModeliAta(_cisimModeli);
+        yayiliKuvvetEkle->exec();
+        break;
+    case DiagramItem::Moment:
+        //TODO:Momentin düzeltilmesi
         break;
     default:
         break;

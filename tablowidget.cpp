@@ -57,6 +57,12 @@ void TabloWidget::tabloyaEkle(int satir, CisimModeli *cisimModeli)
     case DiagramItem::AnkastreMesnet:
         setItem(satir,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
         break;
+    case DiagramItem::TekilKuvvet:
+        setItem(satir,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
+        setItem(satir,2,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKuvvetiAl())));
+    case DiagramItem::YayiliKuvvet:
+//        setItem(satir,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->)));
+        break;
     default:
         break;
     }

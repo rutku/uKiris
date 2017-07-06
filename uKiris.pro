@@ -30,7 +30,9 @@ SOURCES += main.cpp\
     mesnetekle.cpp \
     tablowidget.cpp \
     diagramItem.cpp \
-    diagramScene.cpp
+    diagramScene.cpp \
+    tekilkuvvetekle.cpp \
+    yayilikuvvetekle.cpp
 
 HEADERS  += mainwindow.h \
     kirisekle.h \
@@ -38,7 +40,9 @@ HEADERS  += mainwindow.h \
     mesnetekle.h \
     tablowidget.h \
     diagramItem.h \
-    diagramScene.h
+    diagramScene.h \
+    tekilkuvvetekle.h \
+    yayilikuvvetekle.h
 
 RESOURCES += \
     simgeler.qrc

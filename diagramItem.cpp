@@ -56,6 +56,21 @@ void DiagramItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
             painter->drawPolygon(cizgi);
         }
         break;
+    case TekilKuvvet:
+    {
+        if (cisimModelim->noktaKuvvetiAl() > 0){
+            painter->rotate(180);
+
+        }
+
+        painter->drawPolygon(tekilKuvvetCiz());
+        QPolygonF cizgi;
+        cizgi << QPointF(0,-80) << QPointF(0,-30);
+        painter->drawPolygon(cizgi);
+        QString kuvvet = QString::number(cisimModelim->noktaKuvvetiAl());
+        painter->drawText(QPointF(0,-80),kuvvet);
+    }
+        break;
 
     default:
         break;
@@ -115,17 +130,25 @@ QPolygonF DiagramItem::ankastreMesnetCiz()
     QPolygonF ankastreMesnetim;
     x = cisimModelim->noktaKonumuAl();
     y = 0;
-    QPainterPath yol;
-    QPolygonF sekil;
 
-    sekil << QPointF(-20,-40)
-               << QPointF(-20,-10) << QPointF(0,-10)
-               << QPointF(0,-5) << QPointF(10,-5)
-               << QPointF(10,5) << QPointF(0,5)
-               << QPointF(0,10) << QPointF(-20,10)
-               << QPointF(-20,40);
-    yol.addPolygon(sekil);
+    ankastreMesnetim<< QPointF(-20,-40)
+                    << QPointF(-20,-10) << QPointF(0,-10)
+                    << QPointF(0,-5) << QPointF(10,-5)
+                    << QPointF(10,5) << QPointF(0,5)
+                    << QPointF(0,10) << QPointF(-20,10)
+                    << QPointF(-20,40);
 
 
-    return ankastreMesnetim = yol.toFillPolygon();
+    return ankastreMesnetim;
+}
+
+QPolygonF DiagramItem::tekilKuvvetCiz()
+{
+    QPolygonF tekilKuvvetim;
+    x = cisimModelim->noktaKonumuAl();
+    y = 0;
+
+    tekilKuvvetim << QPointF(-10,-30) << QPointF(0,-10)
+                  << QPointF(10,-30);
+    return tekilKuvvetim;
 }

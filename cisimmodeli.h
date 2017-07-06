@@ -8,35 +8,36 @@ class CisimModeli : public QObject
 {
     Q_OBJECT
 public:
-    CisimModeli(int tip, int noktaKonumu,int noktaYuku,int baslangicKonumu,
-                int bitisKonumu, int baslangicYuku,int bitisYuku, QObject *parent = 0);
+    CisimModeli(int tip, int noktaKonumu,int noktaKuvveti,int baslangicKonumu,
+                int bitisKonumu, int baslangicKuvveti,int bitisKuvveti,int moment, QObject *parent = 0);
     QString tipIsmiAl() { return tipIsmim[_tip]; }
     int tipAl() const { return _tip; }
     int tipAl(QString tipIsmi) { return tipIsmim.key(tipIsmi); }
     int noktaKonumuAl() const { return _noktaKonumu; }
-    int noktaYukuAl() const { return _noktaYuku; }
+    int noktaKuvvetiAl() const { return _noktaKuvveti; }
     int baslangciKonumuAl() const { return _baslangicKonumu; }
     int bitisKonumuAl() const { return _bitisKonumu; }
-    int baslangicYukuAl() const { return _baslangicYuku; }
-    int bitisYukuAl() const { return _bitisYuku; }
+    int baslangicKuvvetiAl() const { return _baslangicKuvveti; }
+    int bitisKuvvetiAl() const { return _bitisKuvveti; }
 
     void tipIsmiAta(QString tipIsmi) { _tipIsmi = tipIsmi; }
     void tipAta(int tip) { _tip = tip; }
     void noktaKonumuAta(int noktaKonumu) { _noktaKonumu = noktaKonumu; }
-    void noktaYukuAta(int noktaYuku ) { _noktaYuku = noktaYuku; }
+    void noktaKuvvetiAta(int noktaKuvveti ) { _noktaKuvveti = noktaKuvveti; }
     void baslangciKonumuAta(int baslangicKonumu ) { _baslangicKonumu = baslangicKonumu; }
     void bitisKonumuAta(int bitisKonumu ) { _bitisKonumu = bitisKonumu; }
-    void baslangicYukuAta(int baslangicYuku ) { _baslangicYuku = baslangicYuku; }
-    void bitisYukuAta(int bitisYuku ) { _bitisYuku = bitisYuku; }
+    void baslangicKuvvetiAta(int baslangicKuvveti ) { _baslangicKuvveti = baslangicKuvveti; }
+    void bitisKuvvetiAta(int bitisKuvveti ) { _bitisKuvveti = bitisKuvveti; }
 private:
     QString _tipIsmi;
     int _tip;
     int _noktaKonumu;
-    int _noktaYuku;
+    int _noktaKuvveti;
     int _baslangicKonumu;
     int _bitisKonumu;
-    int _baslangicYuku;
-    int _bitisYuku;
+    int _baslangicKuvveti;
+    int _bitisKuvveti;
+    int _moment;
     QMap<int,QString> tipIsmim;
 };
 

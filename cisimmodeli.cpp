@@ -1,19 +1,23 @@
 #include "cisimmodeli.h"
 #include "diagramItem.h"
 
-CisimModeli::CisimModeli(int tip, int noktaKonumu, int noktaYuku, int baslangicKonumu, int bitisKonumu, int baslangicYuku, int bitisYuku, QObject *parent)
+CisimModeli::CisimModeli(int tip, int noktaKonumu, int noktaKuvveti, int baslangicKonumu, int bitisKonumu, int baslangicKuvveti, int bitisKuvveti, int moment, QObject *parent)
     : QObject(parent)
 {
     _tip = tip;
     _noktaKonumu = noktaKonumu;
-    _noktaYuku = noktaYuku;
+    _noktaKuvveti = noktaKuvveti;
     _baslangicKonumu = baslangicKonumu;
     _bitisKonumu = bitisKonumu;
-    _baslangicYuku = baslangicYuku;
-    _bitisYuku = bitisYuku;
+    _baslangicKuvveti = baslangicKuvveti;
+    _bitisKuvveti = bitisKuvveti;
     tipIsmim[DiagramItem::Kiris] = tr("Kiriş");
     tipIsmim[DiagramItem::SabitMesnet] = tr("Sabit Mesnet");
     tipIsmim[DiagramItem::HareketliMesnet] = tr("Hareketli Mesnet");
     tipIsmim[DiagramItem::AnkastreMesnet] = tr("Ankastre Mesnet");
+    tipIsmim[DiagramItem::TekilKuvvet] = tr("Tekil Kuvvet");
+    tipIsmim[DiagramItem::YayiliKuvvet] = tr("Yayılı Kuvvet");
+    tipIsmim[DiagramItem::Moment] = tr("Moment");
+
 
 }

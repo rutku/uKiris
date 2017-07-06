@@ -7,5 +7,7 @@
         <file>simgeler/moment.png</file>
         <file>simgeler/tekilKuvvet.png</file>
         <file>simgeler/yayiliKuvvet.png</file>
+        <file>simgeler/asagi.png</file>
+        <file>simgeler/yukari.png</file>
     </qresource>
 </RCC>

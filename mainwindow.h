@@ -8,6 +8,8 @@
 class Cisim;
 class KirisEkle;
 class MesnetEkle;
+class TekilKuvvetEkle;
+class YayiliKuvvetEkle;
 class CisimlerinTabloModeli;
 class TabloWidget;
 class CisimModeli;
@@ -58,6 +60,8 @@ private:
     CisimModeli *cisimModeli;
     KirisEkle *kirisEkle;
     MesnetEkle *mesnetEkle;
+    TekilKuvvetEkle *tekilKuvvetEkle;
+    YayiliKuvvetEkle *yayiliKuvvetEkle;
 
     QMenu *dosyaMenusu;
     QMenu *cisimMenusu;

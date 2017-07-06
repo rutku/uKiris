@@ -51,10 +51,9 @@ void KirisEkle::ekleButonunaTiklandi()
 {
     bool ok;
     uzunluk = txtUzunluk->text().toInt(&ok);
-    qDebug() << "Uzunluk " << uzunluk;
     switch (kipim) {
     case DiagramScene::CisimGir:
-        cisimModeli = new CisimModeli(DiagramItem::Kiris,0,0,0,uzunluk,0,0);
+        cisimModeli = new CisimModeli(DiagramItem::Kiris,0,0,0,uzunluk,0,0,0);
         emit cisimEkle(cisimModeli);
         break;
     case DiagramScene::CisimDuzenle:

@@ -54,6 +54,10 @@ private:
     QPolygonF sabitMesnetCiz();
     QPolygonF hareketliMesnetCiz();
     QPolygonF ankastreMesnetCiz();
+    QPolygonF tekilKuvvetCiz();
+    QPolygonF okBasiCiz(QPointF konum);
+    QPolygonF okGovdesiCiz(QPointF konum);
+
 
 
 };
