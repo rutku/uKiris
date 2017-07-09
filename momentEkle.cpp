@@ -9,11 +9,11 @@ MomentEkle::MomentEkle(QWidget *parent)
     btnIptal = new QPushButton(tr("İptal"));
 
     btnSag = new QToolButton;
-    btnSag->setIcon(QIcon(":/simgeler/asagi.png"));
+    btnSag->setIcon(QIcon(":/simgeler/momentSol.png"));
     btnSag->setIconSize(QSize(50,50));
 
     btnSol = new QToolButton;
-    btnSol->setIcon(QIcon(":/simgeler/yukari.png"));
+    btnSol->setIcon(QIcon(":/simgeler/momentSag.png"));
     btnSol->setIconSize(QSize(50,50));
 
     btnYonGrubu = new QButtonGroup(this);
@@ -61,7 +61,7 @@ MomentEkle::MomentEkle(QWidget *parent)
 
     setLayout(anaKatman);
     setWindowTitle(tr("Moment"));
-    setFixedHeight(150);
+    setFixedHeight(270);
     setFixedWidth(270);
 
 }

@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QMetaEnum>
 #include <QDebug>
+#include <QtMath>
 
 DiagramItem::DiagramItem(CisimModeli *cisimModeli, QGraphicsItem *parent)
     :QGraphicsItem(parent)
@@ -63,12 +64,62 @@ void DiagramItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 
         }
 
-        painter->drawPolygon(tekilKuvvetCiz());
-        QPolygonF cizgi;
-        cizgi << QPointF(0,-80) << QPointF(0,-30);
-        painter->drawPolygon(cizgi);
+        painter->drawPolygon(okBasiCiz(0,0));
+        painter->drawPolygon(okGovdesiCiz(0,-80));
         QString kuvvet = QString::number(cisimModelim->noktaKuvvetiAl());
         painter->drawText(QPointF(0,-80),kuvvet);
+        x = cisimModelim->noktaKonumuAl();
+        y = 0;
+    }
+        break;
+    case YayiliKuvvet:
+    {
+        if (cisimModelim->baslangicKuvvetiAl() > 0) {
+            painter->rotate(180);
+        }
+        int x1 = cisimModelim->baslangciKonumuAl();
+        int x2 = cisimModelim->bitisKonumuAl();
+        x = x1;
+        y = 0;
+        int y1 = -80;
+        int y2 = -80;
+
+        if (cisimModelim->baslangicKuvvetiAl() < cisimModelim->bitisKuvvetiAl()) {
+            y1 = -40;
+            y2 = -80;
+        }else if (cisimModelim->baslangicKuvvetiAl() > cisimModelim->bitisKuvvetiAl()){
+            y1 = -80;
+            y2 = -40;
+        }
+        painter->drawPolygon(okBasiCiz(0,0));
+        painter->drawPolygon(okGovdesiCiz(0,y1));
+
+        painter->drawPolygon(okBasiCiz(x2-x1,0));
+        painter->drawPolygon(okGovdesiCiz(x2-x1,y2));
+
+        painter->drawLine(0,y1,x2-x1,y2);
+    }
+        break;
+    case Moment:
+    {
+        QPointF O(0,15); // intersection of lines
+        QPointF B(45,-180); // end point of horizontal line
+        QPointF A(-150,200); // end point of other line
+
+        float halfSide = B.x()-O.x();
+        QRectF rectangle(O.x() - halfSide,
+                         O.y() - halfSide,
+                         O.x() + halfSide,
+                         O.y() + halfSide);
+
+        int startAngle = 1700;
+        int spanAngle = (atan2(A.y()-O.y(),A.x()-O.x()) * -360 / M_PI) * 16;
+        painter->drawArc(rectangle, startAngle, spanAngle);
+        painter->rotate(80);// Bundan sonra x ve y aksıda bu açıya göre değişir.
+        painter->drawPolygon(okBasiCiz(-32,52));
+
+        x = cisimModelim->noktaKonumuAl();
+        y = 0;
     }
         break;
 
@@ -142,13 +193,19 @@ QPolygonF DiagramItem::ankastreMesnetCiz()
     return ankastreMesnetim;
 }
 
-QPolygonF DiagramItem::tekilKuvvetCiz()
+QPolygonF DiagramItem::okBasiCiz(int x,int y)
 {
-    QPolygonF tekilKuvvetim;
-    x = cisimModelim->noktaKonumuAl();
-    y = 0;
+    QPolygonF okBasi;
+    okBasi << QPointF(x-10,y-30) << QPointF(x,y-10)
+           << QPointF(x+10,y-30);
 
-    tekilKuvvetim << QPointF(-10,-30) << QPointF(0,-10)
-                  << QPointF(10,-30);
-    return tekilKuvvetim;
+    return okBasi;
 }
+
+QPolygonF DiagramItem::okGovdesiCiz(int x, int h)
+{
+    QPolygonF okGovdesi;
+    okGovdesi << QPointF(x,-10) << QPointF(x,h);
+    return okGovdesi;
+}
+

@@ -4,10 +4,11 @@
         <file>simgeler/hareketliMesnet.png</file>
         <file>simgeler/sabitMesnet.png</file>
         <file>simgeler/kiris.png</file>
-        <file>simgeler/moment.png</file>
         <file>simgeler/tekilKuvvet.png</file>
         <file>simgeler/yayiliKuvvet.png</file>
         <file>simgeler/asagi.png</file>
         <file>simgeler/yukari.png</file>
+        <file>simgeler/momentSag.png</file>
+        <file>simgeler/momentSol.png</file>
     </qresource>
 </RCC>

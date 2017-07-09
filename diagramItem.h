@@ -55,8 +55,9 @@ private:
     QPolygonF hareketliMesnetCiz();
     QPolygonF ankastreMesnetCiz();
     QPolygonF tekilKuvvetCiz();
-    QPolygonF okBasiCiz(QPointF konum);
-    QPolygonF okGovdesiCiz(QPointF konum);
+    QPolygonF yayiliKuvvetCiz();
+    QPolygonF okBasiCiz(int x,int y);
+    QPolygonF okGovdesiCiz(int x, int h);
 
 
 

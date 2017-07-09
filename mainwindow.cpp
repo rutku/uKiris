@@ -225,7 +225,7 @@ void MainWindow::aracKutusuOlustur()
     QGridLayout *kuvvetlerKatmani = new QGridLayout;
     kuvvetlerKatmani->addWidget(cisimHucresiOlustur(tr("Tekil Kuvvet"),DiagramItem::TekilKuvvet,":/simgeler/tekilKuvvet.png"),0,0);
     kuvvetlerKatmani->addWidget(cisimHucresiOlustur(tr("Yayılı Kuvvet"),DiagramItem::YayiliKuvvet,":/simgeler/yayiliKuvvet.png"),0,1);
-    kuvvetlerKatmani->addWidget(cisimHucresiOlustur(tr("Moment"),DiagramItem::Moment,":/simgeler/moment.png"),1,0);
+    kuvvetlerKatmani->addWidget(cisimHucresiOlustur(tr("Moment"),DiagramItem::Moment,":/simgeler/momentSol.png"),1,0);
 
     kuvvetlerKatmani->setRowStretch(2,10);
     kuvvetlerKatmani->setColumnStretch(1,10);
