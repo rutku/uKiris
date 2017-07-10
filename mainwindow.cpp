@@ -239,6 +239,12 @@ void MainWindow::aracKutusuOlustur()
     aracKutusu->addItem(elemanlarWidget,tr("Elemanlar"));
     aracKutusu->addItem(kuvvetlerWidget,tr("Kuvvetler"));
 
+    calistir = new QToolButton;
+    calistir->setIconSize(QSize(50,50));
+    calistir->setIcon(QIcon(":/simgeler/calistir.png"));
+
+    projeAracCubugu = addToolBar(tr("Proje"));
+    projeAracCubugu->addWidget(calistir);
 }
 
 void MainWindow::eylemlerOlustur()

@@ -10,5 +10,6 @@
         <file>simgeler/yukari.png</file>
         <file>simgeler/momentSag.png</file>
         <file>simgeler/momentSol.png</file>
+        <file>simgeler/calistir.png</file>
     </qresource>
 </RCC>

@@ -3,7 +3,7 @@
 #include <QtWidgets>
 
 MomentEkle::MomentEkle(QWidget *parent)
-    : QDialog(parent),yon(1)
+    : QDialog(parent),yon(-1)
 {
     btnTamam = new QPushButton(tr("Tamam"));
     btnIptal = new QPushButton(tr("İptal"));
