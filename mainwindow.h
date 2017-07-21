@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "diagramItem.h"
 #include "diagramScene.h"
+#include "KMDiagramSahnesi.h"
 
 class Cisim;
 class KirisEkle;
@@ -47,6 +48,7 @@ private slots:
 
 private:
     void aracKutusuOlustur();
+    void diagramlariOlustur();
     void eylemlerOlustur();
     void menulerOlustur();
     void aracCubuguOlustur();
@@ -56,11 +58,12 @@ private:
     QWidget *cisimHucresiOlustur(const QString &Yazi,
                                   DiagramItem::CisimTipi tip, const QString &simge);
     DiagramScene *scene;
-    DiagramScene *kesmeDiagramSahnesi;
-    DiagramScene *momentDiagramSahnesi;
+    KMDiagramSahnesi *kesmeDiagramSahnesi;
+    QGraphicsScene *momentDiagramSahnesi;
     QGraphicsView *view;
     QGraphicsView *kesmeDiagramGorunumu;
     QGraphicsView *momenDiagramGorunumu;
+
 
     TabloWidget *cisimTablosu;
     CisimModeli *cisimModeli;
@@ -81,12 +84,13 @@ private:
     QComboBox *cisimRenkCombo;
 
     QToolBox *aracKutusu;
+    QToolBox *diagramlarinKutusu;
 
     QButtonGroup *butonGrubu;
     QButtonGroup *isaretciTipiGrubu;
     QButtonGroup *projeTipiGrubu;
 
-    QToolButton *calistir;
+    QToolButton *btnCalistir;
 
     DiagramScene::Mode kipim;
 };

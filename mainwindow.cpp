@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     eylemlerOlustur();
     aracKutusuOlustur();
+    diagramlariOlustur();
     menulerOlustur();
 
     scene = new DiagramScene(cisimMenusu,this);
@@ -26,17 +27,6 @@ MainWindow::MainWindow(QWidget *parent)
     tekilKuvvetEkle  = new TekilKuvvetEkle(this);
     yayiliKuvvetEkle = new YayiliKuvvetEkle(this);
     momentEkle = new MomentEkle(this);
-
-    cisimTablosu = new TabloWidget(this);
-    QStringList cisimTabloBasligi;
-    cisimTabloBasligi << tr("Tip") << tr("Nokta\nKonumu (m)") << tr("Nokta Kuvveti\nkN veya kN-m")
-                      <<tr("Başlangıç\nNoktası(m)")<<tr("Bitiş\nNoktası(m)")
-                     <<tr("Başlangıç\nKuvveti(kN/m)")<<tr("Bitiş\nKuvveti(kN/m)")
-                    <<tr("Moment\n(kN.m)");
-
-    cisimTablosu->setFixedHeight(200);
-    cisimTablosu->setColumnCount(cisimTabloBasligi.size());
-    cisimTablosu->setHorizontalHeaderLabels(cisimTabloBasligi);
 
     connect(kirisEkle,SIGNAL(cisimEkle(CisimModeli*)),
             scene,SLOT(cisimEkle(CisimModeli*)));
@@ -54,6 +44,12 @@ MainWindow::MainWindow(QWidget *parent)
             cisimTablosu,SLOT(tabloyuGuncelle(CisimModeli*)));
     connect(cisimTablosu,SIGNAL(cisimDuzenle(CisimModeli*)),
             this,SLOT(cisimDuzenle(CisimModeli*)));
+    connect(btnCalistir,SIGNAL(clicked(bool)),
+            cisimTablosu,SLOT(diagramCiz()));
+    connect(cisimTablosu,SIGNAL(kesmeDiagramCiz(QList<CisimModeli*>)),
+            kesmeDiagramSahnesi,SLOT(kesmeDiagramiCiz(QList<CisimModeli*>)));
+
+
 
 
     aracCubuguOlustur();
@@ -65,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     view = new QGraphicsView(scene);
     yatayKatman->addWidget(view);
-    yatayKatman->addWidget(cisimTablosu);
+    yatayKatman->addWidget(diagramlarinKutusu);
 
     katman->addLayout(yatayKatman);
     QWidget *widget = new QWidget;
@@ -87,6 +83,10 @@ MainWindow::~MainWindow()
     delete tekilKuvvetEkle;
     delete yayiliKuvvetEkle;
     delete momentEkle;
+    delete kesmeDiagramGorunumu;
+    delete kesmeDiagramSahnesi;
+    delete momenDiagramGorunumu;
+    delete momentDiagramSahnesi;
 
 }
 
@@ -239,12 +239,41 @@ void MainWindow::aracKutusuOlustur()
     aracKutusu->addItem(elemanlarWidget,tr("Elemanlar"));
     aracKutusu->addItem(kuvvetlerWidget,tr("Kuvvetler"));
 
-    calistir = new QToolButton;
-    calistir->setIconSize(QSize(50,50));
-    calistir->setIcon(QIcon(":/simgeler/calistir.png"));
+    btnCalistir = new QToolButton;
+    btnCalistir->setIconSize(QSize(50,50));
+    btnCalistir->setIcon(QIcon(":/simgeler/calistir.png"));
 
     projeAracCubugu = addToolBar(tr("Proje"));
-    projeAracCubugu->addWidget(calistir);
+    projeAracCubugu->addWidget(btnCalistir);
+}
+
+void MainWindow::diagramlariOlustur()
+{
+    kesmeDiagramSahnesi = new KMDiagramSahnesi(this);
+    kesmeDiagramGorunumu = new QGraphicsView(kesmeDiagramSahnesi);
+
+    momentDiagramSahnesi = new QGraphicsScene(this);
+    momenDiagramGorunumu = new QGraphicsView(momentDiagramSahnesi);
+
+
+    cisimTablosu = new TabloWidget(this);
+    QStringList cisimTabloBasligi;
+    cisimTabloBasligi << tr("Tip") << tr("Nokta\nKonumu (m)") << tr("Nokta Kuvveti\nkN veya kN-m")
+                      <<tr("Başlangıç\nNoktası(m)")<<tr("Bitiş\nNoktası(m)")
+                     <<tr("Başlangıç\nKuvveti(kN/m)")<<tr("Bitiş\nKuvveti(kN/m)")
+                    <<tr("Moment\n(kN.m)");
+
+    cisimTablosu->setFixedHeight(200);
+    cisimTablosu->setColumnCount(cisimTabloBasligi.size());
+    cisimTablosu->setHorizontalHeaderLabels(cisimTabloBasligi);
+
+
+
+    diagramlarinKutusu = new QToolBox;
+    diagramlarinKutusu->addItem(cisimTablosu,tr("Elemanların Tablosu"));
+    diagramlarinKutusu->addItem(kesmeDiagramGorunumu,tr("Kesme Diagramı"));
+    diagramlarinKutusu->addItem(momenDiagramGorunumu,tr("Moment Diagramı"));
+
 }
 
 void MainWindow::eylemlerOlustur()

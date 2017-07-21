@@ -1,7 +1,10 @@
 #ifndef TABLOWIDGET_H
 #define TABLOWIDGET_H
 
-#include "QTableWidget"
+#include "KMDiagramSahnesi.h"
+#include <QMetaType>
+#include <QTableWidget>
+#include <QList>
 
 class CisimModeli;
 class DiagramItem;
@@ -21,14 +24,17 @@ public:
 public slots:
     void tabloyaCisimEkle(CisimModeli *cisimModeli);
     void tabloyuGuncelle(CisimModeli *cisimModeli);
+    void diagramCiz();
 signals:
     void cisimDuzenle(CisimModeli *_cisimModeli);
+    void kesmeDiagramCiz(QList<CisimModeli*> _cisimModelListesi);
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 private:
     QList<CisimModeli*> cisimModelListesi;
+
     int simdikiSatir;
     int simdikiSutun;
     void tabloyaEkle(int satir,CisimModeli *cisimModeli);

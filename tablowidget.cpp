@@ -1,6 +1,7 @@
 #include "tablowidget.h"
 #include "cisimmodeli.h"
 #include "diagramItem.h"
+#include "KMDiagramSahnesi.h"
 
 #include <QDebug>
 #include <QMouseEvent>
@@ -11,6 +12,7 @@ TabloWidget::TabloWidget(QWidget *parent)
     setEditTriggers(QAbstractItemView::NoEditTriggers);
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setSelectionMode(QAbstractItemView::SingleSelection);
+
 }
 
 void TabloWidget::tabloyaCisimEkle(CisimModeli *cisimModeli)
@@ -24,6 +26,11 @@ void TabloWidget::tabloyaCisimEkle(CisimModeli *cisimModeli)
 void TabloWidget::tabloyuGuncelle(CisimModeli *cisimModeli)
 {   
     tabloyaEkle(selectedItems().first()->row(),cisimModeli);
+}
+
+void TabloWidget::diagramCiz()
+{
+    emit kesmeDiagramCiz(cisimModelListesi);
 }
 
 void TabloWidget::mouseDoubleClickEvent(QMouseEvent *event)

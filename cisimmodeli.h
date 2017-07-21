@@ -10,6 +10,7 @@ class CisimModeli : public QObject
 public:
     CisimModeli(int tip, int noktaKonumu,int noktaKuvveti,int baslangicKonumu,
                 int bitisKonumu, int baslangicKuvveti,int bitisKuvveti,int moment, QObject *parent = 0);
+    CisimModeli(QObject *parent = 0);
     QString tipIsmiAl() { return tipIsmim[_tip]; }
     int tipAl() const { return _tip; }
     int tipAl(QString tipIsmi) { return tipIsmim.key(tipIsmi); }

@@ -22,3 +22,9 @@ CisimModeli::CisimModeli(int tip, int noktaKonumu, int noktaKuvveti, int baslang
 
 
 }
+
+CisimModeli::CisimModeli(QObject *parent)
+    : QObject(parent)
+{
+
+}
