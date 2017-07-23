@@ -26,8 +26,22 @@ public slots:
 
 private:
     QList<CisimModeli*> cisimModelListesi;
+    QList<CisimModeli*> enKucuktenCisimModelListesi;
     CisimModeli *_cisimModeli;
     void cisimleriSirala();
+    double kuvvetleriTopla();
+    void mesnetleriHesapla();
+    double mesnetinKuvvetiniBul(DiagramItem::CisimTipi tip);
+    void kesmeDiagraminiOlustur();
+    void momentDiagraminiOlustur();
+    double METRE = 0.01;
+    double SANTIMETRE = 100;
+    double kirisUzunlugu;
+    double sabitMesnet;
+    double hareketliMesnet;
+    double ankastreMesnet;
+    QMap<double,double> kesmeKuvvetlerininListesi;
+
 
 };
 
