@@ -30,7 +30,8 @@ void TabloWidget::tabloyuGuncelle(CisimModeli *cisimModeli)
 
 void TabloWidget::diagramCiz()
 {
-    emit kesmeDiagramCiz(cisimModelListesi);
+    emit kesmeDiagramiCiz(cisimModelListesi);
+    emit momentDiagramiCiz(cisimModelListesi);
 }
 
 void TabloWidget::mouseDoubleClickEvent(QMouseEvent *event)

@@ -27,7 +27,8 @@ public slots:
     void diagramCiz();
 signals:
     void cisimDuzenle(CisimModeli *_cisimModeli);
-    void kesmeDiagramCiz(QList<CisimModeli*> _cisimModelListesi);
+    void kesmeDiagramiCiz(QList<CisimModeli*> _cisimModelListesi);
+    void momentDiagramiCiz(QList<CisimModeli*> _cisimModelListesi);
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;

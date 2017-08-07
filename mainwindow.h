@@ -59,7 +59,7 @@ private:
                                   DiagramItem::CisimTipi tip, const QString &simge);
     DiagramScene *scene;
     KMDiagramSahnesi *kesmeDiagramSahnesi;
-    QGraphicsScene *momentDiagramSahnesi;
+    KMDiagramSahnesi *momentDiagramSahnesi;
     QGraphicsView *view;
     QGraphicsView *kesmeDiagramGorunumu;
     QGraphicsView *momenDiagramGorunumu;

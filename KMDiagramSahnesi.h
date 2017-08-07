@@ -19,19 +19,23 @@ class KMDiagramSahnesi : public QGraphicsScene
     Q_OBJECT
 
 public:
+    enum Diagram { KesmeDiagrami, MomentDiagrami };
     KMDiagramSahnesi(QObject *parent = 0);
 
 public slots:
     void kesmeDiagramiCiz(QList<CisimModeli *> _cisimModelListesi);
+    void momentDiagramiCiz(QList<CisimModeli *> _cisimModelListesi);
 
 private:
     QList<CisimModeli*> cisimModelListesi;
     QList<CisimModeli*> enKucuktenCisimModelListesi;
     CisimModeli *_cisimModeli;
+    Diagram diagramim;
     void cisimleriSirala();
     double kuvvetleriTopla();
     void mesnetleriHesapla();
     double mesnetinKuvvetiniBul(DiagramItem::CisimTipi tip);
+    void diagramlariCiz();
     void kesmeDiagraminiOlustur();
     void momentDiagraminiOlustur();
     double METRE = 0.01;
@@ -40,7 +44,8 @@ private:
     double sabitMesnet;
     double hareketliMesnet;
     double ankastreMesnet;
-    QMap<double,double> kesmeKuvvetlerininListesi;
+    QList<double> kesmeKuvvetlerininListesi;
+    void diagramCiz();
 
 
 };

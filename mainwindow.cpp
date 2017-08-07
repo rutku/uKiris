@@ -46,8 +46,10 @@ MainWindow::MainWindow(QWidget *parent)
             this,SLOT(cisimDuzenle(CisimModeli*)));
     connect(btnCalistir,SIGNAL(clicked(bool)),
             cisimTablosu,SLOT(diagramCiz()));
-    connect(cisimTablosu,SIGNAL(kesmeDiagramCiz(QList<CisimModeli*>)),
+    connect(cisimTablosu,SIGNAL(kesmeDiagramiCiz(QList<CisimModeli*>)),
             kesmeDiagramSahnesi,SLOT(kesmeDiagramiCiz(QList<CisimModeli*>)));
+    connect(cisimTablosu,SIGNAL(momentDiagramiCiz(QList<CisimModeli*>)),
+            momentDiagramSahnesi,SLOT(momentDiagramiCiz(QList<CisimModeli*>)));
 
 
 
@@ -252,7 +254,7 @@ void MainWindow::diagramlariOlustur()
     kesmeDiagramSahnesi = new KMDiagramSahnesi(this);
     kesmeDiagramGorunumu = new QGraphicsView(kesmeDiagramSahnesi);
 
-    momentDiagramSahnesi = new QGraphicsScene(this);
+    momentDiagramSahnesi = new KMDiagramSahnesi(this);
     momenDiagramGorunumu = new QGraphicsView(momentDiagramSahnesi);
 
 
