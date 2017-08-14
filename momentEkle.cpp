@@ -100,10 +100,10 @@ void MomentEkle::yonGrubunaTiklandi(int id)
 {
     switch (id) {
     case Sag:
-        yon = -1;
+        yon = 1;
         break;
     case Sol:
-        yon = 1;
+        yon = -1;
         break;
     default:
         break;

@@ -35,16 +35,23 @@ void KMDiagramSahnesi::diagramCiz()
     double y1 = h;
     double y2 = h;
     double moment = 0.0;
+    double enBuyukMoment = 0.0;
     double kesmeKuvveti = 0.0;
     double tekilKuvvet = 0.0;
+    double yayiliKuvvet = 0.0;
     double hareketliMesnetKuvveti = 0.0;
     double sabitMesnetKuvveti = 0.0;
     double ankastreMesnetKuvveti = 0.0;
     double tekilKuvvetMomenti = 0.0;
     double sabitMesnetMomenti = 0.0;
+    double yayiliMoment = 0.0;
+    double noktaMomenti = 0.0;
+    double dikdortgenKuvveti = 0.0;
+    double dikdortgenKuvvetiKonumu = 0.0;
+    double ucgenKuvveti = 0.0;
+    double ucgenKuvvetiKonumu = 0.0;
     double hareketliMesnetMomenti = 0.0;
     double ankastreMesnetMomenti = 0.0;
-
 
     QPen kalem;
     for (int i = 0; i < kirisUzunlugu; ++i) {
@@ -58,54 +65,76 @@ void KMDiagramSahnesi::diagramCiz()
         foreach (CisimModeli *cisim, enKucuktenCisimModelListesi) {
             if (cisim->tipAl() == DiagramItem::YayiliKuvvet) {
                 if (i >= (int)cisim->baslangciKonumuAl() && i <= (int)cisim->bitisKonumuAl()) {
-                    double tabanUzunlugu = (i - cisim->baslangciKonumuAl())/100.0;
-                    double dikdortgenKuvveti = 0;
-                    double ucgenKuvveti = 0;
+
+                    double tabanUzunlugu = (i - cisim->baslangciKonumuAl());
+                    dikdortgenKuvveti = 0;
+                    dikdortgenKuvvetiKonumu = i - (cisim->baslangciKonumuAl()+(tabanUzunlugu/2));
+                    ucgenKuvveti = 0;
+                    ucgenKuvvetiKonumu = 0.0;
+
                     if (cisim->baslangicKuvvetiAl() == cisim->bitisKuvvetiAl()) {
                         dikdortgenKuvveti = cisim->baslangicKuvvetiAl() * tabanUzunlugu;
                     }
+
                     else if (abs(cisim->baslangicKuvvetiAl()) < abs(cisim->bitisKuvvetiAl())) {
                         dikdortgenKuvveti = cisim->baslangicKuvvetiAl() * tabanUzunlugu;
                         ucgenKuvveti = ((cisim->bitisKuvvetiAl() - cisim->baslangicKuvvetiAl()) *
                                 tabanUzunlugu)/2;
+                        ucgenKuvvetiKonumu = i - (cisim->baslangciKonumuAl()+(tabanUzunlugu*2.0)/3.0);
                     }else {
-                        dikdortgenKuvveti = cisim->baslangicKuvvetiAl() * tabanUzunlugu;
-                        ucgenKuvveti = ((cisim->bitisKuvvetiAl() - cisim->baslangicKuvvetiAl()) *
+                        dikdortgenKuvveti = cisim->bitisKuvvetiAl() * tabanUzunlugu;
+                        ucgenKuvveti = ((cisim->baslangicKuvvetiAl() - cisim->bitisKuvvetiAl()) *
                                 tabanUzunlugu)/2;
+                        ucgenKuvvetiKonumu = i - (cisim->baslangciKonumuAl()+(tabanUzunlugu/3.0));
                     }
-                    kesmeKuvveti += (dikdortgenKuvveti+ucgenKuvveti);
+                    yayiliKuvvet = (dikdortgenKuvveti+ucgenKuvveti) / 100;
+                    yayiliMoment = ((dikdortgenKuvveti * dikdortgenKuvvetiKonumu) +
+                            (ucgenKuvveti * ucgenKuvvetiKonumu)) / 100;
+                }else if (i > (int)cisim->bitisKonumuAl()) {
+                    dikdortgenKuvvetiKonumu = i -(cisim->baslangciKonumuAl()+(cisim->bitisKonumuAl()-cisim->baslangciKonumuAl())/2);
+                    ucgenKuvvetiKonumu = i - (cisim->baslangciKonumuAl()+((cisim->bitisKonumuAl()-cisim->baslangciKonumuAl())*2)/3);
+                    if (abs(cisim->baslangicKuvvetiAl()) > abs(cisim->bitisKuvvetiAl())) {
+                         ucgenKuvvetiKonumu = i - (cisim->baslangciKonumuAl()+(cisim->bitisKonumuAl()-cisim->baslangciKonumuAl())/3);
+                    }
+                    yayiliMoment = (((dikdortgenKuvveti * dikdortgenKuvvetiKonumu)) +
+                            (ucgenKuvveti * ucgenKuvvetiKonumu)) / 100;
                 }
             }else if (cisim->tipAl() == DiagramItem::TekilKuvvet) {
                 if (i == (int)cisim->noktaKonumuAl()) {
-                    tekilKuvvet += cisim->noktaKuvvetiAl();
+                    tekilKuvvet = cisim->noktaKuvvetiAl();
                 }else if (i > (int)cisim->noktaKonumuAl()) {
                     tekilKuvvetMomenti = (tekilKuvvet * (i - cisim->noktaKonumuAl()));
                 }
 
             }else if (cisim->tipAl() == DiagramItem::SabitMesnet) {
                 if (i == (int)cisim->noktaKonumuAl()) {
-                    sabitMesnetKuvveti += cisim->noktaKuvvetiAl();
+                    sabitMesnetKuvveti = cisim->noktaKuvvetiAl();
                 }else if (i > (int)cisim->noktaKonumuAl()) {
                     sabitMesnetMomenti = (sabitMesnetKuvveti * (i - cisim->noktaKonumuAl()));
                 }
             }else if (cisim->tipAl() == DiagramItem::HareketliMesnet) {
                 if (i == (int)cisim->noktaKonumuAl()) {
-                    hareketliMesnetKuvveti += cisim->noktaKuvvetiAl();
+                    hareketliMesnetKuvveti = cisim->noktaKuvvetiAl();
                 }else if (i > (int)cisim->noktaKonumuAl()) {
                     hareketliMesnetMomenti = (hareketliMesnetKuvveti * (i - cisim->noktaKonumuAl()));
                 }
             }else if (cisim->tipAl() == DiagramItem::AnkastreMesnet) {
                 if (i == (int)cisim->noktaKonumuAl()) {
-                    ankastreMesnetKuvveti += cisim->noktaKuvvetiAl();
+                    ankastreMesnetKuvveti = cisim->noktaKuvvetiAl();
                 }else if (i > (int)cisim->noktaKonumuAl()) {
                     ankastreMesnetMomenti = (ankastreMesnetKuvveti * (i - cisim->noktaKonumuAl()));
                 }
+            }else if (cisim->tipAl() == DiagramItem::Moment && i == cisim->noktaKonumuAl()) {
+                noktaMomenti = cisim->momentAl() * 100;
             }
         }
-        kesmeKuvveti = tekilKuvvet + sabitMesnetKuvveti + hareketliMesnetKuvveti +
-                ankastreMesnetKuvveti;
-        moment = (tekilKuvvetMomenti + sabitMesnetMomenti + hareketliMesnetMomenti +
-                  ankastreMesnetMomenti) / 10;
+        kesmeKuvveti = (tekilKuvvet + yayiliKuvvet + sabitMesnetKuvveti + hareketliMesnetKuvveti +
+                ankastreMesnetKuvveti) * 10;
+        moment = (tekilKuvvetMomenti + yayiliMoment + sabitMesnetMomenti + hareketliMesnetMomenti +
+                  ankastreMesnetMomenti+noktaMomenti)/10;
+        if (enBuyukMoment<abs(moment)) {
+            enBuyukMoment = moment;
+        }
 
         x2 = i;
         if (diagramim == KesmeDiagrami) {
@@ -119,6 +148,7 @@ void KMDiagramSahnesi::diagramCiz()
         addLine(diagramCizgisi,kalem);
     }
 
+    qDebug() << "En Büyük Moment = " << enBuyukMoment;
 
 }
 
@@ -262,7 +292,7 @@ double KMDiagramSahnesi::mesnetinKuvvetiniBul(DiagramItem::CisimTipi tip)
 
                 moment += dikDortgenKuvveti * dikdortgenMesafe + ucgenKuvveti * ucgenMesafe;
             }else if (DiagramItem::Moment == cisim->tipAl()) {
-                moment += cisim->momentAl();
+                moment -= cisim->momentAl();
             }
         }
 
