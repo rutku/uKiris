@@ -6,7 +6,6 @@
 KMDiagramSahnesi::KMDiagramSahnesi(QObject *parent)
     : QGraphicsScene(parent)
 {
-
 }
 
 void KMDiagramSahnesi::kesmeDiagramiCiz(QList<CisimModeli *> _cisimModelListesi)
@@ -25,7 +24,6 @@ void KMDiagramSahnesi::momentDiagramiCiz(QList<CisimModeli *> _cisimModelListesi
 
 void KMDiagramSahnesi::diagramCiz()
 {
-    diagramlariCiz();
     cisimleriSirala();
     mesnetleriHesapla();
 
@@ -53,9 +51,10 @@ void KMDiagramSahnesi::diagramCiz()
     double hareketliMesnetMomenti = 0.0;
     double ankastreMesnetMomenti = 0.0;
 
-    QPen kalem;
+    QPen kalem(Qt::black,3,Qt::SolidLine,Qt::RoundCap,Qt::RoundJoin);
     for (int i = 0; i < kirisUzunlugu; ++i) {
         QLine diagramCizgisi;
+        bool sinirda = false;
         x2 = i;
         y2 = y2;
         addLine(x1,y1,x2,y2,kalem);
@@ -102,6 +101,7 @@ void KMDiagramSahnesi::diagramCiz()
             }else if (cisim->tipAl() == DiagramItem::TekilKuvvet) {
                 if (i == (int)cisim->noktaKonumuAl()) {
                     tekilKuvvet = cisim->noktaKuvvetiAl();
+                    sinirda = true;
                 }else if (i > (int)cisim->noktaKonumuAl()) {
                     tekilKuvvetMomenti = (tekilKuvvet * (i - cisim->noktaKonumuAl()));
                 }
@@ -109,29 +109,36 @@ void KMDiagramSahnesi::diagramCiz()
             }else if (cisim->tipAl() == DiagramItem::SabitMesnet) {
                 if (i == (int)cisim->noktaKonumuAl()) {
                     sabitMesnetKuvveti = cisim->noktaKuvvetiAl();
+                    sinirda = true;
                 }else if (i > (int)cisim->noktaKonumuAl()) {
                     sabitMesnetMomenti = (sabitMesnetKuvveti * (i - cisim->noktaKonumuAl()));
                 }
             }else if (cisim->tipAl() == DiagramItem::HareketliMesnet) {
                 if (i == (int)cisim->noktaKonumuAl()) {
                     hareketliMesnetKuvveti = cisim->noktaKuvvetiAl();
+                    sinirda = true;
                 }else if (i > (int)cisim->noktaKonumuAl()) {
                     hareketliMesnetMomenti = (hareketliMesnetKuvveti * (i - cisim->noktaKonumuAl()));
                 }
             }else if (cisim->tipAl() == DiagramItem::AnkastreMesnet) {
                 if (i == (int)cisim->noktaKonumuAl()) {
                     ankastreMesnetKuvveti = cisim->noktaKuvvetiAl();
+                    sinirda = true;
                 }else if (i > (int)cisim->noktaKonumuAl()) {
                     ankastreMesnetMomenti = (ankastreMesnetKuvveti * (i - cisim->noktaKonumuAl()));
                 }
             }else if (cisim->tipAl() == DiagramItem::Moment && i == cisim->noktaKonumuAl()) {
                 noktaMomenti = cisim->momentAl() * 100;
+                sinirda = true;
             }
         }
         kesmeKuvveti = (tekilKuvvet + yayiliKuvvet + sabitMesnetKuvveti + hareketliMesnetKuvveti +
                 ankastreMesnetKuvveti) * 10;
         moment = (tekilKuvvetMomenti + yayiliMoment + sabitMesnetMomenti + hareketliMesnetMomenti +
                   ankastreMesnetMomenti+noktaMomenti)/10;
+        qDebug()<<"i:"<<i<<" TM:"<<tekilKuvvetMomenti<< " AM:"<<ankastreMesnetMomenti
+                <<" Moment:"<<moment;
+
         if (enBuyukMoment<abs(moment)) {
             enBuyukMoment = moment;
         }
@@ -139,17 +146,108 @@ void KMDiagramSahnesi::diagramCiz()
         x2 = i;
         if (diagramim == KesmeDiagrami) {
             y2 = kesmeKuvveti + h;
+            if (sinirda) {
+                ucKuvvetler.insert(i,kesmeKuvveti);
+            }
         }else {
             y2 = moment + h;
+            if (sinirda) {
+                ucMomentler.insert(i,moment);
+            }
         }
         diagramCizgisi.setLine(x1,y1,x2,y2);
         x1 = x2;
         y1 = y2;
         addLine(diagramCizgisi,kalem);
     }
+    QPen kirisKalemi(Qt::red,2,Qt::DashLine,Qt::RoundCap,Qt::RoundJoin);
+    QGraphicsLineItem *kiris = addLine(0,h,kirisUzunlugu,h,kirisKalemi);
+    kiris->setZValue(kiris->zValue() - 0.1);
+    uclariCiz();
 
-    qDebug() << "En Büyük Moment = " << enBuyukMoment;
+}
 
+void KMDiagramSahnesi::uclariCiz()
+{
+    QPen kalem(Qt::blue,2,Qt::DashLine,Qt::RoundCap,Qt::RoundJoin);
+
+    QMap<int,double> kuvvetler;
+    QString kuvvetYazisi;
+    int kuvvetXPozisyonu;
+
+    if (diagramim == KesmeDiagrami) {
+        kuvvetler = ucKuvvetler;
+        kuvvetYazisi = tr("Kuvvet(kN)");
+        kuvvetXPozisyonu = -100;
+    }else {
+        kuvvetler = ucMomentler;
+        kuvvetYazisi = tr("Moment(kN.m)");
+        kuvvetXPozisyonu = -130;
+    }
+
+    double enBuyukKuvvet = 0.0;
+    double enKucukKuvvet = 0.0;
+    foreach (double y, kuvvetler.values()) {
+        if (enBuyukKuvvet < y) {
+            enBuyukKuvvet = y;
+        }
+        if (y < 0.0) {
+            if (abs(enKucukKuvvet) < abs(y)) {
+                enKucukKuvvet = y;
+            }
+        }
+    }
+
+    double h = 250.0;
+    double xEksenininYsi = enBuyukKuvvet + h + 50;
+    double yEksenininYsi = enKucukKuvvet + h - 50;
+
+    addLine(-20,xEksenininYsi,kirisUzunlugu,xEksenininYsi,kalem);//->(x)
+    QGraphicsTextItem *xMesafeYazisi = addText("x(cm)");
+    xMesafeYazisi->setPos(kirisUzunlugu,xEksenininYsi);
+
+    addLine(-20,xEksenininYsi,-20,yEksenininYsi,kalem);//->(Kuvvet || Moment)
+    QGraphicsTextItem *kuvvetYazisininPozisyonu = addText(kuvvetYazisi);
+    kuvvetYazisininPozisyonu->setPos(kuvvetXPozisyonu,yEksenininYsi - 15);
+
+    kalem.setStyle(Qt::SolidLine);
+    QGraphicsPolygonItem *xOku = addPolygon(okCiz(-1),kalem);
+    xOku->setPos(kirisUzunlugu,xEksenininYsi);
+
+    QGraphicsPolygonItem *kuvvetOku = addPolygon(okCiz(0),kalem);
+    kuvvetOku->setPos(-20,yEksenininYsi);
+
+     kalem.setStyle(Qt::DashDotDotLine);
+
+    foreach (int x, kuvvetler.keys()) {
+        kalem.setColor(Qt::green);
+        QGraphicsLineItem *xEkseni = addLine(x,kuvvetler.value(x)+h,x,xEksenininYsi,kalem);//->(x)
+        xEkseni->setZValue(xEkseni->zValue()-0.1);
+        QGraphicsTextItem *mesafe = addText(QString("%1").arg(x));
+        mesafe->setPos(x,xEksenininYsi);
+        if (kuvvetler.value(x) != 0.0) {
+            kalem.setColor(Qt::cyan);
+            addLine(-20,kuvvetler.value(x)+h,x,kuvvetler.value(x)+h,kalem);//->(Kuvvet || Moment)
+            QGraphicsTextItem *kuvvet = addText(QString("%1").arg(kuvvetler.value(x)/10.0));
+            kuvvet->setPos(-20,kuvvetler.value(x)+h);
+        }
+
+    }
+
+}
+
+QPolygonF KMDiagramSahnesi::okCiz(int yon/*-1 = Kuvvet || Moment ; 0 = x*/)
+{
+    QPolygonF okBasi;
+    if (yon == 0) {
+        okBasi << QPointF(-5,0) << QPointF(0,-15)
+               << QPointF(5,0);
+    }else {
+        okBasi << QPointF(0,-5) << QPointF(15,0)
+               << QPointF(0,5);
+    }
+
+    return okBasi;
 }
 
 void KMDiagramSahnesi::cisimleriSirala()
@@ -160,6 +258,7 @@ void KMDiagramSahnesi::cisimleriSirala()
 
     for (int i = 0; i < _cisimModelListesi.size(); ++i) {
         if (_cisimModelListesi.at(i)->tipAl() == DiagramItem::Kiris) {
+            kirisUzunlugu = _cisimModelListesi.at(i)->bitisKonumuAl() - _cisimModelListesi.at(i)->baslangciKonumuAl();
             _cisimModelListesi.removeAt(i);
         }
     }
@@ -240,6 +339,7 @@ void KMDiagramSahnesi::mesnetleriHesapla()
     foreach (CisimModeli *cisim, enKucuktenCisimModelListesi) {
         if (cisim->tipAl() ==  DiagramItem::AnkastreMesnet) {
             ankastreMesnet = -1 * kuvvetleriTopla();
+            cisim->noktaKuvvetiAta(ankastreMesnet);
             qDebug() << "Ankastre Mesnet " << ankastreMesnet;
         }else if (cisim->tipAl() == DiagramItem::SabitMesnet) {
             hareketliMesnet = -1 * mesnetinKuvvetiniBul(DiagramItem::SabitMesnet);
@@ -306,83 +406,5 @@ double KMDiagramSahnesi::mesnetinKuvvetiniBul(DiagramItem::CisimTipi tip)
         }
     }
     return kuvvet;
-
-}
-
-void KMDiagramSahnesi::diagramlariCiz()
-{
-    int h = 500;
-    QPen kalem(Qt::red,1,Qt::DashDotDotLine,Qt::RoundCap,Qt::RoundJoin);
-
-    foreach (CisimModeli *cisim, cisimModelListesi) {
-        switch (cisim->tipAl()) {
-        case DiagramItem::Kiris:
-        {
-            int baslangic = cisim->baslangciKonumuAl();
-            int bitis = cisim->bitisKonumuAl();
-            kirisUzunlugu = bitis - baslangic;
-            QLine cizgi(baslangic,(h/2),bitis,(h/2));
-            addLine(cizgi);
-            QLine dikeyCizgi1(baslangic,200,baslangic,300);
-            QLine dikeyCizgi2(bitis,200,bitis,300);
-            addLine(dikeyCizgi1);
-            addLine(dikeyCizgi2);
-        }
-            break;
-        case DiagramItem::SabitMesnet:
-        {
-            int noktaKonumu = cisim->noktaKonumuAl();
-
-            QLine dikeyCizgi(noktaKonumu,0,noktaKonumu,h);
-            addLine(dikeyCizgi,kalem);
-        }
-            break;
-        case DiagramItem::HareketliMesnet:
-        {
-            int noktaKonumu = cisim->noktaKonumuAl();
-
-            QLine dikeyCizgi(noktaKonumu,0,noktaKonumu,h);
-            addLine(dikeyCizgi,kalem);
-        }
-            break;
-        case DiagramItem::AnkastreMesnet:
-        {
-            int noktaKonumu = cisim->noktaKonumuAl();
-
-            QLine dikeyCizgi(noktaKonumu,0,noktaKonumu,h);
-            addLine(dikeyCizgi,kalem);
-        }
-            break;
-        case DiagramItem::TekilKuvvet:
-        {
-            int noktaKonumu = cisim->noktaKonumuAl();
-
-            QLine dikeyCizgi(noktaKonumu,0,noktaKonumu,h);
-            addLine(dikeyCizgi,kalem);
-
-        }
-            break;
-        case DiagramItem::YayiliKuvvet:
-        {
-            int baslangic = cisim->baslangciKonumuAl();
-            int bitis = cisim->bitisKonumuAl();
-            QLine dikeyCizgi1(baslangic,0,baslangic,h);
-            QLine dikeyCizgi2(bitis,0,bitis,h);
-            addLine(dikeyCizgi1,kalem);
-            addLine(dikeyCizgi2,kalem);
-        }
-            break;
-        case DiagramItem::Moment:
-        {
-            int noktaKonumu = cisim->noktaKonumuAl();
-
-            QLine dikeyCizgi(noktaKonumu,0,noktaKonumu,h);
-            addLine(dikeyCizgi,kalem);
-        }
-            break;
-        default:
-            break;
-        }
-    }
 
 }

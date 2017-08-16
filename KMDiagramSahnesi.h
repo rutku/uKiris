@@ -29,6 +29,8 @@ public slots:
 private:
     QList<CisimModeli*> cisimModelListesi;
     QList<CisimModeli*> enKucuktenCisimModelListesi;
+    QMap<int,double> ucKuvvetler;
+    QMap<int,double> ucMomentler;
     CisimModeli *_cisimModeli;
     Diagram diagramim;
     void cisimleriSirala();
@@ -46,7 +48,8 @@ private:
     double ankastreMesnet;
     QList<double> kesmeKuvvetlerininListesi;
     void diagramCiz();
-
+    void uclariCiz();
+    QPolygonF okCiz(int yon/*-1 = Kuvvet || Moment ; 0 = x*/);
 
 };
 
