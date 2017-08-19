@@ -12,6 +12,7 @@ class MesnetEkle;
 class TekilKuvvetEkle;
 class YayiliKuvvetEkle;
 class MomentEkle;
+class AnkastreMesnetEkle;
 class CisimlerinTabloModeli;
 class TabloWidget;
 class CisimModeli;
@@ -64,6 +65,7 @@ private:
     QGraphicsView *kesmeDiagramGorunumu;
     QGraphicsView *momenDiagramGorunumu;
 
+    int kirisUzunlugu;
 
     TabloWidget *cisimTablosu;
     CisimModeli *cisimModeli;
@@ -72,6 +74,7 @@ private:
     TekilKuvvetEkle *tekilKuvvetEkle;
     YayiliKuvvetEkle *yayiliKuvvetEkle;
     MomentEkle *momentEkle;
+    AnkastreMesnetEkle *ankastreMesnetEkle;
 
     QMenu *dosyaMenusu;
     QMenu *cisimMenusu;

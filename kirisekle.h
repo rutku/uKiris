@@ -27,6 +27,7 @@ public:
 
 private slots:
     void ekleButonunaTiklandi();
+
 signals:
     void cisimEkle(CisimModeli *cisimModeli);
 

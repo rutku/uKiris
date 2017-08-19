@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     tekilkuvvetekle.cpp \
     yayilikuvvetekle.cpp \
     momentEkle.cpp \
-    KMDiagramSahnesi.cpp
+    KMDiagramSahnesi.cpp \
+    ankastremesnetekle.cpp
 
 HEADERS  += mainwindow.h \
     kirisekle.h \
@@ -46,7 +47,8 @@ HEADERS  += mainwindow.h \
     tekilkuvvetekle.h \
     yayilikuvvetekle.h \
     momentEkle.h \
-    KMDiagramSahnesi.h
+    KMDiagramSahnesi.h \
+    ankastremesnetekle.h
 
 RESOURCES += \
     simgeler.qrc

@@ -8,6 +8,7 @@
 #include "tablowidget.h"
 #include "yayilikuvvetekle.h"
 #include "momentEkle.h"
+#include "ankastremesnetekle.h"
 
 #include <QtWidgets>
 
@@ -27,10 +28,13 @@ MainWindow::MainWindow(QWidget *parent)
     tekilKuvvetEkle  = new TekilKuvvetEkle(this);
     yayiliKuvvetEkle = new YayiliKuvvetEkle(this);
     momentEkle = new MomentEkle(this);
+    ankastreMesnetEkle = new AnkastreMesnetEkle(this);
 
     connect(kirisEkle,SIGNAL(cisimEkle(CisimModeli*)),
             scene,SLOT(cisimEkle(CisimModeli*)));
     connect(mesnetEkle,SIGNAL(cisimEkle(CisimModeli*)),
+            scene,SLOT(cisimEkle(CisimModeli*)));
+    connect(ankastreMesnetEkle,SIGNAL(cisimEkle(CisimModeli*)),
             scene,SLOT(cisimEkle(CisimModeli*)));
     connect(tekilKuvvetEkle,SIGNAL(cisimEkle(CisimModeli*)),
             scene,SLOT(cisimEkle(CisimModeli*)));
@@ -85,6 +89,7 @@ MainWindow::~MainWindow()
     delete tekilKuvvetEkle;
     delete yayiliKuvvetEkle;
     delete momentEkle;
+    delete ankastreMesnetEkle;
     delete kesmeDiagramGorunumu;
     delete kesmeDiagramSahnesi;
     delete momenDiagramGorunumu;
@@ -99,6 +104,7 @@ void MainWindow::butonGrubuTiklandi(int id)
     case DiagramItem::Kiris:
         kirisEkle->kipAta(kipim);
         kirisEkle->exec();
+        kirisUzunlugu = kirisEkle->uzunlukAl();
         break;
     case DiagramItem::SabitMesnet:
         mesnetEkle->kipAta(kipim);
@@ -111,9 +117,9 @@ void MainWindow::butonGrubuTiklandi(int id)
         mesnetEkle->exec();
         break;
     case DiagramItem::AnkastreMesnet:
-        mesnetEkle->kipAta(kipim);
-        mesnetEkle->tipAta(id);
-        mesnetEkle->exec();
+        ankastreMesnetEkle->kipAta(kipim);
+        ankastreMesnetEkle->kirisUzunluguAta(kirisUzunlugu);
+        ankastreMesnetEkle->exec();
         break;
     case DiagramItem::TekilKuvvet:
         tekilKuvvetEkle->kipAta(kipim);
@@ -180,10 +186,10 @@ void MainWindow::cisimDuzenle(CisimModeli *_cisimModeli)
         mesnetEkle->exec();
         break;
     case DiagramItem::AnkastreMesnet:
-        mesnetEkle->kipAta(DiagramScene::CisimDuzenle);
-        mesnetEkle->cisimModeliAta(_cisimModeli);
-        mesnetEkle->tipAta(_cisimModeli->tipAl());
-        mesnetEkle->exec();
+        ankastreMesnetEkle->kipAta(DiagramScene::CisimDuzenle);
+        ankastreMesnetEkle->cisimModeliAta(_cisimModeli);
+        ankastreMesnetEkle->kirisUzunluguAta(kirisUzunlugu);
+        ankastreMesnetEkle->exec();
         break;
     case DiagramItem::TekilKuvvet:
         tekilKuvvetEkle->kipAta(DiagramScene::CisimDuzenle);
@@ -216,7 +222,7 @@ void MainWindow::aracKutusuOlustur()
     elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Kiriş"),DiagramItem::Kiris,":/simgeler/kiris.png"),0,0);
     elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Sabit Mesnet"),DiagramItem::SabitMesnet,":/simgeler/sabitMesnet.png"),0,1);
     elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Hareketli Mesnet"),DiagramItem::HareketliMesnet,":/simgeler/hareketliMesnet.png"),1,0);
-    elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Ankastre Mesnet"),DiagramItem::AnkastreMesnet,":/simgeler/ankastreMesnet.png"),1,1);
+    elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Ankastre Mesnet"),DiagramItem::AnkastreMesnet,":/simgeler/ankastreMesnetSol.png"),1,1);
 
     elemanlarKatmani->setRowStretch(2, 10);
     elemanlarKatmani->setColumnStretch(1,10);

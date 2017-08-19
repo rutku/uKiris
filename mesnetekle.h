@@ -24,6 +24,7 @@ public:
     void cisimModeliAta(CisimModeli *_cisimModeli) { cisimModeli = _cisimModeli; }
     void kipAta(DiagramScene::Mode kip) { kipim = kip; }
     void tipAta(int tip) { _tip = tip; }
+    void kirisUzunluguGir(int uzunluk) { kirisUzunlugu = uzunluk; }
 
 private slots:
     void ekleButonunaTiklandi();
@@ -37,6 +38,7 @@ private:
     QPushButton *btnEkle;
     QPushButton *btnIptal;
     int _tip;
+    int kirisUzunlugu;
     CisimModeli *cisimModeli;
     DiagramScene::Mode kipim;
 };

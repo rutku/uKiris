@@ -28,9 +28,9 @@ public slots:
 
 private:
     QList<CisimModeli*> cisimModelListesi;
-    QList<CisimModeli*> enKucuktenCisimModelListesi;
-    QMap<int,double> ucKuvvetler;
-    QMap<int,double> ucMomentler;
+    QList<CisimModeli*> enKucuktenCisimModelListesi;    
+    QList<QVector2D> ucKuvvetler;
+    QList<QVector2D> ucMomentler;
     CisimModeli *_cisimModeli;
     Diagram diagramim;
     void cisimleriSirala();

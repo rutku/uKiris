@@ -35,7 +35,6 @@ MesnetEkle::MesnetEkle(QWidget *parent)
 
 MesnetEkle::~MesnetEkle()
 {
-//    delete cisimModeli;
 }
 
 void MesnetEkle::ekleButonunaTiklandi()
