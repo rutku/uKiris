@@ -34,7 +34,7 @@ void DiagramScene::cisimEkle(CisimModeli *_cisimModeli)
     default:
         ;
     }
-    QGraphicsScene::update(0,0,0,0);
+    QGraphicsScene::update(0,0,1000,1000);
 }
 
 void DiagramScene::cisimBul(CisimModeli *_cisimModeli)
@@ -65,11 +65,10 @@ void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    foreach (QGraphicsItem *cisim, items(Qt::AscendingOrder)) {
-        DiagramItem *_cisim = qgraphicsitem_cast<DiagramItem *>(cisim);
-
-        qDebug() << "Cisim : " << _cisim->cisimModeliAl()->bitisKonumuAl() << " Tipi : " << _cisim->cisimTipi();
-    }
+//    foreach (QGraphicsItem *cisim, items(Qt::AscendingOrder)) {
+//        DiagramItem *_cisim = qgraphicsitem_cast<DiagramItem *>(cisim);
+//        qDebug() << "Cisim : " << _cisim->cisimModeliAl()->bitisKonumuAl() << " Tipi : " << _cisim->cisimTipi();
+//    }
 
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }

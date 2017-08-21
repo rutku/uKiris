@@ -33,7 +33,6 @@ void KMDiagramSahnesi::diagramCiz()
     double y1 = h;
     double y2 = h;
     double moment = 0.0;
-    double enBuyukMoment = 0.0;
     double kesmeKuvveti = 0.0;
     double tekilKuvvet = 0.0;
     double yayiliKuvvet = 0.0;
@@ -54,20 +53,24 @@ void KMDiagramSahnesi::diagramCiz()
 
     QPen kalem(Qt::black,3,Qt::SolidLine,Qt::RoundCap,Qt::RoundJoin);
     for (int i = 0; i <= kirisUzunlugu; ++i) {
-        QList<double> momentler;
         QLine diagramCizgisi;
 
         bool sinirda = false;
+
         x2 = i;
         y2 = y2;
-        addLine(x1,y1,x2,y2,kalem);
-        x1 = x2;
+        addLine(x1,y1,x2,y2,kalem); // Kiriş Ve moment Diyagramının ilk burada çiziliyor.
+        x1 = x2;// Ardından ikinci çizginin çizilmesi için aşağıda hesaplar yapılıyor.
         y1 = y2;
+
 
         foreach (CisimModeli *cisim, enKucuktenCisimModelListesi) {
             if (cisim->tipAl() == DiagramItem::YayiliKuvvet) {
                 if (i >= (int)cisim->baslangciKonumuAl() && i <= (int)cisim->bitisKonumuAl()) {
 
+                    if (i == cisim->baslangciKonumuAl() || i == cisim->bitisKonumuAl()) {
+                        sinirda = true;
+                    }
                     double tabanUzunlugu = (i - cisim->baslangciKonumuAl());
                     dikdortgenKuvveti = 0;
                     dikdortgenKuvvetiKonumu = i - (cisim->baslangciKonumuAl()+(tabanUzunlugu/2));
@@ -100,7 +103,6 @@ void KMDiagramSahnesi::diagramCiz()
                     }
                     yayiliMoment = (((dikdortgenKuvveti * dikdortgenKuvvetiKonumu)) +
                             (ucgenKuvveti * ucgenKuvvetiKonumu)) / 100;
-                    momentler.append(yayiliMoment);
                 }
             }else if (cisim->tipAl() == DiagramItem::TekilKuvvet) {
                 if (i == (int)cisim->noktaKonumuAl()) {
@@ -108,7 +110,6 @@ void KMDiagramSahnesi::diagramCiz()
                     sinirda = true;
                 }else if (i > (int)cisim->noktaKonumuAl()) {
                     tekilKuvvetMomenti = (tekilKuvvet * (i - cisim->noktaKonumuAl()));
-                    momentler.append(tekilKuvvetMomenti);
                 }
 
             }else if (cisim->tipAl() == DiagramItem::SabitMesnet) {
@@ -117,7 +118,6 @@ void KMDiagramSahnesi::diagramCiz()
                     sinirda = true;
                 }else if (i > (int)cisim->noktaKonumuAl()) {
                     sabitMesnetMomenti = (sabitMesnetKuvveti * (i - cisim->noktaKonumuAl()));
-                    momentler.append(sabitMesnetMomenti);
                 }
             }else if (cisim->tipAl() == DiagramItem::HareketliMesnet) {
                 if (i == (int)cisim->noktaKonumuAl()) {
@@ -125,55 +125,32 @@ void KMDiagramSahnesi::diagramCiz()
                     sinirda = true;
                 }else if (i > (int)cisim->noktaKonumuAl()) {
                     hareketliMesnetMomenti = (hareketliMesnetKuvveti * (i - cisim->noktaKonumuAl()));
-                    momentler.append(hareketliMesnetMomenti);
                 }
             }else if (cisim->tipAl() == DiagramItem::AnkastreMesnet) {
                 if (i == (int)cisim->noktaKonumuAl()) {
                     ankastreMesnetKuvveti = cisim->noktaKuvvetiAl();
                     ankastreMesnetMomenti = cisim->momentAl() * 100;
-                    momentler.append(ankastreMesnetMomenti);
                     sinirda = true;
                 }else if (i > (int)cisim->noktaKonumuAl()) {
                     ankastreMomenti = (ankastreMesnetKuvveti * (i - cisim->noktaKonumuAl()));
-                    momentler.append(ankastreMesnetMomenti);
                 }
             }else if (cisim->tipAl() == DiagramItem::Moment && i == cisim->noktaKonumuAl()) {
                 noktaMomenti = cisim->momentAl() * 100;
-                momentler.append(noktaMomenti);
                 sinirda = true;
             }
         }
         //TODO:moment değişkeni ve xNoktasindakiMoment değişkeni düzeltilmeli!
         kesmeKuvveti = (tekilKuvvet + yayiliKuvvet + sabitMesnetKuvveti + hareketliMesnetKuvveti +
                 ankastreMesnetKuvveti) * 10;
+
         moment = (tekilKuvvetMomenti + yayiliMoment + sabitMesnetMomenti + hareketliMesnetMomenti +
                   ankastreMesnetMomenti + ankastreMomenti + noktaMomenti)/10;
-        double xNoktasindakiMoment = 0.0;
-
-        foreach (double m, momentler) {
-            xNoktasindakiMoment += m/10;
-        }
-        if (xNoktasindakiMoment == 0 && momentler.size() != 0) {
-            double sonMoment = momentler.last();
-            momentler.removeLast();
-            xNoktasindakiMoment = 0.0;
-            foreach (double m, momentler) {
-                xNoktasindakiMoment += m/10;
-            }
-            if (diagramim == MomentDiagrami) {
-                ucMomentler.append(QVector2D(i,sonMoment/10));
-            }
-        }else {
-            xNoktasindakiMoment = moment;
-        }
 
         qDebug()<<"i:"<<i<<" TM:"<<tekilKuvvetMomenti<< " AM:"<<ankastreMesnetMomenti
                 <<" Moment:"<<moment;
 
-        if (enBuyukMoment<abs(xNoktasindakiMoment)) {
-            enBuyukMoment = xNoktasindakiMoment;
-        }
 
+        //Hesaplanan Yük(lerin)ün ve Mesnetlerin Kuvvet ve Moment Diyagramları Aşağıda çiziliyor.
         x2 = i;
         if (diagramim == KesmeDiagrami) {
             y2 = kesmeKuvveti + h;
@@ -181,15 +158,23 @@ void KMDiagramSahnesi::diagramCiz()
                 ucKuvvetler.append(QVector2D(i,kesmeKuvveti));
             }
         }else {
-            y2 = xNoktasindakiMoment + h;
+            y2 = moment + h;
             if (sinirda) {
-                ucMomentler.append(QVector2D(i,xNoktasindakiMoment));
+                if (ankastreMesnetMomenti != 0
+                        && moment == 0
+                        && ankastreMomenti == 0) {
+                    ucMomentler.append(QVector2D(i,(moment-(ankastreMesnetMomenti/10.0))));
+                }else {
+                    ucMomentler.append(QVector2D(i,moment));
+                }
             }
         }
+
         diagramCizgisi.setLine(x1,y1,x2,y2);
         x1 = x2;
         y1 = y2;
         addLine(diagramCizgisi,kalem);
+
 
     }
     QPen kirisKalemi(Qt::red,2,Qt::DashLine,Qt::RoundCap,Qt::RoundJoin);
@@ -252,22 +237,7 @@ void KMDiagramSahnesi::uclariCiz()
 
     kalem.setStyle(Qt::DashDotDotLine);
 
-    double enBuyukMoment = 0.0;
-    int indis = 0;
-    int noktaKonumu = 0.0;
-    for (int i = 0; i < kuvvetler.size(); ++i) {
-        QVector2D y = kuvvetler.at(i);
-        if (y.x() != noktaKonumu) {
 
-        }
-
-    }
-    foreach (QVector2D y, kuvvetler) {
-
-        if (y.y() > enBuyukMoment) {
-
-        }
-    }
 
     foreach (QVector2D x, kuvvetler) {
         qDebug() << "X"<<x.x()<<" M"<<x.y();
@@ -279,9 +249,11 @@ void KMDiagramSahnesi::uclariCiz()
         mesafe->setPos(x.x(),xEksenininYsi);
         if (x.y() != 0.0) {
             kalem.setColor(Qt::cyan);
-            addLine(-20,x.y()+h,x.x(),x.y()+h,kalem);//->(Kuvvet || Moment)
-            QGraphicsTextItem *kuvvet = addText(QString("%1").arg(x.y()/10.0));
-            kuvvet->setPos(-20,x.y()+h);
+            QGraphicsLineItem *yEkseni =  addLine(-20,x.y()+h,x.x(),x.y()+h,kalem);//->(Kuvvet || Moment)
+            yEkseni->setZValue(xEkseni->zValue()-0.1);
+            QString _kuvvet = QString("%1").arg(x.y()/10.0);
+            QGraphicsTextItem *kuvvet = addText(_kuvvet);
+            kuvvet->setPos(-1*(_kuvvet.size()*2+50),x.y()+h-15);
         }
 
     }

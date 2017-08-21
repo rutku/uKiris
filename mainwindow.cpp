@@ -21,7 +21,6 @@ MainWindow::MainWindow(QWidget *parent)
     menulerOlustur();
 
     scene = new DiagramScene(cisimMenusu,this);
-    scene->setSceneRect(-scene->width(),-scene->height(),scene->width()*2,scene->height()*2);
 
     kirisEkle = new KirisEkle(this);
     mesnetEkle = new MesnetEkle(this);
@@ -137,6 +136,7 @@ void MainWindow::butonGrubuTiklandi(int id)
         break;
     }
     butonGrubu->button(id)->setChecked(false);
+    scene->update(0,0,1000,1000);
 }
 
 void MainWindow::cisimSil()
