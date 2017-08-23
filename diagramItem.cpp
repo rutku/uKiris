@@ -138,6 +138,7 @@ void DiagramItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
         int yaziAcisi = -80;
         int yaziX = -45;
         int yaziY = -45;
+        qDebug() << "Moment "<<cisimModelim->momentAl();
         if (cisimModelim->momentAl() > 0) {
             derece = 360;
             okBasiX = 12;
@@ -146,7 +147,6 @@ void DiagramItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
             yaziAcisi = -160;
             yaziX = -30;
             yaziY = -45;
-
         }
         //https://stackoverflow.com/questions/19197381/how-to-draw-an-arc-with-qt
         //Yukarıdaki adresten faydalandım. Cuk oturdu.

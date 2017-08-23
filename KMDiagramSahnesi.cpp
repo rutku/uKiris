@@ -146,10 +146,6 @@ void KMDiagramSahnesi::diagramCiz()
         moment = (tekilKuvvetMomenti + yayiliMoment + sabitMesnetMomenti + hareketliMesnetMomenti +
                   ankastreMesnetMomenti + ankastreMomenti + noktaMomenti)/10;
 
-        qDebug()<<"i:"<<i<<" TM:"<<tekilKuvvetMomenti<< " AM:"<<ankastreMesnetMomenti
-                <<" Moment:"<<moment;
-
-
         //Hesaplanan Yük(lerin)ün ve Mesnetlerin Kuvvet ve Moment Diyagramları Aşağıda çiziliyor.
         x2 = i;
         if (diagramim == KesmeDiagrami) {
@@ -240,8 +236,6 @@ void KMDiagramSahnesi::uclariCiz()
 
 
     foreach (QVector2D x, kuvvetler) {
-        qDebug() << "X"<<x.x()<<" M"<<x.y();
-
         kalem.setColor(Qt::green);
         QGraphicsLineItem *xEkseni = addLine(x.x(),x.y()+h,x.x(),xEksenininYsi,kalem);//->(x)
         xEkseni->setZValue(xEkseni->zValue()-0.1);
@@ -253,7 +247,7 @@ void KMDiagramSahnesi::uclariCiz()
             yEkseni->setZValue(xEkseni->zValue()-0.1);
             QString _kuvvet = QString("%1").arg(x.y()/10.0);
             QGraphicsTextItem *kuvvet = addText(_kuvvet);
-            kuvvet->setPos(-1*(_kuvvet.size()*2+50),x.y()+h-15);
+            kuvvet->setPos(-1*(_kuvvet.size()*3+50),x.y()+h-15);
         }
 
     }

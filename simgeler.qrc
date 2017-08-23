@@ -12,5 +12,8 @@
         <file>simgeler/calistir.png</file>
         <file>simgeler/ankastreMesnetSag.png</file>
         <file>simgeler/ankastreMesnetSol.png</file>
+        <file>simgeler/ac.png</file>
+        <file>simgeler/goruntu.png</file>
+        <file>simgeler/kaydet.png</file>
     </qresource>
 </RCC>

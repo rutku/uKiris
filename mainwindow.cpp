@@ -15,6 +15,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), kipim(DiagramScene::CisimGir)
 {
+
     eylemlerOlustur();
     aracKutusuOlustur();
     diagramlariOlustur();
@@ -47,12 +48,13 @@ MainWindow::MainWindow(QWidget *parent)
             cisimTablosu,SLOT(tabloyuGuncelle(CisimModeli*)));
     connect(cisimTablosu,SIGNAL(cisimDuzenle(CisimModeli*)),
             this,SLOT(cisimDuzenle(CisimModeli*)));
-    connect(btnCalistir,SIGNAL(clicked(bool)),
-            cisimTablosu,SLOT(diagramCiz()));
     connect(cisimTablosu,SIGNAL(kesmeDiagramiCiz(QList<CisimModeli*>)),
             kesmeDiagramSahnesi,SLOT(kesmeDiagramiCiz(QList<CisimModeli*>)));
     connect(cisimTablosu,SIGNAL(momentDiagramiCiz(QList<CisimModeli*>)),
             momentDiagramSahnesi,SLOT(momentDiagramiCiz(QList<CisimModeli*>)));
+    connect(this,SIGNAL(diagramCiz()),
+            cisimTablosu,SLOT(diagramCiz()));
+
 
 
 
@@ -96,7 +98,7 @@ MainWindow::~MainWindow()
 
 }
 
-void MainWindow::butonGrubuTiklandi(int id)
+void MainWindow::butonGrubunaTiklandi(int id)
 {
     scene->kipAta(kipim);
     switch (DiagramItem::CisimTipi(id)) {
@@ -137,6 +139,17 @@ void MainWindow::butonGrubuTiklandi(int id)
     }
     butonGrubu->button(id)->setChecked(false);
     scene->update(0,0,1000,1000);
+}
+
+void MainWindow::projeGrubunaTiklandi(int id)
+{
+    switch (aracCubugu(id)) {
+    case Calistir:
+        emit diagramCiz();
+        break;
+    default:
+        break;
+    }
 }
 
 void MainWindow::cisimSil()
@@ -213,11 +226,17 @@ void MainWindow::cisimDuzenle(CisimModeli *_cisimModeli)
 
 void MainWindow::aracKutusuOlustur()
 {
-    butonGrubu = new QButtonGroup(this);
+    butonGrubu = new QButtonGroup(this); //Elemanlar ve Mesnetlerin dizisini oluşturuyoruz.
     butonGrubu->setExclusive(false);
 
-    connect(butonGrubu,SIGNAL(buttonClicked(int)),
-            this,SLOT(butonGrubuTiklandi(int)));
+    projeGrubu = new QButtonGroup(this);
+    projeGrubu->setExclusive(false);
+
+    connect(butonGrubu,SIGNAL(buttonClicked(int)),//Sinyalleri kuruyoruz ...
+            this,SLOT(butonGrubunaTiklandi(int)));
+    connect(projeGrubu,SIGNAL(buttonClicked(int)),
+            this,SLOT(projeGrubunaTiklandi(int)));
+
     QGridLayout *elemanlarKatmani = new QGridLayout;
     elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Kiriş"),DiagramItem::Kiris,":/simgeler/kiris.png"),0,0);
     elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Sabit Mesnet"),DiagramItem::SabitMesnet,":/simgeler/sabitMesnet.png"),0,1);
@@ -247,12 +266,15 @@ void MainWindow::aracKutusuOlustur()
     aracKutusu->addItem(elemanlarWidget,tr("Elemanlar"));
     aracKutusu->addItem(kuvvetlerWidget,tr("Kuvvetler"));
 
-    btnCalistir = new QToolButton;
-    btnCalistir->setIconSize(QSize(50,50));
-    btnCalistir->setIcon(QIcon(":/simgeler/calistir.png"));
-
     projeAracCubugu = addToolBar(tr("Proje"));
-    projeAracCubugu->addWidget(btnCalistir);
+    projeAracCubugu->setMinimumHeight(50);
+    projeAracCubugu->addWidget(aracCubuguButonuOlustur(tr("Çalıştır"),Calistir,":/simgeler/calistir.png"));
+    projeAracCubugu->addWidget(aracCubuguButonuOlustur(tr("Kaydet"),Kaydet,":/simgeler/kaydet.png"));
+    projeAracCubugu->addWidget(aracCubuguButonuOlustur(tr("Aç"),Ac,":/simgeler/ac.png"));
+    projeAracCubugu->addWidget(aracCubuguButonuOlustur(tr("Çözümü Görüntü Olarak Kaydet"),GoruntuyuKaydet,":/simgeler/goruntu.png"));
+
+
+
 }
 
 void MainWindow::diagramlariOlustur()
@@ -262,7 +284,6 @@ void MainWindow::diagramlariOlustur()
 
     momentDiagramSahnesi = new KMDiagramSahnesi(this);
     momenDiagramGorunumu = new QGraphicsView(momentDiagramSahnesi);
-
 
     cisimTablosu = new TabloWidget(this);
     QStringList cisimTabloBasligi;
@@ -331,4 +352,16 @@ QWidget *MainWindow::cisimHucresiOlustur(const QString &yazi, DiagramItem::Cisim
     widget->setLayout(katman);
 
     return widget;
+}
+
+QToolButton *MainWindow::aracCubuguButonuOlustur(const QString &Yazi, MainWindow::aracCubugu tip, const QString &simge)
+{
+    QToolButton *buton = new QToolButton;
+    buton->setIcon(QIcon(simge));
+    buton->setIconSize(QSize(50,50));
+    buton->setCheckable(true);
+    buton->setToolTip(Yazi);
+    projeGrubu->addButton(buton,int(tip));
+
+    return buton;
 }

@@ -8,21 +8,23 @@ MomentEkle::MomentEkle(QWidget *parent)
     btnTamam = new QPushButton(tr("Tamam"));
     btnIptal = new QPushButton(tr("İptal"));
 
+    btnSol = new QToolButton;
+    btnSol->setIcon(QIcon(":/simgeler/momentSol.png"));
+    btnSol->setIconSize(QSize(50,50));
+
     btnSag = new QToolButton;
-    btnSag->setIcon(QIcon(":/simgeler/momentSol.png"));
+    btnSag->setIcon(QIcon(":/simgeler/momentSag.png"));
     btnSag->setIconSize(QSize(50,50));
 
-    btnSol = new QToolButton;
-    btnSol->setIcon(QIcon(":/simgeler/momentSag.png"));
-    btnSol->setIconSize(QSize(50,50));
 
     btnYonGrubu = new QButtonGroup(this);
     btnYonGrubu->setExclusive(true);
-    btnYonGrubu->addButton(btnSag,Sag);
     btnYonGrubu->addButton(btnSol,Sol);
+    btnYonGrubu->addButton(btnSag,Sag);
     btnSag->setCheckable(true);
-    btnSag->setChecked(true);
     btnSol->setCheckable(true);
+    btnSol->setChecked(true);
+
 
     lblNoktaKonumu = new QLabel(tr("Nokta Konumu(cm) :"));
     lblMoment = new QLabel(tr("Moment(kN.m) :"));
@@ -34,8 +36,8 @@ MomentEkle::MomentEkle(QWidget *parent)
     txtMoment->setValidator(new QIntValidator(-10000,10000,this));
 
     QHBoxLayout *yonButonKatmani = new QHBoxLayout;
-    yonButonKatmani->addWidget(btnSag);
     yonButonKatmani->addWidget(btnSol);
+    yonButonKatmani->addWidget(btnSag);
 
     QHBoxLayout *noktaKonumuKatmani = new QHBoxLayout;
     noktaKonumuKatmani->addWidget(lblNoktaKonumu,2,Qt::AlignRight);
@@ -77,7 +79,7 @@ void MomentEkle::tamamButonunaTiklandi()
 
     noktaKonumu = txtNoktaKonumu->text().toInt(&ok);
     moment = txtMoment->text().toInt(&ok) * yon;
-
+    qDebug() << yon;
     switch (kipim) {
     case DiagramScene::CisimGir:
         cisimModeli = new CisimModeli(DiagramItem::Moment,noktaKonumu,

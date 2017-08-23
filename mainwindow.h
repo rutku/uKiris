@@ -38,14 +38,20 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    enum aracCubugu {Calistir,Kaydet,Ac,GoruntuyuKaydet};
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
 private slots:
-    void butonGrubuTiklandi(int id);
+    void butonGrubunaTiklandi(int id);
+    void projeGrubunaTiklandi(int id);
     void cisimSil();
     void isaretciGrubuTiklandi(int id);
     void sceneOlcegiDegisti(const QString &olcek);
     void cisimDuzenle(CisimModeli *_cisimModeli);
+
+signals:
+    void diagramCiz();
 
 private:
     void aracKutusuOlustur();
@@ -58,6 +64,9 @@ private:
 
     QWidget *cisimHucresiOlustur(const QString &Yazi,
                                   DiagramItem::CisimTipi tip, const QString &simge);
+    QToolButton *aracCubuguButonuOlustur(const QString &Yazi,
+                                  aracCubugu tip, const QString &simge);
+
     DiagramScene *scene;
     KMDiagramSahnesi *kesmeDiagramSahnesi;
     KMDiagramSahnesi *momentDiagramSahnesi;
@@ -91,9 +100,7 @@ private:
 
     QButtonGroup *butonGrubu;
     QButtonGroup *isaretciTipiGrubu;
-    QButtonGroup *projeTipiGrubu;
-
-    QToolButton *btnCalistir;
+    QButtonGroup *projeGrubu;
 
     DiagramScene::Mode kipim;
 };
