@@ -25,30 +25,48 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    kirisekle.cpp \
     cisimmodeli.cpp \
-    mesnetekle.cpp \
     tablowidget.cpp \
     diagramItem.cpp \
     diagramScene.cpp \
-    tekilkuvvetekle.cpp \
-    yayilikuvvetekle.cpp \
-    momentEkle.cpp \
     KMDiagramSahnesi.cpp \
-    ankastremesnetekle.cpp
+    dosyaislemleri.cpp \
+    arayuzler/kirisekle.cpp \
+    arayuzler/mesnetekle.cpp \
+    arayuzler/tekilkuvvetekle.cpp \
+    arayuzler/yayilikuvvetekle.cpp \
+    arayuzler/momentEkle.cpp \
+    arayuzler/ankastremesnetekle.cpp \
+    cisimler/kirisCismi.cpp \
+    cisimler/sabitmesnetcismi.cpp \
+    cisimler/ankastremesnetcismi.cpp \
+    cisimler/tekilkuvvetcismi.cpp \
+    cisimler/yayilikuvvetcismi.cpp \
+    cisimler/momentcismi.cpp \
+    cisimler/hareketlimesnetCismi.cpp
 
 HEADERS  += mainwindow.h \
-    kirisekle.h \
     cisimmodeli.h \
-    mesnetekle.h \
     tablowidget.h \
     diagramItem.h \
     diagramScene.h \
-    tekilkuvvetekle.h \
-    yayilikuvvetekle.h \
-    momentEkle.h \
     KMDiagramSahnesi.h \
-    ankastremesnetekle.h
+    dosyaislemleri.h \
+    arayuzler/kirisekle.h \
+    arayuzler/mesnetekle.h \
+    arayuzler/tekilkuvvetekle.h \
+    arayuzler/yayilikuvvetekle.h \
+    arayuzler/momentEkle.h \
+    arayuzler/ankastremesnetekle.h \
+    cisimler/kirisCismi.h \
+    cisimler/sabitmesnetcismi.h \
+    cisimler/ankastremesnetcismi.h \
+    cisimler/tekilkuvvetcismi.h \
+    cisimler/yayilikuvvetcismi.h \
+    cisimler/momentcismi.h \
+    cisimler/hareketlimesnetCismi.h
 
 RESOURCES += \
     simgeler.qrc
+
+DISTFILES +=

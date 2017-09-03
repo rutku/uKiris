@@ -1,14 +1,15 @@
 #include "cisimmodeli.h"
 #include "diagramScene.h"
 #include "mainwindow.h"
-#include "kirisekle.h"
-#include "mesnetekle.h"
-#include "tekilkuvvetekle.h"
+#include "arayuzler/kirisekle.h"
+#include "arayuzler/mesnetekle.h"
+#include "arayuzler/tekilkuvvetekle.h"
+#include "arayuzler/yayilikuvvetekle.h"
+#include "arayuzler/momentEkle.h"
+#include "arayuzler/ankastremesnetekle.h"
 #include "cisimmodeli.h"
 #include "tablowidget.h"
-#include "yayilikuvvetekle.h"
-#include "momentEkle.h"
-#include "ankastremesnetekle.h"
+#include "dosyaislemleri.h"
 
 #include <QtWidgets>
 
@@ -21,7 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
     diagramlariOlustur();
     menulerOlustur();
 
-    scene = new DiagramScene(cisimMenusu,this);
 
     kirisEkle = new KirisEkle(this);
     mesnetEkle = new MesnetEkle(this);
@@ -29,25 +29,28 @@ MainWindow::MainWindow(QWidget *parent)
     yayiliKuvvetEkle = new YayiliKuvvetEkle(this);
     momentEkle = new MomentEkle(this);
     ankastreMesnetEkle = new AnkastreMesnetEkle(this);
+    dosyaIslemleri = new DosyaIslemleri(this);
 
     connect(kirisEkle,SIGNAL(cisimEkle(CisimModeli*)),
-            scene,SLOT(cisimEkle(CisimModeli*)));
+            scene,SLOT(cisimIslemleri(CisimModeli*)));
     connect(mesnetEkle,SIGNAL(cisimEkle(CisimModeli*)),
-            scene,SLOT(cisimEkle(CisimModeli*)));
+            scene,SLOT(cisimIslemleri(CisimModeli*)));
     connect(ankastreMesnetEkle,SIGNAL(cisimEkle(CisimModeli*)),
-            scene,SLOT(cisimEkle(CisimModeli*)));
+            scene,SLOT(cisimIslemleri(CisimModeli*)));
     connect(tekilKuvvetEkle,SIGNAL(cisimEkle(CisimModeli*)),
-            scene,SLOT(cisimEkle(CisimModeli*)));
+            scene,SLOT(cisimIslemleri(CisimModeli*)));
     connect(yayiliKuvvetEkle,SIGNAL(cisimEkle(CisimModeli*)),
-            scene,SLOT(cisimEkle(CisimModeli*)));
+            scene,SLOT(cisimIslemleri(CisimModeli*)));
     connect(momentEkle,SIGNAL(cisimEkle(CisimModeli*)),
-            scene,SLOT(cisimEkle(CisimModeli*)));
+            scene,SLOT(cisimIslemleri(CisimModeli*)));
     connect(scene,SIGNAL(tabloyaCisimEkle(CisimModeli*)),
             cisimTablosu,SLOT(tabloyaCisimEkle(CisimModeli*)));
     connect(scene,SIGNAL(tabloyuGuncelle(CisimModeli*)),
             cisimTablosu,SLOT(tabloyuGuncelle(CisimModeli*)));
     connect(cisimTablosu,SIGNAL(cisimDuzenle(CisimModeli*)),
             this,SLOT(cisimDuzenle(CisimModeli*)));
+    connect(cisimTablosu,SIGNAL(Sil(CisimModeli*)),
+            scene,SLOT(cisimIslemleri(CisimModeli*)));
     connect(cisimTablosu,SIGNAL(kesmeDiagramiCiz(QList<CisimModeli*>)),
             kesmeDiagramSahnesi,SLOT(kesmeDiagramiCiz(QList<CisimModeli*>)));
     connect(cisimTablosu,SIGNAL(momentDiagramiCiz(QList<CisimModeli*>)),
@@ -66,7 +69,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     QVBoxLayout *yatayKatman = new QVBoxLayout;
 
-    view = new QGraphicsView(scene);
     yatayKatman->addWidget(view);
     yatayKatman->addWidget(diagramlarinKutusu);
 
@@ -95,42 +97,43 @@ MainWindow::~MainWindow()
     delete kesmeDiagramSahnesi;
     delete momenDiagramGorunumu;
     delete momentDiagramSahnesi;
+    delete dosyaIslemleri;
 
 }
 
 void MainWindow::butonGrubunaTiklandi(int id)
 {
     scene->kipAta(kipim);
-    switch (DiagramItem::CisimTipi(id)) {
-    case DiagramItem::Kiris:
+    switch (CisimModeli::CisimTipi(id)) {
+    case CisimModeli::Kiris:
         kirisEkle->kipAta(kipim);
         kirisEkle->exec();
         kirisUzunlugu = kirisEkle->uzunlukAl();
         break;
-    case DiagramItem::SabitMesnet:
+    case CisimModeli::SabitMesnet:
         mesnetEkle->kipAta(kipim);
         mesnetEkle->tipAta(id);
         mesnetEkle->exec();
         break;
-    case DiagramItem::HareketliMesnet:
+    case CisimModeli::HareketliMesnet:
         mesnetEkle->kipAta(kipim);
         mesnetEkle->tipAta(id);
         mesnetEkle->exec();
         break;
-    case DiagramItem::AnkastreMesnet:
+    case CisimModeli::AnkastreMesnet:
         ankastreMesnetEkle->kipAta(kipim);
         ankastreMesnetEkle->kirisUzunluguAta(kirisUzunlugu);
         ankastreMesnetEkle->exec();
         break;
-    case DiagramItem::TekilKuvvet:
+    case CisimModeli::TekilKuvvet:
         tekilKuvvetEkle->kipAta(kipim);
         tekilKuvvetEkle->exec();
         break;
-    case DiagramItem::YayiliKuvvet:
+    case CisimModeli::YayiliKuvvet:
         yayiliKuvvetEkle->kipAta(kipim);
         yayiliKuvvetEkle->exec();
         break;
-    case DiagramItem::Moment:
+    case CisimModeli::Moment:
         momentEkle->kipAta(kipim);
         momentEkle->exec();
         break;
@@ -147,74 +150,63 @@ void MainWindow::projeGrubunaTiklandi(int id)
     case Calistir:
         emit diagramCiz();
         break;
+    case Ac:
+        dosyaAc();
+        break;
+    case Kaydet:
+        dosyaKaydet();
+        break;
+    case GoruntuyuKaydet:
+        goruntuOlarakKaydet();
+        break;
+    case Sil:
+        scene->kipAta(DiagramScene::CisimSil);
+        cisimTablosu->cisimSil();
+        break;
     default:
         break;
     }
 }
 
-void MainWindow::cisimSil()
-{
-    foreach (QGraphicsItem *cisim, scene->selectedItems()) {
-        scene->removeItem(cisim);
-        delete cisim;
-    }
-
-}
-
-void MainWindow::isaretciGrubuTiklandi(int id)
-{
-    Q_UNUSED(id)
-    scene->kipAta(DiagramScene::Mode(isaretciTipiGrubu->checkedId()));
-
-}
-
-void MainWindow::sceneOlcegiDegisti(const QString &olcek)
-{
-    double yeniOlcek = olcek.left(olcek.indexOf(tr("%"))).toDouble() / 100.0;
-    QMatrix eskiMatriks = view->matrix();
-    view->resetMatrix();
-    view->translate(eskiMatriks.dx(),eskiMatriks.dy());
-    view->scale(yeniOlcek,yeniOlcek);
-}
 
 void MainWindow::cisimDuzenle(CisimModeli *_cisimModeli)
 {
     scene->kipAta(DiagramScene::CisimDuzenle);
     switch (_cisimModeli->tipAl()) {
-    case DiagramItem::Kiris:
+    case CisimModeli::Kiris:
         kirisEkle->kipAta(DiagramScene::CisimDuzenle);
         kirisEkle->cisimModeliAta(_cisimModeli);
         kirisEkle->exec();
         break;
-    case DiagramItem::SabitMesnet:
+    case CisimModeli::SabitMesnet:
         mesnetEkle->kipAta(DiagramScene::CisimDuzenle);
         mesnetEkle->cisimModeliAta(_cisimModeli);
         mesnetEkle->tipAta(_cisimModeli->tipAl());
         mesnetEkle->exec();
         break;
-    case DiagramItem::HareketliMesnet:
+    case CisimModeli::HareketliMesnet:
         mesnetEkle->kipAta(DiagramScene::CisimDuzenle);
         mesnetEkle->cisimModeliAta(_cisimModeli);
         mesnetEkle->tipAta(_cisimModeli->tipAl());
         mesnetEkle->exec();
         break;
-    case DiagramItem::AnkastreMesnet:
+    case CisimModeli::AnkastreMesnet:
         ankastreMesnetEkle->kipAta(DiagramScene::CisimDuzenle);
         ankastreMesnetEkle->cisimModeliAta(_cisimModeli);
         ankastreMesnetEkle->kirisUzunluguAta(kirisUzunlugu);
         ankastreMesnetEkle->exec();
         break;
-    case DiagramItem::TekilKuvvet:
+    case CisimModeli::TekilKuvvet:
         tekilKuvvetEkle->kipAta(DiagramScene::CisimDuzenle);
         tekilKuvvetEkle->cisimModeliAta(_cisimModeli);
         tekilKuvvetEkle->exec();
         break;
-    case DiagramItem::YayiliKuvvet:
+    case CisimModeli::YayiliKuvvet:
         yayiliKuvvetEkle->kipAta(DiagramScene::CisimDuzenle);
         yayiliKuvvetEkle->cisimModeliAta(_cisimModeli);
         yayiliKuvvetEkle->exec();
         break;
-    case DiagramItem::Moment:
+    case CisimModeli::Moment:
         momentEkle->kipAta(DiagramScene::CisimDuzenle);
         momentEkle->cisimModeliAta(_cisimModeli);
         momentEkle->exec();
@@ -238,10 +230,10 @@ void MainWindow::aracKutusuOlustur()
             this,SLOT(projeGrubunaTiklandi(int)));
 
     QGridLayout *elemanlarKatmani = new QGridLayout;
-    elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Kiriş"),DiagramItem::Kiris,":/simgeler/kiris.png"),0,0);
-    elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Sabit Mesnet"),DiagramItem::SabitMesnet,":/simgeler/sabitMesnet.png"),0,1);
-    elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Hareketli Mesnet"),DiagramItem::HareketliMesnet,":/simgeler/hareketliMesnet.png"),1,0);
-    elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Ankastre Mesnet"),DiagramItem::AnkastreMesnet,":/simgeler/ankastreMesnetSol.png"),1,1);
+    elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Kiriş"),CisimModeli::Kiris,":/simgeler/kiris.png"),0,0);
+    elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Sabit Mesnet"),CisimModeli::SabitMesnet,":/simgeler/sabitMesnet.png"),0,1);
+    elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Hareketli Mesnet"),CisimModeli::HareketliMesnet,":/simgeler/hareketliMesnet.png"),1,0);
+    elemanlarKatmani->addWidget(cisimHucresiOlustur(tr("Ankastre Mesnet"),CisimModeli::AnkastreMesnet,":/simgeler/ankastreMesnetSol.png"),1,1);
 
     elemanlarKatmani->setRowStretch(2, 10);
     elemanlarKatmani->setColumnStretch(1,10);
@@ -250,9 +242,9 @@ void MainWindow::aracKutusuOlustur()
     elemanlarWidget->setLayout(elemanlarKatmani);
 
     QGridLayout *kuvvetlerKatmani = new QGridLayout;
-    kuvvetlerKatmani->addWidget(cisimHucresiOlustur(tr("Tekil Kuvvet"),DiagramItem::TekilKuvvet,":/simgeler/tekilKuvvet.png"),0,0);
-    kuvvetlerKatmani->addWidget(cisimHucresiOlustur(tr("Yayılı Kuvvet"),DiagramItem::YayiliKuvvet,":/simgeler/yayiliKuvvet.png"),0,1);
-    kuvvetlerKatmani->addWidget(cisimHucresiOlustur(tr("Moment"),DiagramItem::Moment,":/simgeler/momentSol.png"),1,0);
+    kuvvetlerKatmani->addWidget(cisimHucresiOlustur(tr("Tekil Kuvvet"),CisimModeli::TekilKuvvet,":/simgeler/tekilKuvvet.png"),0,0);
+    kuvvetlerKatmani->addWidget(cisimHucresiOlustur(tr("Yayılı Kuvvet"),CisimModeli::YayiliKuvvet,":/simgeler/yayiliKuvvet.png"),0,1);
+    kuvvetlerKatmani->addWidget(cisimHucresiOlustur(tr("Moment"),CisimModeli::Moment,":/simgeler/momentSol.png"),1,0);
 
     kuvvetlerKatmani->setRowStretch(2,10);
     kuvvetlerKatmani->setColumnStretch(1,10);
@@ -269,9 +261,12 @@ void MainWindow::aracKutusuOlustur()
     projeAracCubugu = addToolBar(tr("Proje"));
     projeAracCubugu->setMinimumHeight(50);
     projeAracCubugu->addWidget(aracCubuguButonuOlustur(tr("Çalıştır"),Calistir,":/simgeler/calistir.png"));
+    projeAracCubugu->addSeparator();
     projeAracCubugu->addWidget(aracCubuguButonuOlustur(tr("Kaydet"),Kaydet,":/simgeler/kaydet.png"));
     projeAracCubugu->addWidget(aracCubuguButonuOlustur(tr("Aç"),Ac,":/simgeler/ac.png"));
     projeAracCubugu->addWidget(aracCubuguButonuOlustur(tr("Çözümü Görüntü Olarak Kaydet"),GoruntuyuKaydet,":/simgeler/goruntu.png"));
+    projeAracCubugu->addSeparator();
+    projeAracCubugu->addWidget(aracCubuguButonuOlustur(tr("Sil"),Sil,":/simgeler/sil.png"));
 
 
 
@@ -279,6 +274,11 @@ void MainWindow::aracKutusuOlustur()
 
 void MainWindow::diagramlariOlustur()
 {
+    scene = new DiagramScene(this);
+    scene->setSceneRect(0,-100,width(),height()/2);
+    view = new QGraphicsView(scene);
+    view->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
+
     kesmeDiagramSahnesi = new KMDiagramSahnesi(this);
     kesmeDiagramGorunumu = new QGraphicsView(kesmeDiagramSahnesi);
 
@@ -313,9 +313,6 @@ void MainWindow::eylemlerOlustur()
 void MainWindow::menulerOlustur()
 {
     dosyaMenusu = menuBar()->addMenu(tr("&Dosya"));
-
-    cisimMenusu = menuBar()->addMenu(tr("&Cisim"));
-
     hakkindaMenusu = menuBar()->addMenu(tr("&Hakkında"));
 
 }
@@ -335,8 +332,44 @@ void MainWindow::cisimBilgisiGir(int id)
     Q_UNUSED(id)
 }
 
+void MainWindow::dosyaAc()
+{
+    QString dosyaIsmi = QFileDialog::getOpenFileName(this,tr("Proje Aç"),"",
+                                                     tr("XML (*.xml);;"));
+    qDebug() << dosyaIsmi;
 
-QWidget *MainWindow::cisimHucresiOlustur(const QString &yazi, DiagramItem::CisimTipi tip, const QString &simge)
+}
+
+void MainWindow::dosyaKaydet()
+{
+    QString dosyaIsmi = QFileDialog::getSaveFileName(this,tr("Projeyi Kaydet"),""
+                                                     ,tr("XML (*.xml);;"));
+
+}
+
+void MainWindow::goruntuOlarakKaydet()
+{
+
+    QString dosyaIsmi = QFileDialog::getSaveFileName(this,tr("Kaydet"),QDir::homePath()
+                                                     ,tr("PNG (*.png)"));
+    if (dosyaIsmi.isEmpty()) {
+        return;
+    }
+    QString proje = dosyaIsmi;
+    proje.append(".png");
+    QString kesmeDiagrami = dosyaIsmi;
+    kesmeDiagrami.append("_kesmenDiagrami.png");
+    QString momentDiagrami = dosyaIsmi;
+    momentDiagrami.append("_momentDiagrami.png");
+
+    dosyaIslemleri->goruntuOlarakKaydet(proje,scene);
+    dosyaIslemleri->goruntuOlarakKaydet(kesmeDiagrami,kesmeDiagramSahnesi);
+    dosyaIslemleri->goruntuOlarakKaydet(momentDiagrami,momentDiagramSahnesi);
+
+}
+
+
+QWidget *MainWindow::cisimHucresiOlustur(const QString &yazi, CisimModeli::CisimTipi tip, const QString &simge)
 {
     QToolButton *buton = new QToolButton;
     buton->setIcon(QIcon(simge));

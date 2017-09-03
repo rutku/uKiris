@@ -20,6 +20,8 @@ class TabloWidget : public QTableWidget
 
 public:
     TabloWidget(QWidget *parent = 0);
+    QList<CisimModeli*> cisimModelListesiAl() { return cisimModelListesi; }
+    void cisimSil();
 
 public slots:
     void tabloyaCisimEkle(CisimModeli *cisimModeli);
@@ -27,6 +29,7 @@ public slots:
     void diagramCiz();
 signals:
     void cisimDuzenle(CisimModeli *_cisimModeli);
+    void Sil(CisimModeli *_cisimModeli);
     void kesmeDiagramiCiz(QList<CisimModeli*> _cisimModelListesi);
     void momentDiagramiCiz(QList<CisimModeli*> _cisimModelListesi);
 

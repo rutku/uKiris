@@ -21,10 +21,10 @@ class DiagramItem : public QObject, public QGraphicsItem
 public:
     enum {Tip = UserType + 15};
     enum CisimTipi {Kiris, SabitMesnet, HareketliMesnet, AnkastreMesnet,
-                    TekilKuvvet, YayiliKuvvet, Moment};
+                    TekilKuvvet, YayiliKuvvet, Moment,Yok};
 
     DiagramItem(CisimModeli *cisimModeli, QGraphicsItem *parent = nullptr);
-    DiagramItem(QGraphicsItem *parent = nullptr);
+//    DiagramItem(QGraphicsItem *parent = nullptr);
 
     virtual ~DiagramItem();
 

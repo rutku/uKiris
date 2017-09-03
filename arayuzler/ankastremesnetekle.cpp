@@ -58,7 +58,7 @@ void AnkastreMesnetEkle::tamamButonunaTiklandi()
     }
     switch (kipim) {
     case DiagramScene::CisimGir:
-        cisimModeli = new CisimModeli(DiagramItem::AnkastreMesnet,noktaKonumu,
+        cisimModeli = new CisimModeli(CisimModeli::AnkastreMesnet,noktaKonumu,
                                       0,0,0,0,0,0);
         emit cisimEkle(cisimModeli);
         break;

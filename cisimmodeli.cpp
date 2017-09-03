@@ -1,8 +1,8 @@
 #include "cisimmodeli.h"
 #include "diagramItem.h"
 
-CisimModeli::CisimModeli(int tip, int noktaKonumu, int noktaKuvveti, int baslangicKonumu, int bitisKonumu, int baslangicKuvveti, int bitisKuvveti, int moment, QObject *parent)
-    : QObject(parent)
+CisimModeli::CisimModeli(int tip, int noktaKonumu, int noktaKuvveti, int baslangicKonumu, int bitisKonumu, int baslangicKuvveti, int bitisKuvveti, int moment, QGraphicsItem *parent)
+    : QGraphicsItem(parent)
 {
     _tip = tip;
     _noktaKonumu = noktaKonumu;
@@ -23,8 +23,18 @@ CisimModeli::CisimModeli(int tip, int noktaKonumu, int noktaKuvveti, int baslang
 
 }
 
-CisimModeli::CisimModeli(QObject *parent)
-    : QObject(parent)
+CisimModeli::CisimModeli(QGraphicsItem *parent)
+    : QGraphicsItem(parent)
+{
+
+}
+
+QRectF CisimModeli::boundingRect() const
+{
+
+}
+
+void CisimModeli::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
 
 }

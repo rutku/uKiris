@@ -29,17 +29,24 @@ public slots:
 private:
     QList<CisimModeli*> cisimModelListesi;
     QList<CisimModeli*> enKucuktenCisimModelListesi;    
+
+    QList<QVector2D> kesmeKuvvetleri;
+    QList<QVector2D> momentler;
     QList<QVector2D> ucKuvvetler;
     QList<QVector2D> ucMomentler;
+
     CisimModeli *_cisimModeli;
     Diagram diagramim;
     void cisimleriSirala();
     double kuvvetleriTopla();
     void mesnetleriHesapla();
-    double mesnetinKuvvetiniBul(DiagramItem::CisimTipi tip);
+    double mesnetinKuvvetiniBul(CisimModeli::CisimTipi tip);
     void diagramlariCiz();
     void kesmeDiagraminiOlustur();
     void momentDiagraminiOlustur();
+    double yayiliIcKuvvet(CisimModeli *cisim, int i);
+    double yayiliIcMoment(CisimModeli *cisim, int i);
+    double yayiliDisMoment(CisimModeli *cisim, int i);
     double METRE = 0.01;
     double SANTIMETRE = 100;
     double kirisUzunlugu;

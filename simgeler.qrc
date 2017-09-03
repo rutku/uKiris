@@ -15,5 +15,6 @@
         <file>simgeler/ac.png</file>
         <file>simgeler/goruntu.png</file>
         <file>simgeler/kaydet.png</file>
+        <file>simgeler/sil.png</file>
     </qresource>
 </RCC>

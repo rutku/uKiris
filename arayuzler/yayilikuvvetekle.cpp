@@ -96,7 +96,7 @@ void YayiliKuvvetEkle::tamamButonunaTiklandi()
 
     switch (kipim) {
     case DiagramScene::CisimGir:
-        cisimModeli = new CisimModeli(DiagramItem::YayiliKuvvet,0,0,baslangicKonumu,
+        cisimModeli = new CisimModeli(CisimModeli::YayiliKuvvet,0,0,baslangicKonumu,
                                       bitisKonumu,baslangicKuvveti,bitisKuvveti,0);
         emit cisimEkle(cisimModeli);
         break;

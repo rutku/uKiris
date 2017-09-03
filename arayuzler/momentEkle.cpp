@@ -82,7 +82,7 @@ void MomentEkle::tamamButonunaTiklandi()
     qDebug() << yon;
     switch (kipim) {
     case DiagramScene::CisimGir:
-        cisimModeli = new CisimModeli(DiagramItem::Moment,noktaKonumu,
+        cisimModeli = new CisimModeli(CisimModeli::Moment,noktaKonumu,
                                       0,0,0,0,0,moment);
         emit cisimEkle(cisimModeli);
         break;

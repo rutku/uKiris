@@ -2,15 +2,18 @@
 #define CISIMMODELI_H
 
 #include <QObject>
+#include <QGraphicsItem>
 #include <QMap>
 
-class CisimModeli : public QObject
+class CisimModeli : public QObject,public QGraphicsItem
 {
     Q_OBJECT
 public:
+    enum CisimTipi {Kiris, SabitMesnet, HareketliMesnet, AnkastreMesnet,
+                    TekilKuvvet, YayiliKuvvet, Moment};
     CisimModeli(int tip, int noktaKonumu,int noktaKuvveti,int baslangicKonumu,
-                int bitisKonumu, int baslangicKuvveti,int bitisKuvveti,int moment, QObject *parent = 0);
-    CisimModeli(QObject *parent = 0);
+                int bitisKonumu, int baslangicKuvveti,int bitisKuvveti,int moment, QGraphicsItem *parent = 0);
+    CisimModeli(QGraphicsItem *parent = 0);
     QString tipIsmiAl() { return tipIsmim[_tip]; }
     int tipAl() const { return _tip; }
     int tipAl(QString tipIsmi) { return tipIsmim.key(tipIsmi); }
@@ -31,6 +34,9 @@ public:
     void baslangicKuvvetiAta(double baslangicKuvveti ) { _baslangicKuvveti = baslangicKuvveti; }
     void bitisKuvvetiAta(double bitisKuvveti ) { _bitisKuvveti = bitisKuvveti; }
     void momentAta(double moment) { _moment = moment; }
+protected:
+    virtual QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override;
 private:
     QString _tipIsmi;
     int _tip;

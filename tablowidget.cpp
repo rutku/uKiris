@@ -12,7 +12,15 @@ TabloWidget::TabloWidget(QWidget *parent)
     setEditTriggers(QAbstractItemView::NoEditTriggers);
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setSelectionMode(QAbstractItemView::SingleSelection);
+}
 
+void TabloWidget::cisimSil()
+{
+    if (selectedItems().isEmpty()) {
+        return;
+    }
+    emit Sil(cisimModelListesi.at(selectedItems().first()->row()));
+    removeRow(selectedItems().first()->row());
 }
 
 void TabloWidget::tabloyaCisimEkle(CisimModeli *cisimModeli)

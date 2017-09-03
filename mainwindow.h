@@ -1,11 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
 #include "diagramItem.h"
 #include "diagramScene.h"
 #include "KMDiagramSahnesi.h"
 
+#include <QMainWindow>
+#include <QFileDialog>
 class Cisim;
 class KirisEkle;
 class MesnetEkle;
@@ -16,6 +17,7 @@ class AnkastreMesnetEkle;
 class CisimlerinTabloModeli;
 class TabloWidget;
 class CisimModeli;
+class DosyaIslemleri;
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -38,16 +40,13 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    enum aracCubugu {Calistir,Kaydet,Ac,GoruntuyuKaydet};
+    enum aracCubugu {Calistir,Kaydet,Ac,GoruntuyuKaydet,Sil};
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
 private slots:
     void butonGrubunaTiklandi(int id);
     void projeGrubunaTiklandi(int id);
-    void cisimSil();
-    void isaretciGrubuTiklandi(int id);
-    void sceneOlcegiDegisti(const QString &olcek);
     void cisimDuzenle(CisimModeli *_cisimModeli);
 
 signals:
@@ -60,10 +59,13 @@ private:
     void menulerOlustur();
     void aracCubuguOlustur();
     void cisimBilgisiGir(int id);
+    void dosyaAc();
+    void dosyaKaydet();
+    void goruntuOlarakKaydet();
 
 
     QWidget *cisimHucresiOlustur(const QString &Yazi,
-                                  DiagramItem::CisimTipi tip, const QString &simge);
+                                  CisimModeli::CisimTipi tip, const QString &simge);
     QToolButton *aracCubuguButonuOlustur(const QString &Yazi,
                                   aracCubugu tip, const QString &simge);
 
@@ -73,6 +75,7 @@ private:
     QGraphicsView *view;
     QGraphicsView *kesmeDiagramGorunumu;
     QGraphicsView *momenDiagramGorunumu;
+
 
     int kirisUzunlugu;
 
@@ -84,9 +87,9 @@ private:
     YayiliKuvvetEkle *yayiliKuvvetEkle;
     MomentEkle *momentEkle;
     AnkastreMesnetEkle *ankastreMesnetEkle;
+    DosyaIslemleri *dosyaIslemleri;
 
     QMenu *dosyaMenusu;
-    QMenu *cisimMenusu;
     QMenu *hakkindaMenusu;
 
     QToolBar *isaretciAracCubugu;
