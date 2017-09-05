@@ -151,9 +151,11 @@ void KMDiagramSahnesi::diagramCiz()
                 if (ankastreMesnetMomenti != 0
                         && moment == 0
                         && ankastreMomenti == 0) {
+                    momentler.insert(momentler.size()-1,QVector2D(i,((moment-(ankastreMesnetMomenti/10.0)))));
                     ucMomentler.append(QVector2D(i,(moment-(ankastreMesnetMomenti/10.0))));
 
                 }else {
+                    momentler.insert(momentler.size()-1,QVector2D(i,(moment)));
                     ucMomentler.append(QVector2D(i,moment));
                 }
             }
@@ -172,6 +174,11 @@ void KMDiagramSahnesi::diagramCiz()
         foreach (auto v, kesmeKuvvetleri) {
             qDebug()<<"X" << v.x()<<" Y"<<v.y();
         }
+    }else {
+        foreach (auto m, momentler) {
+            qDebug()<<"X" << m.x()<<" Y"<<m.y();
+        }
+
     }
 
 }
