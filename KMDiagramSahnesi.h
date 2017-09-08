@@ -6,6 +6,7 @@
 
 #include <QGraphicsScene>
 #include <QList>
+#include <QtMath>
 
 QT_BEGIN_NAMESPACE
 class QPen;

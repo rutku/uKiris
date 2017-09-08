@@ -5,6 +5,7 @@
 
 #include <QPainter>
 #include <QPainterPath>
+#include <QtMath>
 
 class YayiliKuvvetCismi : public CisimModeli
 {

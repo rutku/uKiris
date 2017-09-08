@@ -32,10 +32,10 @@ void YayiliKuvvetCismi::paint(QPainter *painter, const QStyleOptionGraphicsItem 
         x = x2;
     }
 
-    if (abs(cisimModelim->baslangicKuvvetiAl()) < abs(cisimModelim->bitisKuvvetiAl())) {
+    if (qFabs(cisimModelim->baslangicKuvvetiAl()) < qFabs(cisimModelim->bitisKuvvetiAl())) {
         y1 = -40;
         y2 = -80;
-    }else if (abs(cisimModelim->baslangicKuvvetiAl()) > abs(cisimModelim->bitisKuvvetiAl())){
+    }else if (qFabs(cisimModelim->baslangicKuvvetiAl()) > qFabs(cisimModelim->bitisKuvvetiAl())){
         y1 = -80;
         y2 = -40;
     }
