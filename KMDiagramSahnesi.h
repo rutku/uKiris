@@ -43,11 +43,17 @@ private:
     void mesnetleriHesapla();
     double mesnetinKuvvetiniBul(CisimModeli::CisimTipi tip);
     void diagramlariCiz();
+    void diagramCiz();
     void kesmeDiagraminiOlustur();
     void momentDiagraminiOlustur();
+    void eksenleriCiz();
+    void sinirlardakiKuvvetleriCiz();
+    double enBuyukKuvvetiAl(QList<QVector2D> kuvvetListesi);
+    double enKucukKuvvetiAl(QList<QVector2D> kuvvetListesi);
     double yayiliIcKuvvet(CisimModeli *cisim, int i);
     double yayiliIcMoment(CisimModeli *cisim, int i);
     double yayiliDisMoment(CisimModeli *cisim, int i);
+    QVector2D enBuyukMomentiAl();
     double METRE = 0.01;
     double SANTIMETRE = 100;
     double kirisUzunlugu;
@@ -55,8 +61,7 @@ private:
     double hareketliMesnet;
     double ankastreMesnet;
     QList<double> kesmeKuvvetlerininListesi;
-    void diagramCiz();
-    void uclariCiz();
+    void hesapla();
     QPolygonF okCiz(int yon/*-1 = Kuvvet || Moment ; 0 = x*/);
 
 };
