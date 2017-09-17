@@ -12,21 +12,40 @@ CisimModeli::CisimModeli(int tip, int noktaKonumu, int noktaKuvveti, int baslang
     _baslangicKuvveti = baslangicKuvveti;
     _bitisKuvveti = bitisKuvveti;
     _moment = moment;
-    tipIsmim[DiagramItem::Kiris] = tr("Kiriş");
-    tipIsmim[DiagramItem::SabitMesnet] = tr("Sabit Mesnet");
-    tipIsmim[DiagramItem::HareketliMesnet] = tr("Hareketli Mesnet");
-    tipIsmim[DiagramItem::AnkastreMesnet] = tr("Ankastre Mesnet");
-    tipIsmim[DiagramItem::TekilKuvvet] = tr("Tekil Kuvvet");
-    tipIsmim[DiagramItem::YayiliKuvvet] = tr("Yayılı Kuvvet");
-    tipIsmim[DiagramItem::Moment] = tr("Moment");
-
-
+    
+    tipIsimleriOlustur();
+    degerlerinIsimleriniOlustur();
 }
 
 CisimModeli::CisimModeli(QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
+    tipIsimleriOlustur();
+    degerlerinIsimleriniOlustur();
+}
 
+void CisimModeli::tipIsimleriOlustur()
+{
+    tipIsmim[Kiris] = tr("Kiriş");
+    tipIsmim[SabitMesnet] = tr("Sabit Mesnet");
+    tipIsmim[HareketliMesnet] = tr("Hareketli Mesnet");
+    tipIsmim[AnkastreMesnet] = tr("Ankastre Mesnet");
+    tipIsmim[TekilKuvvet] = tr("Tekil Kuvvet");
+    tipIsmim[YayiliKuvvet] = tr("Yayılı Kuvvet");
+    tipIsmim[Moment] = tr("Moment");
+
+}
+
+void CisimModeli::degerlerinIsimleriniOlustur()
+{
+    degerlerim.insert(Tip,tr("Tip"));
+    degerlerim.insert(NoktaKonumu,tr("Nokta Konumu"));
+    degerlerim.insert(NoktaKuvveti,tr("Nokta Kuvveti"));
+    degerlerim.insert(BaslangicKonumu,tr("Başlangıç Konumu"));
+    degerlerim.insert(BaslangicKuvveti,tr("Başlangıç Kuvveti"));
+    degerlerim.insert(BitisKonumu,tr("Bitiş Konumu"));
+    degerlerim.insert(BitisKuvveti,tr("Bitiş Kuvveti"));
+    degerlerim.insert(MomentDegeri,tr("Moment"));
 }
 
 QRectF CisimModeli::boundingRect() const

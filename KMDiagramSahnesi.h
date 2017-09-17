@@ -43,7 +43,6 @@ private:
     void mesnetleriHesapla();
     double mesnetinKuvvetiniBul(CisimModeli::CisimTipi tip);
     void diagramlariCiz();
-    void diagramCiz();
     void kesmeDiagraminiOlustur();
     void momentDiagraminiOlustur();
     void eksenleriCiz();

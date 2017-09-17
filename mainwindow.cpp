@@ -336,6 +336,23 @@ void MainWindow::dosyaAc()
 {
     QString dosyaIsmi = QFileDialog::getOpenFileName(this,tr("Proje Aç"),"",
                                                      tr("XML (*.xml);;"));
+
+    if (dosyaIsmi.isEmpty()) {
+        return;
+    }
+
+    QFile dosya(dosyaIsmi);
+
+    if (!dosya.open(QFile::ReadOnly | QFile::Text)) {
+        QMessageBox::warning(this, tr("uKiriş"),
+                             tr("Dosya Okunamadı %1:\n%2.")
+                             .arg(dosyaIsmi)
+                             .arg(dosya.errorString()));
+        return;
+    }
+
+    dosyaIslemleri->xmlAc(&dosya);
+
     qDebug() << dosyaIsmi;
 
 }
@@ -344,7 +361,20 @@ void MainWindow::dosyaKaydet()
 {
     QString dosyaIsmi = QFileDialog::getSaveFileName(this,tr("Projeyi Kaydet"),""
                                                      ,tr("XML (*.xml);;"));
+    if (dosyaIsmi.isEmpty()) {
+        return;
+    }
 
+    QFile dosya(dosyaIsmi);
+    if (!dosya.open(QFile::WriteOnly | QFile::Text)) {
+        QMessageBox::warning(this, tr("uKiriş"),
+                             tr("Dosya Yazılamadı %1:\n%2.")
+                             .arg(dosyaIsmi)
+                             .arg(dosya.errorString()));
+        return;
+    }
+
+    dosyaIslemleri->xmlOlarakKaydet(&dosya,cisimTablosu->cisimModelListesiAl());
 }
 
 void MainWindow::goruntuOlarakKaydet()

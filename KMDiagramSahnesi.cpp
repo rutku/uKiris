@@ -55,8 +55,6 @@ void KMDiagramSahnesi::hesapla()
 
         x2 = i;
         y2 = y2;
-        x1 = x2;// Ardından ikinci çizginin çizilmesi için aşağıda hesaplar yapılıyor.
-        y1 = y2;
 
 
         foreach (CisimModeli *cisim, enKucuktenCisimModelListesi) {
@@ -148,9 +146,6 @@ void KMDiagramSahnesi::hesapla()
                 }
             }
         }
-
-        x1 = x2;
-        y1 = y2;
     }
 
     diagramlariCiz();
@@ -204,10 +199,6 @@ void KMDiagramSahnesi::eksenleriCiz()
         kuvvetListesi = momentler;
         kuvvetYazisi = "Moment(kN.m)";
         kuvvetXPozisyonu = -130;
-    }
-
-    foreach (auto k, kuvvetListesi) {
-        qDebug() <<kuvvetYazisi<< " "<<k.y()<<" i "<<k.x();
     }
 
     xEksenininYsi += enBuyukKuvvetiAl(kuvvetListesi);

@@ -11,10 +11,15 @@ class CisimModeli : public QObject,public QGraphicsItem
 public:
     enum CisimTipi {Kiris, SabitMesnet, HareketliMesnet, AnkastreMesnet,
                     TekilKuvvet, YayiliKuvvet, Moment};
+    enum Degerler {Tip, NoktaKonumu, NoktaKuvveti, BaslangicKonumu, BaslangicKuvveti,
+                  BitisKonumu, BitisKuvveti, MomentDegeri};
+
     CisimModeli(int tip, int noktaKonumu,int noktaKuvveti,int baslangicKonumu,
                 int bitisKonumu, int baslangicKuvveti,int bitisKuvveti,int moment, QGraphicsItem *parent = 0);
     CisimModeli(QGraphicsItem *parent = 0);
     QString tipIsmiAl() { return tipIsmim[_tip]; }
+    QMap<int,QString> tipIsimleriAl() { return tipIsmim; }
+    QMap<int,QString> degerlerinIsimleriniAl() { return degerlerim; }
     int tipAl() const { return _tip; }
     int tipAl(QString tipIsmi) { return tipIsmim.key(tipIsmi); }
     double noktaKonumuAl() const { return _noktaKonumu; }
@@ -34,6 +39,9 @@ public:
     void baslangicKuvvetiAta(double baslangicKuvveti ) { _baslangicKuvveti = baslangicKuvveti; }
     void bitisKuvvetiAta(double bitisKuvveti ) { _bitisKuvveti = bitisKuvveti; }
     void momentAta(double moment) { _moment = moment; }
+    void tipIsimleriOlustur();
+    void degerlerinIsimleriniOlustur();
+
 protected:
     virtual QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override;
@@ -48,6 +56,8 @@ private:
     double _bitisKuvveti;
     double _moment;
     QMap<int,QString> tipIsmim;
+    QMap<int,QString> degerlerim;
+
 };
 
 #endif // CISIMMODELI_H
