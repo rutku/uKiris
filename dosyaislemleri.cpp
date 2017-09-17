@@ -40,8 +40,6 @@ int DosyaIslemleri::xmlAc(QIODevice *dosya)
     QString hataMesaji;
     int hataDizesi;
     int hataKolonu;
-    CisimModeli cisim;
-    qDebug() << "Okuma";
 
     if (!domBelgesi.setContent(dosya,true,&hataMesaji,&hataDizesi,&hataKolonu)) {
         return -1;

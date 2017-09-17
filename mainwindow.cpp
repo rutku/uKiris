@@ -289,10 +289,15 @@ void MainWindow::diagramlariOlustur()
 
     cisimTablosu = new TabloWidget(this);
     QStringList cisimTabloBasligi;
-    cisimTabloBasligi << tr("Tip") << tr("Nokta\nKonumu (m)") << tr("Nokta Kuvveti\nkN veya kN-m")
-                      <<tr("Başlangıç\nNoktası(m)")<<tr("Bitiş\nNoktası(m)")
-                     <<tr("Başlangıç\nKuvveti(kN/m)")<<tr("Bitiş\nKuvveti(kN/m)")
-                    <<tr("Moment\n(kN.m)");
+    CisimModeli cisim;
+    foreach (auto isim, cisim.degerlerinIsimleriniAl().values()) {
+        isim = isim.replace(" ","\n");
+        cisimTabloBasligi.append(isim);
+    }
+//    cisimTabloBasligi << tr("Tip") << tr("Nokta\nKonumu (m)") << tr("Nokta Kuvveti\nkN veya kN-m")
+//                      <<tr("Başlangıç\nNoktası(m)")<<tr("Bitiş\nNoktası(m)")
+//                     <<tr("Başlangıç\nKuvveti(kN/m)")<<tr("Bitiş\nKuvveti(kN/m)")
+//                    <<tr("Moment\n(kN.m)");
 
     cisimTablosu->setFixedHeight(200);
     cisimTablosu->setColumnCount(cisimTabloBasligi.size());

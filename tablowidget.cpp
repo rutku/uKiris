@@ -56,32 +56,32 @@ void TabloWidget::tabloyaEkle(int satir, CisimModeli *cisimModeli)
 {
     setItem(satir,0,new QTableWidgetItem(cisimModeli->tipIsmiAl()));
     switch (cisimModeli->tipAl()) {
-    case DiagramItem::Kiris:
-        setItem(satir,3,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangciKonumuAl())));
-        setItem(satir,4,new QTableWidgetItem(tr("%1").arg(cisimModeli->bitisKonumuAl())));
+    case CisimModeli::Kiris:
+        setItem(satir,CisimModeli::BaslangicKonumu,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangciKonumuAl())));
+        setItem(satir,CisimModeli::BitisKonumu,new QTableWidgetItem(tr("%1").arg(cisimModeli->bitisKonumuAl())));
         break;
-    case DiagramItem::SabitMesnet:
-        setItem(satir,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
+    case CisimModeli::SabitMesnet:
+        setItem(satir,CisimModeli::NoktaKonumu,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
         break;
-    case DiagramItem::HareketliMesnet:
-        setItem(satir,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
+    case CisimModeli::HareketliMesnet:
+        setItem(satir,CisimModeli::HareketliMesnet,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
         break;
-    case DiagramItem::AnkastreMesnet:
-        setItem(satir,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
+    case CisimModeli::AnkastreMesnet:
+        setItem(satir,CisimModeli::NoktaKonumu,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
         break;
-    case DiagramItem::TekilKuvvet:
-        setItem(satir,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
-        setItem(satir,2,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKuvvetiAl())));
+    case CisimModeli::TekilKuvvet:
+        setItem(satir,CisimModeli::NoktaKonumu,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
+        setItem(satir,CisimModeli::NoktaKuvveti,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKuvvetiAl())));
         break;
-    case DiagramItem::YayiliKuvvet:
-        setItem(satir,3,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangciKonumuAl())));
-        setItem(satir,4,new QTableWidgetItem(tr("%1").arg(cisimModeli->bitisKonumuAl())));
-        setItem(satir,5,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangicKuvvetiAl())));
-        setItem(satir,6,new QTableWidgetItem(tr("%1").arg(cisimModeli->bitisKuvvetiAl())));
+    case CisimModeli::YayiliKuvvet:
+        setItem(satir,CisimModeli::BaslangicKonumu,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangciKonumuAl())));
+        setItem(satir,CisimModeli::BitisKonumu,new QTableWidgetItem(tr("%1").arg(cisimModeli->bitisKonumuAl())));
+        setItem(satir,CisimModeli::BaslangicKuvveti,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangicKuvvetiAl())));
+        setItem(satir,CisimModeli::BitisKuvveti,new QTableWidgetItem(tr("%1").arg(cisimModeli->bitisKuvvetiAl())));
         break;
-    case DiagramItem::Moment:
-        setItem(satir,1,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
-        setItem(satir,7,new QTableWidgetItem(tr("%1").arg(cisimModeli->momentAl())));
+    case CisimModeli::Moment:
+        setItem(satir,CisimModeli::NoktaKonumu,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKonumuAl())));
+        setItem(satir,CisimModeli::Moment,new QTableWidgetItem(tr("%1").arg(cisimModeli->momentAl())));
         break;
     default:
         break;

@@ -39,6 +39,7 @@ void CisimModeli::tipIsimleriOlustur()
 void CisimModeli::degerlerinIsimleriniOlustur()
 {
     degerlerim.insert(Tip,tr("Tip"));
+    degerlerim.insert(Sira,tr("Sıra"));
     degerlerim.insert(NoktaKonumu,tr("Nokta Konumu"));
     degerlerim.insert(NoktaKuvveti,tr("Nokta Kuvveti"));
     degerlerim.insert(BaslangicKonumu,tr("Başlangıç Konumu"));

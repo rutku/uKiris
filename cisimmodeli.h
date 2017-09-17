@@ -11,7 +11,7 @@ class CisimModeli : public QObject,public QGraphicsItem
 public:
     enum CisimTipi {Kiris, SabitMesnet, HareketliMesnet, AnkastreMesnet,
                     TekilKuvvet, YayiliKuvvet, Moment};
-    enum Degerler {Tip, NoktaKonumu, NoktaKuvveti, BaslangicKonumu, BaslangicKuvveti,
+    enum Degerler {Tip, Sira,NoktaKonumu, NoktaKuvveti, BaslangicKonumu, BaslangicKuvveti,
                   BitisKonumu, BitisKuvveti, MomentDegeri};
 
     CisimModeli(int tip, int noktaKonumu,int noktaKuvveti,int baslangicKonumu,
@@ -22,6 +22,7 @@ public:
     QMap<int,QString> degerlerinIsimleriniAl() { return degerlerim; }
     int tipAl() const { return _tip; }
     int tipAl(QString tipIsmi) { return tipIsmim.key(tipIsmi); }
+    int siraAl() const { return _sira; }
     double noktaKonumuAl() const { return _noktaKonumu; }
     double noktaKuvvetiAl() const { return _noktaKuvveti; }
     double baslangciKonumuAl() const { return _baslangicKonumu; }
@@ -32,6 +33,7 @@ public:
 
     void tipIsmiAta(QString tipIsmi) { _tipIsmi = tipIsmi; }
     void tipAta(int tip) { _tip = tip; }
+    void siraAta(int sira) { _sira = sira; }
     void noktaKonumuAta(double noktaKonumu) { _noktaKonumu = noktaKonumu; }
     void noktaKuvvetiAta(double noktaKuvveti ) { _noktaKuvveti = noktaKuvveti; }
     void baslangciKonumuAta(double baslangicKonumu ) { _baslangicKonumu = baslangicKonumu; }
@@ -48,6 +50,7 @@ protected:
 private:
     QString _tipIsmi;
     int _tip;
+    int _sira;
     double _noktaKonumu;
     double _noktaKuvveti;
     double _baslangicKonumu;
