@@ -51,6 +51,7 @@ private slots:
 
 signals:
     void diagramCiz();
+    void cisimEkle(CisimModeli *_cisimModeli);
 
 private:
     void aracKutusuOlustur();

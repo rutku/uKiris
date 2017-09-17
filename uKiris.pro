@@ -43,7 +43,8 @@ SOURCES += main.cpp\
     cisimler/tekilkuvvetcismi.cpp \
     cisimler/yayilikuvvetcismi.cpp \
     cisimler/momentcismi.cpp \
-    cisimler/hareketlimesnetCismi.cpp
+    cisimler/hareketlimesnetCismi.cpp \
+    ayarlar.cpp
 
 HEADERS  += mainwindow.h \
     cisimmodeli.h \
@@ -64,7 +65,8 @@ HEADERS  += mainwindow.h \
     cisimler/tekilkuvvetcismi.h \
     cisimler/yayilikuvvetcismi.h \
     cisimler/momentcismi.h \
-    cisimler/hareketlimesnetCismi.h
+    cisimler/hareketlimesnetCismi.h \
+    ayarlar.h
 
 RESOURCES += \
     simgeler.qrc

@@ -23,6 +23,7 @@ void DiagramScene::kipAta(DiagramScene::Mode kip)
 
 void DiagramScene::cisimIslemleri(CisimModeli *_cisimModeli)
 {
+    qDebug() << "Geldim";
     if (_cisimModeli == nullptr) {
         return;
     }

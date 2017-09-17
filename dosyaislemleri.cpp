@@ -17,7 +17,7 @@ void DosyaIslemleri::xmlOlarakKaydet(QIODevice *dosya, QList<CisimModeli *> cisi
     xmlAkisiYaz.writeStartElement("xbel");
     xmlAkisiYaz.writeAttribute("version", "1.0");
 
-    xmlAkisiYaz.writeTextElement("UzunlugunBirimi","cm");
+    xmlAkisiYaz.writeTextElement("UzunluğunBirimi","cm");
     xmlAkisiYaz.writeTextElement("KuvvetinBirimi","kN");
     xmlAkisiYaz.writeTextElement("MomentinBirimi","kN.m");
     foreach (auto cisim, cisimModeliListesi) {
@@ -35,74 +35,29 @@ void DosyaIslemleri::xmlOlarakKaydet(QIODevice *dosya, QList<CisimModeli *> cisi
     xmlAkisiYaz.writeEndDocument();
 }
 
-QList<CisimModeli *> DosyaIslemleri::xmlAc(QIODevice *dosya)
+int DosyaIslemleri::xmlAc(QIODevice *dosya)
 {
     QString hataMesaji;
     int hataDizesi;
     int hataKolonu;
-    QList<CisimModeli*> cisimModelListesi;
     CisimModeli cisim;
     qDebug() << "Okuma";
 
     if (!domBelgesi.setContent(dosya,true,&hataMesaji,&hataDizesi,&hataKolonu)) {
-        return cisimModelListesi;
+        return -1;
     }
 
     QDomElement kok = domBelgesi.documentElement();
 
     if (kok.tagName() != "xbel") {
-        return cisimModelListesi;
-    } else if (kok.hasAttribute("Sürüm")
+        return -2;
+    } else if (kok.hasAttribute("version")
                && kok.attribute("version") != "1.0") {
-        return cisimModelListesi;
+        return -3;
     }
-    foreach (auto tipIsmi, cisim.tipIsimleriAl().values()) {
-        tipIsmi = tipIsmi.replace(" ","");
-        QDomElement eleman = kok.firstChildElement(tipIsmi);
-        CisimModeli yeniEleman;
-        if (!eleman.isNull()) {
-            foreach (auto deger, yeniEleman.degerlerinIsimleriniAl().keys()) {
-                QString isim = yeniEleman.degerlerinIsimleriniAl().value(deger);
-                isim = isim.replace(" ","");
-                if (!isim.isEmpty()) {
-                    switch (deger) {
-                    case CisimModeli::Tip:
-                        yeniEleman.tipAta(cisim.tipIsimleriAl().key(tipIsmi));
-                        yeniEleman.tipIsmiAta(tipIsmi);
-                        break;
-                    case CisimModeli::NoktaKonumu:
-                        yeniEleman.noktaKonumuAta(elemaninDegerleriniOku(eleman,isim));
-                        break;
-                    case CisimModeli::NoktaKuvveti:
-                        yeniEleman.noktaKuvvetiAta(elemaninDegerleriniOku(eleman,isim));
-                        break;
-                    case CisimModeli::BaslangicKonumu:
-                        yeniEleman.baslangciKonumuAta(elemaninDegerleriniOku(eleman,isim));
-                        break;
-                    case CisimModeli::BaslangicKuvveti:
-                        yeniEleman.baslangicKuvvetiAta(elemaninDegerleriniOku(eleman,isim));
-                        break;
-                    case CisimModeli::BitisKonumu:
-                        yeniEleman.bitisKonumuAta(elemaninDegerleriniOku(eleman,isim));
-                        break;
-                    case CisimModeli::BitisKuvveti:
-                        yeniEleman.bitisKuvvetiAta(elemaninDegerleriniOku(eleman,isim));
-                        break;
-                    case CisimModeli::MomentDegeri:
-                        yeniEleman.momentAta(elemaninDegerleriniOku(eleman,isim));
-                        break;
-                    default:
-                        break;
-                    }
-
-                }
-            }
-        }
-        cisimModelListesi.append(&yeniEleman);
-    }
-
-    return cisimModelListesi;
-
+    cisimleriOku(kok);
+    ayarlariOku(kok);
+    return 0;
 }
 
 void DosyaIslemleri::goruntuOlarakKaydet(QString &dosyaYolu, QGraphicsScene *sahne)
@@ -118,10 +73,87 @@ void DosyaIslemleri::goruntuOlarakKaydet(QString &dosyaYolu, QGraphicsScene *sah
 
 }
 
+void DosyaIslemleri::cisimleriOku(QDomElement &kok)
+{
+    CisimModeli cisim;
+
+    foreach (auto tipIsmi, cisim.tipIsimleriAl().values()) {
+        int tip = cisim.tipIsimleriAl().key(tipIsmi);
+        tipIsmi = tipIsmi.replace(" ","");
+        QDomElement eleman = kok.firstChildElement(tipIsmi);
+        if (!eleman.isNull()) {
+            CisimModeli *yeniEleman = new CisimModeli();
+            foreach (auto deger, yeniEleman->degerlerinIsimleriniAl().keys()) {
+                QString isim = yeniEleman->degerlerinIsimleriniAl().value(deger);
+                isim = isim.replace(" ","");
+                if (!isim.isEmpty()) {
+                    switch (deger) {
+                    case CisimModeli::Tip:
+                        yeniEleman->tipAta(tip);
+                        yeniEleman->tipIsmiAta(cisim.tipIsimleriAl().value(tip));
+                        break;
+                    case CisimModeli::NoktaKonumu:
+                        yeniEleman->noktaKonumuAta(elemaninDegerleriniOku(eleman,isim));
+                        break;
+                    case CisimModeli::NoktaKuvveti:
+                        yeniEleman->noktaKuvvetiAta(elemaninDegerleriniOku(eleman,isim));
+                        break;
+                    case CisimModeli::BaslangicKonumu:
+                        yeniEleman->baslangciKonumuAta(elemaninDegerleriniOku(eleman,isim));
+                        break;
+                    case CisimModeli::BaslangicKuvveti:
+                        yeniEleman->baslangicKuvvetiAta(elemaninDegerleriniOku(eleman,isim));
+                        break;
+                    case CisimModeli::BitisKonumu:
+                        yeniEleman->bitisKonumuAta(elemaninDegerleriniOku(eleman,isim));
+                        break;
+                    case CisimModeli::BitisKuvveti:
+                        yeniEleman->bitisKuvvetiAta(elemaninDegerleriniOku(eleman,isim));
+                        break;
+                    case CisimModeli::MomentDegeri:
+                        yeniEleman->momentAta(elemaninDegerleriniOku(eleman,isim));
+                        break;
+                    default:
+                        break;
+                    }
+
+                }
+            }
+
+            cisimModelListesi.append(yeniEleman);
+        }
+    }
+
+
+}
+
 double DosyaIslemleri::elemaninDegerleriniOku(QDomElement &eleman,QString &ozellikIsmi)
 {
     bool tamam;
     double deger = eleman.firstChildElement(ozellikIsmi).text().toDouble(&tamam);
 
     return deger;
+}
+
+void DosyaIslemleri::ayarlariOku(QDomElement &kok)
+{
+    Ayarlar ayarlarim;
+    foreach (auto ayarIsmi, ayarlarim.ayarlarinIsimleriniAl().values()) {
+        int ayar = ayarlarim.ayarlarinIsimleriniAl().key(ayarIsmi);
+        ayarIsmi = ayarIsmi.replace(" ","");
+        QString ayarinDegeri = kok.firstChildElement(ayarIsmi).text();
+        switch (ayar) {
+        case Ayarlar::UzunlugunBirimi:
+            ayarlar.insert(Ayarlar::UzunlugunBirimi,ayarinDegeri);
+            break;
+        case Ayarlar::KuvvetinBirimi:
+            ayarlar.insert(Ayarlar::KuvvetinBirimi,ayarinDegeri);
+            break;
+        case Ayarlar::MomentinBirimi:
+            ayarlar.insert(Ayarlar::MomentinBirimi,ayarinDegeri);
+            break;
+        default:
+            break;
+        }
+    }
 }

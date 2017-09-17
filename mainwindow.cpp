@@ -31,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent)
     ankastreMesnetEkle = new AnkastreMesnetEkle(this);
     dosyaIslemleri = new DosyaIslemleri(this);
 
+    connect(this,SIGNAL(cisimEkle(CisimModeli*)),
+            scene,SLOT(cisimIslemleri(CisimModeli*)));
     connect(kirisEkle,SIGNAL(cisimEkle(CisimModeli*)),
             scene,SLOT(cisimIslemleri(CisimModeli*)));
     connect(mesnetEkle,SIGNAL(cisimEkle(CisimModeli*)),
@@ -352,9 +354,10 @@ void MainWindow::dosyaAc()
     }
 
     dosyaIslemleri->xmlAc(&dosya);
-
-    qDebug() << dosyaIsmi;
-
+    foreach (auto cisim, dosyaIslemleri->cisimModelListesiAl()) {
+        scene->kipAta(DiagramScene::CisimGir);
+        emit cisimEkle(cisim);
+    }
 }
 
 void MainWindow::dosyaKaydet()
