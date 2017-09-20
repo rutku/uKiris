@@ -13,6 +13,8 @@ public:
     enum {Tip = CisimModeli::Kiris };
     KirisCismi(CisimModeli *parent = nullptr);
     int type() const override { return Tip; }
+    int tipAl() { return tipim;}
+    int siraAl() { return siram; }
     virtual QRectF boundingRect() const override;
     QPainterPath shape() const override;
     CisimModeli *cisimModeliAl(){ return cisimModelim; }
@@ -26,6 +28,8 @@ private:
     qreal x;
     qreal y;
     QRectF cisimAlani;
+    int tipim;
+    int siram;
 };
 
 #endif // KIRIS_H

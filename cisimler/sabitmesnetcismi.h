@@ -14,6 +14,8 @@ public:
     enum {Tip = CisimModeli::SabitMesnet};
     SabitMesnetCismi(CisimModeli *parent = nullptr);
     int type() const override { return Tip; }
+    int tipAl() { return tipim;}
+    int siraAl() { return siram; }
     virtual QRectF boundingRect() const override { return cisimAlani; }
     QPainterPath shape() const override;
     CisimModeli *cisimModeliAl(){ return cisimModelim; }
@@ -28,6 +30,8 @@ private:
     qreal y;
     QRectF cisimAlani;
 
+    int tipim;
+    int siram;
 };
 
 #endif // SABITMESNETCISMI_H

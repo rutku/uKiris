@@ -14,6 +14,8 @@ public:
     enum {Tip = CisimModeli::HareketliMesnet };
     HareketliMesnetCismi(CisimModeli *parent = nullptr);
     int type() const override { return Tip; }
+    int tipAl() { return tipim; }
+    int siraAl() { return siram; }
     virtual QRectF boundingRect() const override { return cisimAlani; }
     QPainterPath shape() const override;
     CisimModeli *cisimModeliAl(){ return cisimModelim; }
@@ -28,6 +30,8 @@ private:
     qreal x;
     qreal y;
     QRectF cisimAlani;
+    int tipim;
+    int siram;
 
 };
 

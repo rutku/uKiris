@@ -14,6 +14,8 @@ public:
     enum {Tip = CisimModeli::TekilKuvvet };
     TekilKuvvetCismi(CisimModeli *parent = nullptr);
     int type() const override { return Tip; }
+    int tipAl() { return tipim;}
+    int siraAl() { return siram; }
     virtual QRectF boundingRect() const override { return cisimAlani; }
     QPainterPath shape() const override;
     CisimModeli *cisimModeliAl(){ return cisimModelim; }
@@ -31,6 +33,8 @@ private:
     QPolygonF okBasiCiz(int x,int y);
     QPolygonF okGovdesiCiz(int x, int h);
 
+    int tipim;
+    int siram;
 
 };
 

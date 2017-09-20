@@ -5,6 +5,8 @@ HareketliMesnetCismi::HareketliMesnetCismi(CisimModeli *parent)
     : cisimModelim(parent)
 {
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+    tipim = cisimModelim->tipAl();
+    siram = cisimModelim->siraAl();
 }
 
 QPainterPath HareketliMesnetCismi::shape() const

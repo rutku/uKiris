@@ -29,7 +29,7 @@ private:
 
     void cisimleriOku(QDomElement &kok);
     double elemaninDegerleriniOku(QDomElement &eleman,QString &ozellikIsmi);
-    void ayarlariOku(QDomElement &kok);
+    QDomNode ayarlariOku(QDomElement &kok);
 
     QDomDocument domBelgesi;
     QList<CisimModeli *> cisimModelListesi;

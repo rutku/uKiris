@@ -7,6 +7,8 @@ KirisCismi::KirisCismi(CisimModeli *parent)
     : cisimModelim(parent)
 {
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+    tipim = cisimModelim->tipAl();
+    siram = cisimModelim->siraAl();
 }
 
 QRectF KirisCismi::boundingRect() const

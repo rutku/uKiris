@@ -4,6 +4,8 @@ SabitMesnetCismi::SabitMesnetCismi(CisimModeli *parent)
     : cisimModelim(parent)
 {
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+    tipim = cisimModelim->tipAl();
+    siram = cisimModelim->siraAl();
 }
 
 QPainterPath SabitMesnetCismi::shape() const

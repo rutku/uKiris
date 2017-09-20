@@ -12,6 +12,7 @@ public:
     enum Birimler {UzunlugunBirimi, KuvvetinBirimi, MomentinBirimi};
 
     QMap<int,QString> ayarlarinIsimleriniAl() { return ayarlarinIsimleri; }
+    QString ayarIsmiAl(int deger) { return ayarlarinIsimleri.value(deger); }
 
 signals:
 

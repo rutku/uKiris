@@ -3,6 +3,8 @@
 AnkastreMesnetCismi::AnkastreMesnetCismi(CisimModeli *parent)
     : cisimModelim(parent)
 {
+    tipim = cisimModelim->tipAl();
+    siram = cisimModelim->siraAl();
 }
 
 QPainterPath AnkastreMesnetCismi::shape() const

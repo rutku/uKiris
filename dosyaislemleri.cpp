@@ -17,19 +17,34 @@ void DosyaIslemleri::xmlOlarakKaydet(QIODevice *dosya, QList<CisimModeli *> cisi
     xmlAkisiYaz.writeStartElement("xbel");
     xmlAkisiYaz.writeAttribute("version", "1.0");
 
-    xmlAkisiYaz.writeTextElement("UzunluğunBirimi","cm");
-    xmlAkisiYaz.writeTextElement("KuvvetinBirimi","kN");
-    xmlAkisiYaz.writeTextElement("MomentinBirimi","kN.m");
+    Ayarlar _ayarlar;
+    QString uzunlugunBirimi = _ayarlar.ayarIsmiAl(Ayarlar::UzunlugunBirimi).replace(" ","_");
+    QString kuvvetinBirimi = _ayarlar.ayarIsmiAl(Ayarlar::KuvvetinBirimi).replace(" ","_");
+    QString momentinBirimi = _ayarlar.ayarIsmiAl(Ayarlar::MomentinBirimi).replace(" ","_");
+
+    xmlAkisiYaz.writeTextElement(uzunlugunBirimi,"cm");
+    xmlAkisiYaz.writeTextElement(kuvvetinBirimi,"kN");
+    xmlAkisiYaz.writeTextElement(momentinBirimi,"kN.m");
     foreach (auto cisim, cisimModeliListesi) {
-        auto tipIsmi = cisim->tipIsmiAl().replace(" ","");
-        xmlAkisiYaz.writeStartElement(tipIsmi);
-        xmlAkisiYaz.writeTextElement("NoktaKonumu",QString("%1").arg(cisim->noktaKonumuAl()));
-        xmlAkisiYaz.writeTextElement("NoktaKuvveti",QString("%1").arg(cisim->noktaKuvvetiAl()));
-        xmlAkisiYaz.writeTextElement("BaşlangıçKonumu",QString("%1").arg(cisim->baslangciKonumuAl()));
-        xmlAkisiYaz.writeTextElement("BaşlangıçKuvveti",QString("%1").arg(cisim->baslangicKuvvetiAl()));
-        xmlAkisiYaz.writeTextElement("BitişKonumu",QString("%1").arg(cisim->bitisKonumuAl()));
-        xmlAkisiYaz.writeTextElement("BitişKuvveti",QString("%1").arg(cisim->bitisKuvvetiAl()));
-        xmlAkisiYaz.writeTextElement("Moment",QString("%1").arg(cisim->momentAl()));
+        QString tipIsmi = cisim->tipIsmiAl().replace(" ","_");
+        QString sira = cisim->degerIsmiAl(CisimModeli::Sira).replace(" ","_");
+        QString noktaKonumu = cisim->degerIsmiAl(CisimModeli::NoktaKonumu).replace(" ","_");
+        QString noktaKuvveti = cisim->degerIsmiAl(CisimModeli::NoktaKuvveti).replace(" ","_");
+        QString baslangicKonumu = cisim->degerIsmiAl(CisimModeli::BaslangicKonumu).replace(" ","_");
+        QString baslangicKuvveti = cisim->degerIsmiAl(CisimModeli::BaslangicKuvveti).replace(" ","_");
+        QString bitisKonumu = cisim->degerIsmiAl(CisimModeli::BitisKonumu).replace(" ","_");
+        QString bitisKuvveti = cisim->degerIsmiAl(CisimModeli::BitisKuvveti).replace(" ","_");
+        QString moment = cisim->degerIsmiAl(CisimModeli::Moment).replace(" ","_");
+
+        xmlAkisiYaz.writeStartElement(tipIsmi);        
+        xmlAkisiYaz.writeTextElement(sira,QString("%1").arg(cisim->siraAl()));
+        xmlAkisiYaz.writeTextElement(noktaKonumu,QString("%1").arg(cisim->noktaKonumuAl()));
+        xmlAkisiYaz.writeTextElement(noktaKuvveti,QString("%1").arg(cisim->noktaKuvvetiAl()));
+        xmlAkisiYaz.writeTextElement(baslangicKonumu,QString("%1").arg(cisim->baslangciKonumuAl()));
+        xmlAkisiYaz.writeTextElement(baslangicKuvveti,QString("%1").arg(cisim->baslangicKuvvetiAl()));
+        xmlAkisiYaz.writeTextElement(bitisKonumu,QString("%1").arg(cisim->bitisKonumuAl()));
+        xmlAkisiYaz.writeTextElement(bitisKuvveti,QString("%1").arg(cisim->bitisKuvvetiAl()));
+        xmlAkisiYaz.writeTextElement(moment,QString("%1").arg(cisim->momentAl()));
         xmlAkisiYaz.writeEndElement();
     }
     xmlAkisiYaz.writeEndDocument();
@@ -53,8 +68,8 @@ int DosyaIslemleri::xmlAc(QIODevice *dosya)
                && kok.attribute("version") != "1.0") {
         return -3;
     }
+
     cisimleriOku(kok);
-    ayarlariOku(kok);
     return 0;
 }
 
@@ -75,21 +90,26 @@ void DosyaIslemleri::cisimleriOku(QDomElement &kok)
 {
     CisimModeli cisim;
 
-    foreach (auto tipIsmi, cisim.tipIsimleriAl().values()) {
-        int tip = cisim.tipIsimleriAl().key(tipIsmi);
-        tipIsmi = tipIsmi.replace(" ","");
-        QDomElement eleman = kok.firstChildElement(tipIsmi);
+    QDomNode n = ayarlariOku(kok);
+
+    while(!n.isNull()){
+        QDomElement eleman = n.toElement();
+        QString tipIsmi = eleman.tagName();
+
+        int tip = cisim.tipIsimleriAl().key(tipIsmi.replace("_"," "));
         if (!eleman.isNull()) {
             CisimModeli *yeniEleman = new CisimModeli();
             foreach (auto deger, yeniEleman->degerlerinIsimleriniAl().keys()) {
                 QString isim = yeniEleman->degerlerinIsimleriniAl().value(deger);
-                isim = isim.replace(" ","");
+                isim = isim.replace(" ","_");
                 if (!isim.isEmpty()) {
                     switch (deger) {
                     case CisimModeli::Tip:
                         yeniEleman->tipAta(tip);
                         yeniEleman->tipIsmiAta(cisim.tipIsimleriAl().value(tip));
                         break;
+                    case CisimModeli::Sira:
+                        yeniEleman->siraAta(elemaninDegerleriniOku(eleman,isim));
                     case CisimModeli::NoktaKonumu:
                         yeniEleman->noktaKonumuAta(elemaninDegerleriniOku(eleman,isim));
                         break;
@@ -114,12 +134,12 @@ void DosyaIslemleri::cisimleriOku(QDomElement &kok)
                     default:
                         break;
                     }
-
                 }
             }
 
             cisimModelListesi.append(yeniEleman);
         }
+        n = n.nextSibling();
     }
 
 
@@ -133,25 +153,28 @@ double DosyaIslemleri::elemaninDegerleriniOku(QDomElement &eleman,QString &ozell
     return deger;
 }
 
-void DosyaIslemleri::ayarlariOku(QDomElement &kok)
+QDomNode DosyaIslemleri::ayarlariOku(QDomElement &kok)
 {
+    QDomNode n = kok.firstChild();
+
+    int ayarSayisi = 0;
     Ayarlar ayarlarim;
-    foreach (auto ayarIsmi, ayarlarim.ayarlarinIsimleriniAl().values()) {
-        int ayar = ayarlarim.ayarlarinIsimleriniAl().key(ayarIsmi);
-        ayarIsmi = ayarIsmi.replace(" ","");
-        QString ayarinDegeri = kok.firstChildElement(ayarIsmi).text();
-        switch (ayar) {
+    while (ayarSayisi < ayarlarim.ayarlarinIsimleriniAl().size()) {
+        QDomElement ayar = n.toElement();
+        int sira = ayarlarim.ayarlarinIsimleriniAl().key(ayar.tagName().replace("_"," "));
+        QString ayarinDegeri = ayar.text();
+        switch (sira) {
         case Ayarlar::UzunlugunBirimi:
-            ayarlar.insert(Ayarlar::UzunlugunBirimi,ayarinDegeri);
-            break;
         case Ayarlar::KuvvetinBirimi:
-            ayarlar.insert(Ayarlar::KuvvetinBirimi,ayarinDegeri);
-            break;
         case Ayarlar::MomentinBirimi:
-            ayarlar.insert(Ayarlar::MomentinBirimi,ayarinDegeri);
+            ayarlar.insert(sira,ayarinDegeri);
             break;
         default:
             break;
         }
+        n = n.nextSibling();
+        ayarSayisi++;
     }
+
+    return n;
 }

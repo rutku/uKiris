@@ -35,6 +35,7 @@ void DiagramScene::cisimIslemleri(CisimModeli *_cisimModeli)
                 kirisCismi = new KirisCismi(_cisimModeli);
                 addItem(kirisCismi);
                 kirisCismi->setPos(_cisimModeli->baslangciKonumuAl(),0);
+                qDebug() << kirisCismi->cisimModeliAl()->tipAl();
                 break;
             case CisimModeli::SabitMesnet:
                 sabitMesnetCismi = new SabitMesnetCismi(_cisimModeli);
@@ -109,10 +110,72 @@ void DiagramScene::cisimIslemleri(CisimModeli *_cisimModeli)
     {
         {
             foreach (QGraphicsItem *cisim, items(Qt::AscendingOrder)) {
-                CisimModeli *_cisim = qgraphicsitem_cast<CisimModeli *>(cisim);
-
-                if (_cisim->tipAl() == _cisimModeli->tipAl()) {
-                    removeItem(cisim);
+                switch (cisim->type()) {
+                case CisimModeli::Kiris:
+                {
+                    kirisCismi = qgraphicsitem_cast<KirisCismi *>(cisim);
+                    if (kirisCismi->tipAl() == _cisimModeli->tipAl() &&
+                            kirisCismi->siraAl() == _cisimModeli->siraAl()) {
+                        removeItem(cisim);
+                    }
+                }
+                    break;
+                case CisimModeli::SabitMesnet:
+                {
+                    sabitMesnetCismi = qgraphicsitem_cast<SabitMesnetCismi *>(cisim);
+                      if (sabitMesnetCismi->tipAl() == _cisimModeli->tipAl() &&
+                            sabitMesnetCismi->siraAl() == _cisimModeli->siraAl()) {
+                        removeItem(cisim);
+                    }
+                }
+                    break;
+                case CisimModeli::HareketliMesnet:
+                {
+                    hareketliMesnet = qgraphicsitem_cast<HareketliMesnetCismi *>(cisim);
+                    if (hareketliMesnet->tipAl() == _cisimModeli->tipAl() &&
+                            hareketliMesnet->siraAl() == _cisimModeli->siraAl()) {
+                        removeItem(cisim);
+                    }
+                }
+                    break;
+                case CisimModeli::AnkastreMesnet:
+                {
+                    ankastreMesnetCismi = qgraphicsitem_cast<AnkastreMesnetCismi *>(cisim);
+                    if (ankastreMesnetCismi->tipAl() == _cisimModeli->tipAl() &&
+                            ankastreMesnetCismi->siraAl() == _cisimModeli->siraAl()) {
+                        removeItem(cisim);
+                    }
+                }
+                    break;
+                case CisimModeli::TekilKuvvet:
+                {
+                    tekilKuvvetCismi = qgraphicsitem_cast<TekilKuvvetCismi *>(cisim);
+                    if (tekilKuvvetCismi->tipAl() == _cisimModeli->tipAl() &&
+                            tekilKuvvetCismi->siraAl() == _cisimModeli->siraAl()) {
+                        removeItem(cisim);
+                    }
+                }
+                    break;
+                case CisimModeli::YayiliKuvvet:
+                {
+                    yayiliKuvvetCismi = qgraphicsitem_cast<YayiliKuvvetCismi *>(cisim);
+                    if (yayiliKuvvetCismi->tipAl() == _cisimModeli->tipAl() &&
+                            yayiliKuvvetCismi->siraAl() == _cisimModeli->siraAl()) {
+                        removeItem(cisim);
+                    }
+                }
+                    break;
+                case CisimModeli::Moment:
+                {
+                    momentCismi = qgraphicsitem_cast<MomentCismi *>(cisim);
+                    if (momentCismi->tipAl() == _cisimModeli->tipAl() &&
+                            momentCismi->siraAl() == _cisimModeli->siraAl()) {
+                        removeItem(cisim);
+                    }
+                }
+                    break;
+                default:
+                    break;
                 }
             }
         }

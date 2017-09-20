@@ -8,6 +8,7 @@
 class CisimModeli : public QObject,public QGraphicsItem
 {
     Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 public:
     enum CisimTipi {Kiris, SabitMesnet, HareketliMesnet, AnkastreMesnet,
                     TekilKuvvet, YayiliKuvvet, Moment};
@@ -20,6 +21,7 @@ public:
     QString tipIsmiAl() { return tipIsmim[_tip]; }
     QMap<int,QString> tipIsimleriAl() { return tipIsmim; }
     QMap<int,QString> degerlerinIsimleriniAl() { return degerlerim; }
+    QString degerIsmiAl(int deger) { return degerlerim.value(deger); }
     int tipAl() const { return _tip; }
     int tipAl(QString tipIsmi) { return tipIsmim.key(tipIsmi); }
     int siraAl() const { return _sira; }
@@ -30,6 +32,7 @@ public:
     double baslangicKuvvetiAl() const { return _baslangicKuvveti; }
     double bitisKuvvetiAl() const { return _bitisKuvveti; }
     double momentAl() const { return _moment; }
+
 
     void tipIsmiAta(QString tipIsmi) { _tipIsmi = tipIsmi; }
     void tipAta(int tip) { _tip = tip; }

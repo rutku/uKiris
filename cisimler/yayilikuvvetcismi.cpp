@@ -4,6 +4,8 @@ YayiliKuvvetCismi::YayiliKuvvetCismi(CisimModeli *parent)
     : cisimModelim(parent)
 {
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+    tipim = cisimModelim->tipAl();
+    siram = cisimModelim->siraAl();
 }
 
 QPainterPath YayiliKuvvetCismi::shape() const

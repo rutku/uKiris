@@ -42,6 +42,7 @@ private:
     int simdikiSatir;
     int simdikiSutun;
     void tabloyaEkle(int satir,CisimModeli *cisimModeli);
+    void siraAl(CisimModeli *cisim);
 };
 
 #endif // TABLOWIDGET_H

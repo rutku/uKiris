@@ -15,6 +15,8 @@ public:
     enum {Tip = CisimModeli::Moment };
     MomentCismi(CisimModeli *parent = nullptr);
     int type() const override { return Tip; }
+    int tipAl() { return tipim;}
+    int siraAl() { return siram; }
     virtual QRectF boundingRect() const override { return cisimAlani; }
     QPainterPath shape() const override;
     CisimModeli *cisimModeliAl(){ return cisimModelim; }
@@ -29,6 +31,8 @@ private:
     QRectF cisimAlani;
 
     QPolygonF okBasiCiz(int x,int y);
+    int tipim;
+    int siram;
 
 
 };

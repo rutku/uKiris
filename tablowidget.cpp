@@ -19,13 +19,24 @@ void TabloWidget::cisimSil()
     if (selectedItems().isEmpty()) {
         return;
     }
-    emit Sil(cisimModelListesi.at(selectedItems().first()->row()));
-    removeRow(selectedItems().first()->row());
+    bool tamam;
+    QString tipIsmi = selectedItems().first()->text();
+    int sira = selectedItems().at(1)->text().toInt(&tamam);
+
+    for (int i = 0; i < cisimModelListesi.size(); i++) {
+        if (cisimModelListesi.at(i)->tipIsmiAl() == tipIsmi &&
+                cisimModelListesi.at(i)->siraAl() == sira) {
+            emit Sil(cisimModelListesi.at(i));
+            removeRow(selectedItems().first()->row());
+            cisimModelListesi.removeAt(i);
+        }
+    }
 }
 
 void TabloWidget::tabloyaCisimEkle(CisimModeli *cisimModeli)
 {
 
+    siraAl(cisimModeli);
     cisimModelListesi.append(cisimModeli);
     insertRow(rowCount());
     tabloyaEkle(rowCount()-1,cisimModeli);
@@ -54,7 +65,8 @@ void TabloWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 void TabloWidget::tabloyaEkle(int satir, CisimModeli *cisimModeli)
 {
-    setItem(satir,0,new QTableWidgetItem(cisimModeli->tipIsmiAl()));
+    setItem(satir,CisimModeli::Tip,new QTableWidgetItem(cisimModeli->tipIsmiAl()));
+    setItem(satir,CisimModeli::Sira,new QTableWidgetItem(tr("%1").arg(cisimModeli->siraAl())));
     switch (cisimModeli->tipAl()) {
     case CisimModeli::Kiris:
         setItem(satir,CisimModeli::BaslangicKonumu,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangciKonumuAl())));
@@ -86,5 +98,18 @@ void TabloWidget::tabloyaEkle(int satir, CisimModeli *cisimModeli)
     default:
         break;
     }
+}
+
+void TabloWidget::siraAl(CisimModeli *cisim)
+{
+    int sira = 0;
+    foreach (auto c, cisimModelListesiAl()) {
+        if (cisim->tipAl() == c->tipAl()) {
+            if (sira == c->siraAl()) {
+                sira++;
+            }
+        }
+    }
+    cisim->siraAta(sira);
 }
 

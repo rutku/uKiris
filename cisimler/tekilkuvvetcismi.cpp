@@ -4,6 +4,8 @@ TekilKuvvetCismi::TekilKuvvetCismi(CisimModeli *parent)
     : cisimModelim(parent)
 {
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+    tipim = cisimModelim->tipAl();
+    siram = cisimModelim->siraAl();
 }
 
 QPainterPath TekilKuvvetCismi::shape() const
