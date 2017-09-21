@@ -35,7 +35,6 @@ void DiagramScene::cisimIslemleri(CisimModeli *_cisimModeli)
                 kirisCismi = new KirisCismi(_cisimModeli);
                 addItem(kirisCismi);
                 kirisCismi->setPos(_cisimModeli->baslangciKonumuAl(),0);
-                qDebug() << kirisCismi->cisimModeliAl()->tipAl();
                 break;
             case CisimModeli::SabitMesnet:
                 sabitMesnetCismi = new SabitMesnetCismi(_cisimModeli);

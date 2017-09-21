@@ -22,6 +22,7 @@ public:
     TabloWidget(QWidget *parent = 0);
     QList<CisimModeli*> cisimModelListesiAl() { return cisimModelListesi; }
     void cisimSil();
+    void tumCisimleriSil();
 
 public slots:
     void tabloyaCisimEkle(CisimModeli *cisimModeli);

@@ -33,6 +33,16 @@ void TabloWidget::cisimSil()
     }
 }
 
+void TabloWidget::tumCisimleriSil()
+{
+    for (int i = 0; i < cisimModelListesi.size(); ++i) {
+        emit Sil(cisimModelListesi.at(i));
+    }
+    setRowCount(0);
+    qDeleteAll(cisimModelListesi.begin(),cisimModelListesi.end());
+    cisimModelListesi.clear();
+}
+
 void TabloWidget::tabloyaCisimEkle(CisimModeli *cisimModeli)
 {
 

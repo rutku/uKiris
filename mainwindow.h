@@ -40,7 +40,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    enum aracCubugu {Calistir,Kaydet,Ac,GoruntuyuKaydet,Sil};
+    enum aracCubugu {Calistir,Yeni,Kaydet,Ac,GoruntuyuKaydet,Sil};
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
@@ -60,10 +60,11 @@ private:
     void menulerOlustur();
     void aracCubuguOlustur();
     void cisimBilgisiGir(int id);
+    void yeniProje();
     void dosyaAc();
     void dosyaKaydet();
     void goruntuOlarakKaydet();
-
+    void projeyiSil();
 
     QWidget *cisimHucresiOlustur(const QString &Yazi,
                                   CisimModeli::CisimTipi tip, const QString &simge);

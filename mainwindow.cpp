@@ -60,10 +60,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this,SIGNAL(diagramCiz()),
             cisimTablosu,SLOT(diagramCiz()));
 
-
-
-
-
     aracCubuguOlustur();
 
     QHBoxLayout *katman = new QHBoxLayout;
@@ -151,6 +147,10 @@ void MainWindow::projeGrubunaTiklandi(int id)
     switch (aracCubugu(id)) {
     case Calistir:
         emit diagramCiz();
+        break;
+    case Yeni:
+        scene->kipAta(DiagramScene::CisimSil);
+        yeniProje();
         break;
     case Ac:
         dosyaAc();
@@ -264,6 +264,7 @@ void MainWindow::aracKutusuOlustur()
     projeAracCubugu->setMinimumHeight(50);
     projeAracCubugu->addWidget(aracCubuguButonuOlustur(tr("Çalıştır"),Calistir,":/simgeler/calistir.png"));
     projeAracCubugu->addSeparator();
+    projeAracCubugu->addWidget(aracCubuguButonuOlustur(tr("Yeni"),Yeni,":/simgeler/yeni.png"));
     projeAracCubugu->addWidget(aracCubuguButonuOlustur(tr("Kaydet"),Kaydet,":/simgeler/kaydet.png"));
     projeAracCubugu->addWidget(aracCubuguButonuOlustur(tr("Aç"),Ac,":/simgeler/ac.png"));
     projeAracCubugu->addWidget(aracCubuguButonuOlustur(tr("Çözümü Görüntü Olarak Kaydet"),GoruntuyuKaydet,":/simgeler/goruntu.png"));
@@ -339,6 +340,11 @@ void MainWindow::cisimBilgisiGir(int id)
     Q_UNUSED(id)
 }
 
+void MainWindow::yeniProje()
+{
+    projeyiSil();
+}
+
 void MainWindow::dosyaAc()
 {
     QString dosyaIsmi = QFileDialog::getOpenFileName(this,tr("Proje Aç"),"",
@@ -358,7 +364,11 @@ void MainWindow::dosyaAc()
         return;
     }
 
-    dosyaIslemleri->xmlAc(&dosya);
+
+    if (dosyaIslemleri->xmlAc(&dosya) == 0) {
+        scene->kipAta(DiagramScene::CisimSil);
+        cisimTablosu->tumCisimleriSil();
+    }
     foreach (auto cisim, dosyaIslemleri->cisimModelListesiAl()) {
         scene->kipAta(DiagramScene::CisimGir);
         emit cisimEkle(cisim);
@@ -404,6 +414,11 @@ void MainWindow::goruntuOlarakKaydet()
     dosyaIslemleri->goruntuOlarakKaydet(kesmeDiagrami,kesmeDiagramSahnesi);
     dosyaIslemleri->goruntuOlarakKaydet(momentDiagrami,momentDiagramSahnesi);
 
+}
+
+void MainWindow::projeyiSil()
+{
+    cisimTablosu->tumCisimleriSil();
 }
 
 
