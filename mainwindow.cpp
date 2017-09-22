@@ -382,7 +382,7 @@ void MainWindow::dosyaKaydet()
     if (dosyaIsmi.isEmpty()) {
         return;
     }
-
+    dosyaIsmi.append(".xml");
     QFile dosya(dosyaIsmi);
     if (!dosya.open(QFile::WriteOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("uKiriş"),
@@ -419,6 +419,8 @@ void MainWindow::goruntuOlarakKaydet()
 void MainWindow::projeyiSil()
 {
     cisimTablosu->tumCisimleriSil();
+    kesmeDiagramSahnesi->sonuclariSil();
+    momentDiagramSahnesi->sonuclariSil();
 }
 
 

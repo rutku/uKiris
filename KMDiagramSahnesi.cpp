@@ -8,6 +8,14 @@ KMDiagramSahnesi::KMDiagramSahnesi(QObject *parent)
 {
 }
 
+void KMDiagramSahnesi::sonuclariSil()
+{
+    foreach (auto cisim, items(Qt::AscendingOrder)) {
+        removeItem(cisim);
+    }
+    cisimModelListesi.clear();
+}
+
 void KMDiagramSahnesi::kesmeDiagramiCiz(QList<CisimModeli *> _cisimModelListesi)
 {
     diagramim = KesmeDiagrami;
@@ -27,9 +35,9 @@ void KMDiagramSahnesi::hesapla()
     cisimleriSirala();
     mesnetleriHesapla();
 
-    double h = 250;
-    double x2 = 0;
+    double h = 250.0;
     double y2 = h;
+    double x2 = 0.0;
     double moment = 0.0;
     double kesmeKuvveti = 0.0;
     double tekilKuvvet = 0.0;

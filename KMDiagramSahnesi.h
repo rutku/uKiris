@@ -22,6 +22,7 @@ class KMDiagramSahnesi : public QGraphicsScene
 public:
     enum Diagram { KesmeDiagrami, MomentDiagrami };
     KMDiagramSahnesi(QObject *parent = 0);
+    void sonuclariSil();
 
 public slots:
     void kesmeDiagramiCiz(QList<CisimModeli *> _cisimModelListesi);
