@@ -19,7 +19,7 @@ void YayiliKuvvetCismi::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 {
     prepareGeometryChange();
     painter->setRenderHint(QPainter::Antialiasing);
-    int x1 = cisimModelim->baslangciKonumuAl();
+    int x1 = cisimModelim->baslangicKonumuAl();
     int x2 = cisimModelim->bitisKonumuAl();
     x = x1;
     y = 0;

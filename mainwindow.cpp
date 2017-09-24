@@ -364,14 +364,17 @@ void MainWindow::dosyaAc()
         return;
     }
 
-
-    if (dosyaIslemleri->xmlAc(&dosya) == 0) {
+    qDebug() << dosyaIslemleri->cisimModelListesiAl().size();
+    if (dosyaIslemleri->cisimModelListesiAl().size() != 0) {
         scene->kipAta(DiagramScene::CisimSil);
         cisimTablosu->tumCisimleriSil();
+        dosyaIslemleri->verileriTemizle();
     }
-    foreach (auto cisim, dosyaIslemleri->cisimModelListesiAl()) {
-        scene->kipAta(DiagramScene::CisimGir);
-        emit cisimEkle(cisim);
+    if (dosyaIslemleri->xmlAc(&dosya) == 0) {
+        foreach (auto cisim, dosyaIslemleri->cisimModelListesiAl()) {
+            scene->kipAta(DiagramScene::CisimGir);
+            emit cisimEkle(cisim);
+        }
     }
 }
 

@@ -22,6 +22,7 @@ public:
     void goruntuOlarakKaydet(QString &dosyaYolu,QGraphicsScene *sahne);
     QList<CisimModeli *> cisimModelListesiAl() { return cisimModelListesi; }
     QMap<int,QString> ayarlariAl() { return ayarlar; }
+    void verileriTemizle();
 
 private:
     QXmlStreamWriter xmlAkisiYaz;

@@ -57,7 +57,7 @@ void KMDiagramSahnesi::hesapla()
     for (int i = 0; i <= kirisUzunlugu; ++i) {
         QLine diagramCizgisi;
         tekilKuvvetMomenti = 0.0;
-        yayiliMoment =0.0;
+//        yayiliMoment =0.0;
 
         bool sinirda = false;
 
@@ -67,14 +67,14 @@ void KMDiagramSahnesi::hesapla()
 
         foreach (CisimModeli *cisim, enKucuktenCisimModelListesi) {
             if (cisim->tipAl() == CisimModeli::YayiliKuvvet) {
-                if (i >= (int)cisim->baslangciKonumuAl() && i <= (int)cisim->bitisKonumuAl()) {
+                if (i >= (int)cisim->baslangicKonumuAl() && i <= (int)cisim->bitisKonumuAl()) {
 
-                    if (i == cisim->baslangciKonumuAl() || i == cisim->bitisKonumuAl()) {
+                    if (i == (int)cisim->baslangicKonumuAl() || i == (int)cisim->bitisKonumuAl()) {
                         sinirda = true;
                     }
 
-                    yayiliKuvvet = yayiliIcKuvvet(cisim,i);
-                    yayiliMoment = yayiliIcMoment(cisim,i);
+                    yayiliKuvvet = yayiliIcKuvvet(cisim,(double)i);
+                    yayiliMoment = yayiliIcMoment(cisim,(double)i);
 
                 }else if (i > (int)cisim->bitisKonumuAl()) {
                     yayiliMoment = yayiliDisMoment(cisim,i);
@@ -122,8 +122,8 @@ void KMDiagramSahnesi::hesapla()
 
         moment = (tekilKuvvetMomenti + yayiliMoment + sabitMesnetMomenti + hareketliMesnetMomenti +
                   ankastreMesnetMomenti + ankastreMomenti + noktaMomenti)/10;
-//        qDebug()<<"i["<<i<<"]TKM:"<<tekilKuvvetMomenti<<"YKM:"<<yayiliMoment<<"SMKM:"<<sabitMesnetMomenti<<"HMKM:"<<hareketliMesnetMomenti
-//               << "AMKM:"<<ankastreMesnetMomenti<<" M:"<<moment/10;
+        qDebug()<<"i["<<i<<"]TKM:"<<tekilKuvvetMomenti<<"YKM:"<<yayiliMoment<<"SMKM:"<<sabitMesnetMomenti<<"HMKM:"<<hareketliMesnetMomenti
+               << "AMKM:"<<ankastreMesnetMomenti<<" M:"<<moment/10;
 
 
         //Hesaplanan Yük(lerin)ün ve Mesnetlerin Kuvvet ve Moment Diyagramları Aşağıda çiziliyor.
@@ -325,7 +325,7 @@ void KMDiagramSahnesi::cisimleriSirala()
 
     for (int i = 0; i < _cisimModelListesi.size(); ++i) {
         if (_cisimModelListesi.at(i)->tipAl() == CisimModeli::Kiris) {
-            kirisUzunlugu = _cisimModelListesi.at(i)->bitisKonumuAl() - _cisimModelListesi.at(i)->baslangciKonumuAl();
+            kirisUzunlugu = _cisimModelListesi.at(i)->bitisKonumuAl() - _cisimModelListesi.at(i)->baslangicKonumuAl();
             _cisimModelListesi.removeAt(i);
         }
     }
@@ -339,7 +339,7 @@ void KMDiagramSahnesi::cisimleriSirala()
             int konum = 0;
 
             if (cisim->tipAl() == CisimModeli::YayiliKuvvet) {
-                konum = cisim->baslangciKonumuAl();
+                konum = cisim->baslangicKonumuAl();
             }else
             {
                 konum = cisim->noktaKonumuAl();
@@ -371,7 +371,7 @@ double KMDiagramSahnesi::kuvvetleriTopla()
         if (cisim->tipAl() == CisimModeli::TekilKuvvet) {
             toplamKuvvet += cisim->noktaKuvvetiAl();
         }else if (cisim->tipAl() == CisimModeli::YayiliKuvvet) {
-            double tabanUzunlugu = (cisim->bitisKonumuAl() - cisim->baslangciKonumuAl()) * METRE;
+            double tabanUzunlugu = (cisim->bitisKonumuAl() - cisim->baslangicKonumuAl()) * METRE;
             double dikDortgenKuvveti = 0;
             double ucgenKuvveti = 0;
 
@@ -436,10 +436,10 @@ double KMDiagramSahnesi::mesnetinKuvvetiniBul(CisimModeli::CisimTipi tip)
             if (CisimModeli::TekilKuvvet == cisim->tipAl()) {
                 moment += (cisim->noktaKonumuAl() * METRE - noktaKonumu) * cisim->noktaKuvvetiAl();
             }else if (CisimModeli::YayiliKuvvet == cisim->tipAl()) {
-                double tabanUzunlugu = (cisim->bitisKonumuAl() - cisim->baslangciKonumuAl()) * METRE;
+                double tabanUzunlugu = (cisim->bitisKonumuAl() - cisim->baslangicKonumuAl()) * METRE;
                 double dikDortgenKuvveti = 0;
                 double ucgenKuvveti = 0;
-                double dikdortgenMesafe = (cisim->baslangciKonumuAl() * METRE - noktaKonumu) + (tabanUzunlugu/2);
+                double dikdortgenMesafe = (cisim->baslangicKonumuAl() * METRE - noktaKonumu) + (tabanUzunlugu/2);
                 double ucgenMesafe = 0;
 
                 if (cisim->baslangicKuvvetiAl() == cisim->bitisKuvvetiAl()) {
@@ -448,12 +448,12 @@ double KMDiagramSahnesi::mesnetinKuvvetiniBul(CisimModeli::CisimTipi tip)
                     dikDortgenKuvveti = cisim->baslangicKuvvetiAl() * tabanUzunlugu;
                     ucgenKuvveti = (((cisim->bitisKuvvetiAl() - cisim->baslangicKuvvetiAl())
                             * tabanUzunlugu)/2.0);
-                    ucgenMesafe = (cisim->baslangciKonumuAl() * METRE - noktaKonumu) + (tabanUzunlugu*(2.0/3.0));
+                    ucgenMesafe = (cisim->baslangicKonumuAl() * METRE - noktaKonumu) + (tabanUzunlugu*(2.0/3.0));
                 }else if (qFabs(cisim->baslangicKuvvetiAl()) > qFabs(cisim->bitisKuvvetiAl())) {
                     dikDortgenKuvveti = cisim->bitisKuvvetiAl() * tabanUzunlugu;
                     ucgenKuvveti = (1/2)*((cisim->baslangicKuvvetiAl() - cisim->bitisKuvvetiAl())
                             * tabanUzunlugu);
-                    ucgenMesafe = (cisim->baslangciKonumuAl() * METRE - noktaKonumu) + (tabanUzunlugu*(1.0/3.0));
+                    ucgenMesafe = (cisim->baslangicKonumuAl() * METRE - noktaKonumu) + (tabanUzunlugu*(1.0/3.0));
                 }
 
                 moment += dikDortgenKuvveti * dikdortgenMesafe + ucgenKuvveti * ucgenMesafe;
@@ -479,39 +479,44 @@ double KMDiagramSahnesi::mesnetinKuvvetiniBul(CisimModeli::CisimTipi tip)
 }
 
 
-double KMDiagramSahnesi::yayiliIcKuvvet(CisimModeli *cisim, int i)
+double KMDiagramSahnesi::yayiliIcKuvvet(CisimModeli *cisim, double x)
 {
-    double dikdortgenKuvveti = cisim->baslangicKuvvetiAl() * (i - cisim->baslangciKonumuAl());
-    double ucgenKuvveti = ((cisim->bitisKuvvetiAl() - cisim->baslangicKuvvetiAl()) *
-                                                  (i-cisim->baslangciKonumuAl()))/2.0;
+    double dikdortgenKuvveti = 0.0;
+    double ucgeninKuvveti = 0.0;
 
-
-    if (cisim->baslangicKuvvetiAl() == cisim->bitisKuvvetiAl()) {
-        dikdortgenKuvveti = cisim->baslangicKuvvetiAl() * (i - cisim->baslangciKonumuAl());
-    }else {
-        dikdortgenKuvveti = cisim->bitisKuvvetiAl() * (i - cisim->baslangciKonumuAl());
-        ucgenKuvveti = ((cisim->baslangicKuvvetiAl() - cisim->bitisKuvvetiAl()) *
-                (i - cisim->baslangciKonumuAl()))/2.0;
+    if (cisim->baslangicKuvvetiAl() != cisim->bitisKuvvetiAl()) {
+        ucgeninKuvveti = ucgeninIcKuvveti(cisim,x);
+    }else if (cisim->baslangicKuvvetiAl() != 0.0 || cisim->bitisKuvvetiAl() != 0.0) {
+        dikdortgenKuvveti = dikdortgeninIcKuvveti(cisim,x);
     }
-    return ((dikdortgenKuvveti+ucgenKuvveti) / 100.0);
+    return ((dikdortgenKuvveti+ucgeninKuvveti) / 100.0);
 }
 
-double KMDiagramSahnesi::yayiliIcMoment(CisimModeli *cisim, int i)
+double KMDiagramSahnesi::yayiliIcMoment(CisimModeli *cisim, double x)
 {
-    double dikdortgenKuvveti = cisim->baslangicKuvvetiAl() * (i - cisim->baslangciKonumuAl());
-    double dikdortgenKuvvetiKonumu = i - (cisim->baslangciKonumuAl()+((i - cisim->baslangciKonumuAl())/2.0));
-    double ucgenKuvveti = ((cisim->bitisKuvvetiAl() - cisim->baslangicKuvvetiAl()) *
-                                                  (i-cisim->baslangciKonumuAl()))/2.0;
-    double ucgenKuvvetiKonumu = i - (cisim->baslangciKonumuAl()+((i - cisim->baslangciKonumuAl()*2.0)/3.0));
-
+    double dikdortgenKuvveti = 0.0;
+    double dikdortgenKuvvetiKonumu = 0.0;
+    double ucgenKuvveti = 0.0;
+    double ucgenKuvvetiKonumu = 0.0;
 
     if (cisim->baslangicKuvvetiAl() == cisim->bitisKuvvetiAl()) {
-        dikdortgenKuvveti = cisim->baslangicKuvvetiAl() * (i - cisim->baslangciKonumuAl());
+        dikdortgenKuvveti = dikdortgeninIcKuvveti(cisim,x);
+    }else if ( cisim->baslangicKuvvetiAl() == 0.0){
+        ucgenKuvveti = ucgeninIcKuvveti(cisim,x);
+        ucgenKuvvetiKonumu = ucgeninKonumu(cisim,x);
+    }else if (cisim->bitisKuvvetiAl() == 0.0) {
+        ucgenKuvveti = ucgeninIcKuvveti(cisim,x);
+        ucgenKuvvetiKonumu = ucgeninKonumu(cisim,x);
+    }else if ( qFabs(cisim->baslangicKuvvetiAl()) < qFabs(cisim->bitisKuvvetiAl())){
+        dikdortgenKuvveti = dikdortgeninIcKuvveti(cisim,x);
+        dikdortgenKuvvetiKonumu = dikdortgeninKonumu(cisim, x);
+        ucgenKuvveti = ucgeninIcKuvveti(cisim,x);
+        ucgenKuvvetiKonumu = ucgeninKonumu(cisim,x);
     }else {
-        dikdortgenKuvveti = cisim->bitisKuvvetiAl() * (i - cisim->baslangciKonumuAl());
-        ucgenKuvveti = ((cisim->baslangicKuvvetiAl() - cisim->bitisKuvvetiAl()) *
-                (i - cisim->baslangciKonumuAl()))/2.0;
-        ucgenKuvvetiKonumu = i - (cisim->baslangciKonumuAl()+((i - cisim->baslangciKonumuAl())/3.0));
+        dikdortgenKuvveti = dikdortgeninIcKuvveti(cisim,x);
+        dikdortgenKuvvetiKonumu = dikdortgeninKonumu(cisim,x);
+        ucgenKuvveti = ucgeninIcKuvveti(cisim,x);
+        ucgenKuvvetiKonumu = ucgeninKonumu(cisim,x);
     }
     return (((dikdortgenKuvveti * dikdortgenKuvvetiKonumu) +
              (ucgenKuvveti * ucgenKuvvetiKonumu)) / 100.0);
@@ -519,24 +524,93 @@ double KMDiagramSahnesi::yayiliIcMoment(CisimModeli *cisim, int i)
 
 double KMDiagramSahnesi::yayiliDisMoment(CisimModeli *cisim, int i)
 {
-    double dikdortgenKuvvetiKonumu = i -(cisim->baslangciKonumuAl()+(cisim->bitisKonumuAl()-cisim->baslangciKonumuAl())/2.0);
-    double dikdortgenKuvveti = cisim->baslangicKuvvetiAl() * (cisim->bitisKonumuAl() - cisim->baslangciKonumuAl());
-    double ucgenKuvvetiKonumu = i - (cisim->baslangciKonumuAl()+((cisim->bitisKonumuAl()-cisim->baslangciKonumuAl())*2.0)/3.0);
+    double dikdortgenKuvvetiKonumu = i -(cisim->baslangicKonumuAl()+(cisim->bitisKonumuAl()-cisim->baslangicKonumuAl())/2.0);
+    double dikdortgenKuvveti = cisim->baslangicKuvvetiAl() * (cisim->bitisKonumuAl() - cisim->baslangicKonumuAl());
+    double ucgenKuvvetiKonumu = i - (cisim->baslangicKonumuAl()+((cisim->bitisKonumuAl()-cisim->baslangicKonumuAl())*2.0)/3.0);
     double ucgenKuvveti = ((cisim->bitisKuvvetiAl() - cisim->baslangicKuvvetiAl()) *
-                           (cisim->bitisKonumuAl()-cisim->baslangciKonumuAl()))/2.0;
+                           (cisim->bitisKonumuAl()-cisim->baslangicKonumuAl()))/2.0;
 
     if (cisim->baslangicKuvvetiAl() == cisim->bitisKuvvetiAl()) {
-        dikdortgenKuvveti = cisim->baslangicKuvvetiAl() * (cisim->bitisKonumuAl()-cisim->baslangciKonumuAl());
+        dikdortgenKuvveti = cisim->baslangicKuvvetiAl() * (cisim->bitisKonumuAl()-cisim->baslangicKonumuAl());
 
     }else if (qFabs(cisim->baslangicKuvvetiAl()) > qFabs(cisim->bitisKuvvetiAl())) {
-        dikdortgenKuvveti = cisim->bitisKuvvetiAl() * (cisim->bitisKonumuAl() - cisim->baslangciKonumuAl());
-        ucgenKuvvetiKonumu = i - (cisim->baslangciKonumuAl()+(cisim->bitisKonumuAl()-cisim->baslangciKonumuAl())/3.0);
+        dikdortgenKuvveti = cisim->bitisKuvvetiAl() * (cisim->bitisKonumuAl() - cisim->baslangicKonumuAl());
+        ucgenKuvvetiKonumu = i - (cisim->baslangicKonumuAl()+(cisim->bitisKonumuAl()-cisim->baslangicKonumuAl())/3.0);
         ucgenKuvveti = ((cisim->baslangicKuvvetiAl() - cisim->bitisKuvvetiAl()) *
-                                    (cisim->bitisKonumuAl()-cisim->baslangciKonumuAl()))/2.0;
+                                    (cisim->bitisKonumuAl()-cisim->baslangicKonumuAl()))/2.0;
     }
     return ((((dikdortgenKuvveti * dikdortgenKuvvetiKonumu)) +
             (ucgenKuvveti * ucgenKuvvetiKonumu)) / 100.0);
 
+}
+
+double KMDiagramSahnesi::ucgeninIcKuvveti(CisimModeli *cisim, double x)
+{
+    double ucgeninXDekiBileskeKuvveti = 0.0;
+    double ucgeninXdekiKuvveti = 0.0;
+
+    if (cisim->baslangicKuvvetiAl() == 0.0) {
+        ucgeninXdekiKuvveti = (cisim->bitisKuvvetiAl()/(cisim->bitisKonumuAl() - cisim->baslangicKonumuAl())) * ( x - cisim->baslangicKonumuAl());
+        ucgeninXDekiBileskeKuvveti = (ucgeninXdekiKuvveti * (x - cisim->baslangicKonumuAl())) / 2.0;
+    }else if( cisim->bitisKuvvetiAl() == 0.0){
+        ucgeninXdekiKuvveti = (cisim->baslangicKuvvetiAl()/(cisim->bitisKonumuAl() - cisim->baslangicKonumuAl())) * ( x - cisim->baslangicKonumuAl());
+        ucgeninXDekiBileskeKuvveti = (ucgeninXdekiKuvveti * (x - cisim->baslangicKonumuAl())) / 2.0;
+    }else if (qFabs(cisim->baslangicKuvvetiAl()) < qFabs(cisim->bitisKuvvetiAl())) {
+        ucgeninXdekiKuvveti = ((cisim->bitisKuvvetiAl() - cisim->baslangicKuvvetiAl())/(cisim->bitisKonumuAl() - cisim->baslangicKonumuAl())) * ( x - cisim->baslangicKonumuAl());
+        ucgeninXDekiBileskeKuvveti = (ucgeninXdekiKuvveti * (x - cisim->baslangicKonumuAl())) / 2.0;
+    }else if (qFabs(cisim->bitisKuvvetiAl()) < qFabs(cisim->baslangicKuvvetiAl())) {
+        ucgeninXdekiKuvveti = ((cisim->baslangicKuvvetiAl() - cisim->bitisKuvvetiAl())/(cisim->bitisKonumuAl() - cisim->baslangicKonumuAl())) * ( x - cisim->baslangicKonumuAl());
+        ucgeninXDekiBileskeKuvveti = (ucgeninXdekiKuvveti * (x - cisim->baslangicKonumuAl())) / 2.0;
+    }else {
+        ucgeninXDekiBileskeKuvveti = -1;
+    }
+
+    return ucgeninXDekiBileskeKuvveti;
+}
+
+double KMDiagramSahnesi::ucgeninKonumu(CisimModeli *cisim, double x)
+{
+    double konum = 0.0;
+    if (cisim->baslangicKuvvetiAl() == 0.0 ||
+            qFabs(cisim->baslangicKuvvetiAl()) < qFabs(cisim->bitisKuvvetiAl())) {
+        konum = (x - cisim->baslangicKonumuAl()) / 3.0;
+    }else if( cisim->bitisKuvvetiAl() == 0.0 ||
+              qFabs(cisim->bitisKuvvetiAl()) < qFabs(cisim->baslangicKuvvetiAl())){
+        konum = ((x - cisim->baslangicKonumuAl()) * 2.0) / 3.0;
+    }else{
+        konum = -1;
+    }
+
+    return konum;
+}
+
+double KMDiagramSahnesi::dikdortgeninIcKuvveti(CisimModeli *cisim, double x)
+{
+    double dikdortgeninXdekiBileskeKuvveti = 0.0;
+
+    if (cisim->baslangicKuvvetiAl() == cisim->bitisKuvvetiAl()) {
+        dikdortgeninXdekiBileskeKuvveti = cisim->baslangicKuvvetiAl() * (x - cisim->baslangicKonumuAl());
+    }else if (qFabs(cisim->baslangicKuvvetiAl()) < qFabs(cisim->bitisKuvvetiAl())) {
+        dikdortgeninXdekiBileskeKuvveti = cisim->baslangicKuvvetiAl() * (x - cisim->baslangicKonumuAl());
+    }else if (qFabs(cisim->bitisKuvvetiAl()) < qFabs(cisim->baslangicKuvvetiAl())) {
+        dikdortgeninXdekiBileskeKuvveti = cisim->bitisKuvvetiAl() * (x - cisim->baslangicKonumuAl());
+    }else{
+        dikdortgeninXdekiBileskeKuvveti = -1;
+    }
+
+    return dikdortgeninXdekiBileskeKuvveti;
+}
+
+double KMDiagramSahnesi::dikdortgeninKonumu(CisimModeli *cisim, double x)
+{
+    double konum = 0.0;
+    if (cisim->baslangicKuvvetiAl() != 0.0 && cisim->bitisKuvvetiAl() != 0.0) {
+        konum = (x - cisim->baslangicKonumuAl()) / 2.0;
+    }else{
+        konum = -1;
+    }
+
+    return konum;
 }
 
 QVector2D KMDiagramSahnesi::enBuyukMomentiAl()

@@ -50,9 +50,13 @@ private:
     void sinirlardakiKuvvetleriCiz();
     double enBuyukKuvvetiAl(QList<QVector2D> kuvvetListesi);
     double enKucukKuvvetiAl(QList<QVector2D> kuvvetListesi);
-    double yayiliIcKuvvet(CisimModeli *cisim, int i);
-    double yayiliIcMoment(CisimModeli *cisim, int i);
+    double yayiliIcKuvvet(CisimModeli *cisim, double x);
+    double yayiliIcMoment(CisimModeli *cisim, double x);
     double yayiliDisMoment(CisimModeli *cisim, int i);
+    double ucgeninIcKuvveti(CisimModeli *cisim, double x);
+    double ucgeninKonumu(CisimModeli *cisim, double x);
+    double dikdortgeninIcKuvveti(CisimModeli *cisim, double x);
+    double dikdortgeninKonumu(CisimModeli *cisim, double x);
     QVector2D enBuyukMomentiAl();
     double METRE = 0.01;
     double SANTIMETRE = 100;

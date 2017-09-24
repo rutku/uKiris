@@ -27,7 +27,7 @@ public:
     int siraAl() const { return _sira; }
     double noktaKonumuAl() const { return _noktaKonumu; }
     double noktaKuvvetiAl() const { return _noktaKuvveti; }
-    double baslangciKonumuAl() const { return _baslangicKonumu; }
+    double baslangicKonumuAl() const { return _baslangicKonumu; }
     double bitisKonumuAl() const { return _bitisKonumu; }
     double baslangicKuvvetiAl() const { return _baslangicKuvveti; }
     double bitisKuvvetiAl() const { return _bitisKuvveti; }

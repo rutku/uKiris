@@ -34,7 +34,7 @@ void DiagramScene::cisimIslemleri(CisimModeli *_cisimModeli)
             case CisimModeli::Kiris:
                 kirisCismi = new KirisCismi(_cisimModeli);
                 addItem(kirisCismi);
-                kirisCismi->setPos(_cisimModeli->baslangciKonumuAl(),0);
+                kirisCismi->setPos(_cisimModeli->baslangicKonumuAl(),0);
                 break;
             case CisimModeli::SabitMesnet:
                 sabitMesnetCismi = new SabitMesnetCismi(_cisimModeli);
@@ -59,7 +59,7 @@ void DiagramScene::cisimIslemleri(CisimModeli *_cisimModeli)
             case CisimModeli::YayiliKuvvet:
                 yayiliKuvvetCismi = new YayiliKuvvetCismi(_cisimModeli);
                 addItem(yayiliKuvvetCismi);
-                yayiliKuvvetCismi->setPos(_cisimModeli->baslangciKonumuAl(),0);
+                yayiliKuvvetCismi->setPos(_cisimModeli->baslangicKonumuAl(),0);
                 break;
             case CisimModeli::Moment:
                 momentCismi = new MomentCismi(_cisimModeli);
@@ -78,7 +78,7 @@ void DiagramScene::cisimIslemleri(CisimModeli *_cisimModeli)
         {
             switch (_cisimModeli->tipAl()) {
             case CisimModeli::Kiris:
-                kirisCismi->setPos(_cisimModeli->baslangciKonumuAl(),0);
+                kirisCismi->setPos(_cisimModeli->baslangicKonumuAl(),0);
                 break;
             case CisimModeli::SabitMesnet:
                 sabitMesnetCismi->setPos(_cisimModeli->noktaKonumuAl(),35);
@@ -93,7 +93,7 @@ void DiagramScene::cisimIslemleri(CisimModeli *_cisimModeli)
                 tekilKuvvetCismi->setPos(_cisimModeli->noktaKonumuAl(),0);
                 break;
             case CisimModeli::YayiliKuvvet:
-                yayiliKuvvetCismi->setPos(_cisimModeli->baslangciKonumuAl(),0);
+                yayiliKuvvetCismi->setPos(_cisimModeli->baslangicKonumuAl(),0);
                 break;
             case CisimModeli::Moment:
                 momentCismi->setPos(_cisimModeli->noktaKonumuAl()+22,0);

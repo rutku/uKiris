@@ -196,8 +196,8 @@ QPolygonF DiagramItem::kirisCiz()
     QPolygonF kirisim;
 
     cisimModelim->tipAta(Kiris);
-    x = cisimModelim->baslangciKonumuAl();
-    int uzunluk = cisimModelim->bitisKonumuAl() - cisimModelim->baslangciKonumuAl();
+    x = cisimModelim->baslangicKonumuAl();
+    int uzunluk = cisimModelim->bitisKonumuAl() - cisimModelim->baslangicKonumuAl();
     y = 0;
     bound.setRect(x-1,-11,uzunluk+3,23);
     kirisim << QPointF(uzunluk, -10) << QPointF(0,-10)

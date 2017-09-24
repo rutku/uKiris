@@ -45,7 +45,6 @@ void TabloWidget::tumCisimleriSil()
 
 void TabloWidget::tabloyaCisimEkle(CisimModeli *cisimModeli)
 {
-
     siraAl(cisimModeli);
     cisimModelListesi.append(cisimModeli);
     insertRow(rowCount());
@@ -79,7 +78,7 @@ void TabloWidget::tabloyaEkle(int satir, CisimModeli *cisimModeli)
     setItem(satir,CisimModeli::Sira,new QTableWidgetItem(tr("%1").arg(cisimModeli->siraAl())));
     switch (cisimModeli->tipAl()) {
     case CisimModeli::Kiris:
-        setItem(satir,CisimModeli::BaslangicKonumu,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangciKonumuAl())));
+        setItem(satir,CisimModeli::BaslangicKonumu,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangicKonumuAl())));
         setItem(satir,CisimModeli::BitisKonumu,new QTableWidgetItem(tr("%1").arg(cisimModeli->bitisKonumuAl())));
         break;
     case CisimModeli::SabitMesnet:
@@ -96,7 +95,7 @@ void TabloWidget::tabloyaEkle(int satir, CisimModeli *cisimModeli)
         setItem(satir,CisimModeli::NoktaKuvveti,new QTableWidgetItem(tr("%1").arg(cisimModeli->noktaKuvvetiAl())));
         break;
     case CisimModeli::YayiliKuvvet:
-        setItem(satir,CisimModeli::BaslangicKonumu,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangciKonumuAl())));
+        setItem(satir,CisimModeli::BaslangicKonumu,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangicKonumuAl())));
         setItem(satir,CisimModeli::BitisKonumu,new QTableWidgetItem(tr("%1").arg(cisimModeli->bitisKonumuAl())));
         setItem(satir,CisimModeli::BaslangicKuvveti,new QTableWidgetItem(tr("%1").arg(cisimModeli->baslangicKuvvetiAl())));
         setItem(satir,CisimModeli::BitisKuvveti,new QTableWidgetItem(tr("%1").arg(cisimModeli->bitisKuvvetiAl())));

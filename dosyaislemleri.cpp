@@ -40,7 +40,7 @@ void DosyaIslemleri::xmlOlarakKaydet(QIODevice *dosya, QList<CisimModeli *> cisi
         xmlAkisiYaz.writeTextElement(sira,QString("%1").arg(cisim->siraAl()));
         xmlAkisiYaz.writeTextElement(noktaKonumu,QString("%1").arg(cisim->noktaKonumuAl()));
         xmlAkisiYaz.writeTextElement(noktaKuvveti,QString("%1").arg(cisim->noktaKuvvetiAl()));
-        xmlAkisiYaz.writeTextElement(baslangicKonumu,QString("%1").arg(cisim->baslangciKonumuAl()));
+        xmlAkisiYaz.writeTextElement(baslangicKonumu,QString("%1").arg(cisim->baslangicKonumuAl()));
         xmlAkisiYaz.writeTextElement(baslangicKuvveti,QString("%1").arg(cisim->baslangicKuvvetiAl()));
         xmlAkisiYaz.writeTextElement(bitisKonumu,QString("%1").arg(cisim->bitisKonumuAl()));
         xmlAkisiYaz.writeTextElement(bitisKuvveti,QString("%1").arg(cisim->bitisKuvvetiAl()));
@@ -84,6 +84,12 @@ void DosyaIslemleri::goruntuOlarakKaydet(QString &dosyaYolu, QGraphicsScene *sah
     sahne->render(&boyaci);
     goruntu.save(dosyaYolu);
 
+}
+
+void DosyaIslemleri::verileriTemizle()
+{
+//    qDeleteAll(cisimModelListesi.begin(),cisimModelListesi.end());
+    cisimModelListesi.clear();
 }
 
 void DosyaIslemleri::cisimleriOku(QDomElement &kok)
