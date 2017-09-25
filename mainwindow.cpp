@@ -367,8 +367,7 @@ void MainWindow::dosyaAc()
     qDebug() << dosyaIslemleri->cisimModelListesiAl().size();
     if (dosyaIslemleri->cisimModelListesiAl().size() != 0) {
         scene->kipAta(DiagramScene::CisimSil);
-        cisimTablosu->tumCisimleriSil();
-        dosyaIslemleri->verileriTemizle();
+        projeyiSil();
     }
     if (dosyaIslemleri->xmlAc(&dosya) == 0) {
         foreach (auto cisim, dosyaIslemleri->cisimModelListesiAl()) {
@@ -424,6 +423,7 @@ void MainWindow::projeyiSil()
     cisimTablosu->tumCisimleriSil();
     kesmeDiagramSahnesi->sonuclariSil();
     momentDiagramSahnesi->sonuclariSil();
+    dosyaIslemleri->verileriTemizle();
 }
 
 

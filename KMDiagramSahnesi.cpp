@@ -57,7 +57,7 @@ void KMDiagramSahnesi::hesapla()
     for (int i = 0; i <= kirisUzunlugu; ++i) {
         QLine diagramCizgisi;
         tekilKuvvetMomenti = 0.0;
-//        yayiliMoment =0.0;
+        yayiliMoment =0.0;
 
         bool sinirda = false;
 
@@ -484,10 +484,18 @@ double KMDiagramSahnesi::yayiliIcKuvvet(CisimModeli *cisim, double x)
     double dikdortgenKuvveti = 0.0;
     double ucgeninKuvveti = 0.0;
 
-    if (cisim->baslangicKuvvetiAl() != cisim->bitisKuvvetiAl()) {
+    if (cisim->baslangicKuvvetiAl() == cisim->bitisKuvvetiAl()) {
         ucgeninKuvveti = ucgeninIcKuvveti(cisim,x);
-    }else if (cisim->baslangicKuvvetiAl() != 0.0 || cisim->bitisKuvvetiAl() != 0.0) {
+    }else if (cisim->baslangicKuvvetiAl() == 0.0) {
+        ucgeninKuvveti = ucgeninIcKuvveti(cisim,x);
+    }else if (cisim->bitisKuvvetiAl() == 0.0) {
+        ucgeninKuvveti = ucgeninIcKuvveti(cisim,x);
+    }else if (qFabs(cisim->baslangicKuvvetiAl()) < qFabs(cisim->bitisKuvvetiAl())) {
         dikdortgenKuvveti = dikdortgeninIcKuvveti(cisim,x);
+        ucgeninKuvveti = ucgeninIcKuvveti(cisim,x);
+    }else {
+        dikdortgenKuvveti = dikdortgeninIcKuvveti(cisim,x);
+        ucgeninKuvveti = ucgeninIcKuvveti(cisim,x);
     }
     return ((dikdortgenKuvveti+ucgeninKuvveti) / 100.0);
 }
