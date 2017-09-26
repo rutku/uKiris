@@ -35,9 +35,6 @@ void KMDiagramSahnesi::hesapla()
     cisimleriSirala();
     mesnetleriHesapla();
 
-    double h = 250.0;
-    double y2 = h;
-    double x2 = 0.0;
     double moment = 0.0;
     double kesmeKuvveti = 0.0;
     double tekilKuvvet = 0.0;
@@ -60,10 +57,6 @@ void KMDiagramSahnesi::hesapla()
         yayiliMoment =0.0;
 
         bool sinirda = false;
-
-        x2 = i;
-        y2 = y2;
-
 
         foreach (CisimModeli *cisim, enKucuktenCisimModelListesi) {
             if (cisim->tipAl() == CisimModeli::YayiliKuvvet) {
@@ -118,22 +111,25 @@ void KMDiagramSahnesi::hesapla()
 
         double tmpKesmeKuvveti = kesmeKuvveti;
         kesmeKuvveti = (tekilKuvvet + yayiliKuvvet + sabitMesnetKuvveti + hareketliMesnetKuvveti +
-                ankastreMesnetKuvveti) * 10;
+                ankastreMesnetKuvveti) * 10.0;
+//        qDebug()<<"i["<<i<<"]TK:"<<tekilKuvvet<<"YK:"<<yayiliKuvvet<<"SMK:"<<sabitMesnetKuvveti<<"HMK:"<<hareketliMesnetKuvveti
+//               << "AMK:"<<ankastreMesnetKuvveti<<" K:"<<kesmeKuvveti * 10.0;
 
         moment = (tekilKuvvetMomenti + yayiliMoment + sabitMesnetMomenti + hareketliMesnetMomenti +
-                  ankastreMesnetMomenti + ankastreMomenti + noktaMomenti)/10;
-        qDebug()<<"i["<<i<<"]TKM:"<<tekilKuvvetMomenti<<"YKM:"<<yayiliMoment<<"SMKM:"<<sabitMesnetMomenti<<"HMKM:"<<hareketliMesnetMomenti
-               << "AMKM:"<<ankastreMesnetMomenti<<" M:"<<moment/10;
+                  ankastreMesnetMomenti + ankastreMomenti + noktaMomenti)/10.0;
+        if (qFabs(moment) < 0.0001 ) { //Hata Payı
+            moment = 0.0;
+        }
+//        qDebug()<<"i["<<i<<"]TKM:"<<tekilKuvvetMomenti<<"YKM:"<<yayiliMoment<<"SMKM:"<<sabitMesnetMomenti<<"HMKM:"<<hareketliMesnetMomenti
+//               << "AMKM:"<<ankastreMesnetMomenti<<" M:"<<moment/10;
 
 
         //Hesaplanan Yük(lerin)ün ve Mesnetlerin Kuvvet ve Moment Diyagramları Aşağıda çiziliyor.
-        x2 = i;
         if (diagramim == KesmeDiagrami) {
             kesmeKuvvetleri.append(QVector2D(i,kesmeKuvveti));
-            y2 = kesmeKuvveti + h;
             if (sinirda) {
                 if (kesmeKuvveti != tmpKesmeKuvveti) {
-                    kesmeKuvvetleri.insert((kesmeKuvvetleri.size()-1),QVector2D(i,tmpKesmeKuvveti));
+                    kesmeKuvvetleri.insert((kesmeKuvvetleri.size()-1),QVector2D(i,kesmeKuvveti));
                 }
             }
         }else {
@@ -143,7 +139,6 @@ void KMDiagramSahnesi::hesapla()
                     sinirda = true;
                 }
             }
-            y2 = moment + h;
             if (sinirda) {
                 if (ankastreMesnetMomenti != 0
                         && moment == 0
@@ -238,7 +233,6 @@ void KMDiagramSahnesi::sinirlardakiKuvvetleriCiz()
     double xEksenininYsi = enBuyukKuvvetiAl(kuvvetler) + h + 55;
     QPen kalem(Qt::blue,2,Qt::DashDotLine,Qt::RoundCap,Qt::RoundJoin);
 
-
     foreach (auto k, kuvvetler) {
         bool sinirda = false;
         foreach (auto cisim, enKucuktenCisimModelListesi) {
@@ -251,7 +245,7 @@ void KMDiagramSahnesi::sinirlardakiKuvvetleriCiz()
                 sinirda = cisim->noktaKonumuAl() == k.x() ? true : false;
                 break;
             case CisimModeli::YayiliKuvvet:
-                if (cisim->noktaKonumuAl() == k.x() && cisim->bitisKonumuAl() == k.x())
+                if (cisim->baslangicKonumuAl() == k.x() || cisim->bitisKonumuAl() == k.x())
                     sinirda = true;
                 break;
             default:

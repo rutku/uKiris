@@ -364,7 +364,6 @@ void MainWindow::dosyaAc()
         return;
     }
 
-    qDebug() << dosyaIslemleri->cisimModelListesiAl().size();
     if (dosyaIslemleri->cisimModelListesiAl().size() != 0) {
         scene->kipAta(DiagramScene::CisimSil);
         projeyiSil();
