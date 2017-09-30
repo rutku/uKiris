@@ -1,7 +1,5 @@
 #include "dosyaislemleri.h"
 
-#include <QDebug>
-
 DosyaIslemleri::DosyaIslemleri(QObject *parent)
     : QObject(parent)
 {

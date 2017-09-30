@@ -7,6 +7,7 @@
 #include <QGraphicsScene>
 #include <QList>
 #include <QtMath>
+#include <QVector2D>
 
 QT_BEGIN_NAMESPACE
 class QPen;

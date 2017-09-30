@@ -55,9 +55,6 @@ private:
     QToolButton *btnSol;
 
     QButtonGroup *btnYonGrubu;
-
-
-
 };
 
 #endif // MOMENTEKLE_H

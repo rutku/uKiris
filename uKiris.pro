@@ -37,6 +37,7 @@ SOURCES += main.cpp\
     arayuzler/yayilikuvvetekle.cpp \
     arayuzler/momentEkle.cpp \
     arayuzler/ankastremesnetekle.cpp \
+    arayuzler/uygulamahakkinda.cpp \
     cisimler/kirisCismi.cpp \
     cisimler/sabitmesnetcismi.cpp \
     cisimler/ankastremesnetcismi.cpp \
@@ -59,6 +60,7 @@ HEADERS  += mainwindow.h \
     arayuzler/yayilikuvvetekle.h \
     arayuzler/momentEkle.h \
     arayuzler/ankastremesnetekle.h \
+    arayuzler/uygulamahakkinda.h \
     cisimler/kirisCismi.h \
     cisimler/sabitmesnetcismi.h \
     cisimler/ankastremesnetcismi.h \

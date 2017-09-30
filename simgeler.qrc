@@ -17,5 +17,10 @@
         <file>simgeler/kaydet.png</file>
         <file>simgeler/sil.png</file>
         <file>simgeler/yeni.png</file>
+        <file>simgeler/github.png</file>
+        <file>simgeler/linkedin.png</file>
+        <file>simgeler/twitter.png</file>
+        <file>simgeler/website.png</file>
+        <file>simgeler/email.png</file>
     </qresource>
 </RCC>

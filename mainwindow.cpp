@@ -7,6 +7,7 @@
 #include "arayuzler/yayilikuvvetekle.h"
 #include "arayuzler/momentEkle.h"
 #include "arayuzler/ankastremesnetekle.h"
+#include "arayuzler/uygulamahakkinda.h"
 #include "cisimmodeli.h"
 #include "tablowidget.h"
 #include "dosyaislemleri.h"
@@ -17,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), kipim(DiagramScene::CisimGir)
 {
 
-    eylemlerOlustur();
+    eylemleriOlustur();
     aracKutusuOlustur();
     diagramlariOlustur();
     menulerOlustur();
@@ -29,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     yayiliKuvvetEkle = new YayiliKuvvetEkle(this);
     momentEkle = new MomentEkle(this);
     ankastreMesnetEkle = new AnkastreMesnetEkle(this);
+    uygulamaHakkinda = new UygulamaHakkinda(this);
     dosyaIslemleri = new DosyaIslemleri(this);
 
     connect(this,SIGNAL(cisimEkle(CisimModeli*)),
@@ -96,6 +98,7 @@ MainWindow::~MainWindow()
     delete momenDiagramGorunumu;
     delete momentDiagramSahnesi;
     delete dosyaIslemleri;
+    delete uygulamaHakkinda;
 
 }
 
@@ -313,15 +316,52 @@ void MainWindow::diagramlariOlustur()
 
 }
 
-void MainWindow::eylemlerOlustur()
+void MainWindow::eylemleriOlustur()
 {
+    projeAc = new QAction(tr("Proje &Aç"),this);
+    projeAc->setShortcuts(QKeySequence::Open);
+    projeAc->setStatusTip(tr("Kayıtlı olan Projeyi Aç"));
+    connect(projeAc,&QAction::triggered,this,&MainWindow::dosyaAc);
+
+    projeyiKaydet = new QAction(tr("Projeyi &Kaydet"),this);
+    projeyiKaydet->setShortcuts(QKeySequence::Save);
+    projeyiKaydet->setStatusTip(tr("Çalışmakta Olduğunuz Projeyi Kaydeder"));
+    connect(projeyiKaydet,&QAction::triggered,this,&MainWindow::dosyaKaydet);
+
+    yeniProjeOlustur = new QAction(tr("Yeni Proje &Oluştur"),this);
+    yeniProjeOlustur->setShortcuts(QKeySequence::New);
+    yeniProjeOlustur->setStatusTip(tr("Çalışmakta Olduğunuz Projeyi Kaydeder"));
+    connect(yeniProjeOlustur,&QAction::triggered,this,&MainWindow::yeniProje);
+
+    cikis = new QAction(tr("&Çıkış"),this);
+    cikis->setShortcuts(QKeySequence::Quit);
+    cikis->setStatusTip(tr("Uygulamadan Çıkış"));
+    connect(cikis,&QAction::triggered,this,&MainWindow::close);
+
+    hakkinda = new QAction(tr("Uygulama &Hakkında"),this);
+    hakkinda->setStatusTip(tr("Uygulama hakkında bilgiler verir"));
+    connect(hakkinda,&QAction::triggered,this,&MainWindow::hakkindaPenceresiniAc);
+
+    qtHakkinda = new QAction(tr("&Qt Hakkında"),this);
+    qtHakkinda->setStatusTip(tr("Uygulamanın Geliştirildiği Çatının Bilgisi"));
+    connect(qtHakkinda,&QAction::triggered,qApp,&QApplication::aboutQt);
+
 
 }
 
 void MainWindow::menulerOlustur()
 {
     dosyaMenusu = menuBar()->addMenu(tr("&Dosya"));
+    dosyaMenusu->addAction(projeAc);
+    dosyaMenusu->addAction(projeyiKaydet);
+    dosyaMenusu->addAction(yeniProjeOlustur);
+    dosyaMenusu->addAction(cikis);
+
+    projeMenusu = menuBar()->addMenu(tr("&Proje"));
+
     hakkindaMenusu = menuBar()->addMenu(tr("&Hakkında"));
+    hakkindaMenusu->addAction(hakkinda);
+    hakkindaMenusu->addAction(qtHakkinda);
 
 }
 
@@ -423,6 +463,11 @@ void MainWindow::projeyiSil()
     kesmeDiagramSahnesi->sonuclariSil();
     momentDiagramSahnesi->sonuclariSil();
     dosyaIslemleri->verileriTemizle();
+}
+
+void MainWindow::hakkindaPenceresiniAc()
+{
+    uygulamaHakkinda->exec();
 }
 
 

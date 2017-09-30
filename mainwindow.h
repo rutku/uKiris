@@ -7,6 +7,7 @@
 
 #include <QMainWindow>
 #include <QFileDialog>
+
 class Cisim;
 class KirisEkle;
 class MesnetEkle;
@@ -14,6 +15,7 @@ class TekilKuvvetEkle;
 class YayiliKuvvetEkle;
 class MomentEkle;
 class AnkastreMesnetEkle;
+class UygulamaHakkinda;
 class CisimlerinTabloModeli;
 class TabloWidget;
 class CisimModeli;
@@ -56,7 +58,7 @@ signals:
 private:
     void aracKutusuOlustur();
     void diagramlariOlustur();
-    void eylemlerOlustur();
+    void eylemleriOlustur();
     void menulerOlustur();
     void aracCubuguOlustur();
     void cisimBilgisiGir(int id);
@@ -65,6 +67,7 @@ private:
     void dosyaKaydet();
     void goruntuOlarakKaydet();
     void projeyiSil();
+    void hakkindaPenceresiniAc();
 
     QWidget *cisimHucresiOlustur(const QString &Yazi,
                                   CisimModeli::CisimTipi tip, const QString &simge);
@@ -90,9 +93,21 @@ private:
     MomentEkle *momentEkle;
     AnkastreMesnetEkle *ankastreMesnetEkle;
     DosyaIslemleri *dosyaIslemleri;
+    UygulamaHakkinda *uygulamaHakkinda;
 
     QMenu *dosyaMenusu;
+    QMenu *projeMenusu;
     QMenu *hakkindaMenusu;
+
+    //Dosya Menüsü
+    QAction *projeAc;
+    QAction *projeyiKaydet;
+    QAction *yeniProjeOlustur;
+    QAction *cikis;
+
+    //Hakkında
+    QAction *hakkinda;
+    QAction *qtHakkinda;
 
     QToolBar *isaretciAracCubugu;
     QToolBar *projeAracCubugu;
