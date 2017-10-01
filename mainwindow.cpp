@@ -318,6 +318,7 @@ void MainWindow::diagramlariOlustur()
 
 void MainWindow::eylemleriOlustur()
 {
+    //Dosya Menüsü
     projeAc = new QAction(tr("Proje &Aç"),this);
     projeAc->setShortcuts(QKeySequence::Open);
     projeAc->setStatusTip(tr("Kayıtlı olan Projeyi Aç"));
@@ -338,6 +339,36 @@ void MainWindow::eylemleriOlustur()
     cikis->setStatusTip(tr("Uygulamadan Çıkış"));
     connect(cikis,&QAction::triggered,this,&MainWindow::close);
 
+    //Proje Menüsü
+    kirisEkleme = new QAction(tr("&Kiriş Ekle"),this);
+    kirisEkleme->setStatusTip(tr("Yüklerin konulanacağı kiriş"));
+    connect(kirisEkleme,&QAction::triggered,this,&MainWindow::kirisEklemeTiklandi);
+
+    sabitMesnetEkleme = new QAction(tr("&Sabit Mesnet Ekle"));
+    sabitMesnetEkleme->setStatusTip(tr("Düşey yükleri taşıyan eleman"));
+    connect(sabitMesnetEkleme,&QAction::triggered,this,&MainWindow::sabitMesnetEklemeTiklandi);
+
+    hareketliMesnetEkleme = new QAction(tr("&Hareketli Mesnet Ekle"));
+    hareketliMesnetEkleme->setStatusTip(tr("Düşey yükleri taşıyan kayıcı eleman"));
+    connect(hareketliMesnetEkleme,&QAction::triggered,this,&MainWindow::hareketliMesnetEklemeTiklandi);
+
+    ankastreMesnetEkleme = new QAction(tr("&Ankastre Mesnet Ekle"));
+    ankastreMesnetEkleme->setStatusTip(tr("Düşey yükleri taşıyan eleman"));
+    connect(ankastreMesnetEkleme,&QAction::triggered,this,&MainWindow::ankastreMesnetEklemeTiklandi);
+
+    tekilKuvvetEkleme = new QAction(tr("&Tekil Kuvvet Ekle"));
+    tekilKuvvetEkleme->setStatusTip(tr("Nokta birime etki eden kuvvet"));
+    connect(tekilKuvvetEkleme,&QAction::triggered,this,&MainWindow::tekilKuvvetEklemeTiklandi);
+
+    yayiliYukEkleme = new QAction(tr("&Yayılı Kuvvet Ekle"));
+    yayiliYukEkleme->setStatusTip(tr("Belirli bir alana etki eden kuvvet"));
+    connect(yayiliYukEkleme,&QAction::triggered,this,&MainWindow::yayiliYukEklemeTiklandi);
+
+    momentEkleme = new QAction(tr("&Moment Ekle"));
+    momentEkleme->setStatusTip(tr("Döndürme kuvveti"));
+    connect(momentEkleme,&QAction::triggered,this,&MainWindow::momentEklemeTiklandi);
+
+    //Hakkında Menüsü
     hakkinda = new QAction(tr("Uygulama &Hakkında"),this);
     hakkinda->setStatusTip(tr("Uygulama hakkında bilgiler verir"));
     connect(hakkinda,&QAction::triggered,this,&MainWindow::hakkindaPenceresiniAc);
@@ -358,6 +389,13 @@ void MainWindow::menulerOlustur()
     dosyaMenusu->addAction(cikis);
 
     projeMenusu = menuBar()->addMenu(tr("&Proje"));
+    projeMenusu->addAction(kirisEkleme);
+    projeMenusu->addAction(sabitMesnetEkleme);
+    projeMenusu->addAction(hareketliMesnetEkleme);
+    projeMenusu->addAction(ankastreMesnetEkleme);
+    projeMenusu->addAction(tekilKuvvetEkleme);
+    projeMenusu->addAction(yayiliYukEkleme);
+    projeMenusu->addAction(momentEkleme);
 
     hakkindaMenusu = menuBar()->addMenu(tr("&Hakkında"));
     hakkindaMenusu->addAction(hakkinda);

@@ -68,6 +68,14 @@ private:
     void goruntuOlarakKaydet();
     void projeyiSil();
     void hakkindaPenceresiniAc();
+    void kirisEklemeTiklandi() {emit butonGrubunaTiklandi(CisimModeli::Kiris); }
+    void sabitMesnetEklemeTiklandi() {emit butonGrubunaTiklandi(CisimModeli::SabitMesnet); }
+    void hareketliMesnetEklemeTiklandi() {emit butonGrubunaTiklandi(CisimModeli::HareketliMesnet); }
+    void ankastreMesnetEklemeTiklandi() {emit butonGrubunaTiklandi(CisimModeli::AnkastreMesnet); }
+    void tekilKuvvetEklemeTiklandi() {emit butonGrubunaTiklandi(CisimModeli::TekilKuvvet); }
+    void yayiliYukEklemeTiklandi() {emit butonGrubunaTiklandi(CisimModeli::YayiliKuvvet); }
+    void momentEklemeTiklandi() {emit butonGrubunaTiklandi(CisimModeli::Moment); }
+
 
     QWidget *cisimHucresiOlustur(const QString &Yazi,
                                   CisimModeli::CisimTipi tip, const QString &simge);
@@ -104,6 +112,15 @@ private:
     QAction *projeyiKaydet;
     QAction *yeniProjeOlustur;
     QAction *cikis;
+
+    //ProjeMenüsü
+    QAction *kirisEkleme;
+    QAction *sabitMesnetEkleme;
+    QAction *hareketliMesnetEkleme;
+    QAction *ankastreMesnetEkleme;
+    QAction *tekilKuvvetEkleme;
+    QAction *yayiliYukEkleme;
+    QAction *momentEkleme;
 
     //Hakkında
     QAction *hakkinda;
