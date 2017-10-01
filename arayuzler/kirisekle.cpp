@@ -65,7 +65,6 @@
 
 #include "kirisekle.h"
 #include "cisimmodeli.h"
-#include "diagramItem.h"
 #include "diagramScene.h"
 
 #include <QtWidgets>

@@ -27,7 +27,6 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     cisimmodeli.cpp \
     tablowidget.cpp \
-    diagramItem.cpp \
     diagramScene.cpp \
     KMDiagramSahnesi.cpp \
     dosyaislemleri.cpp \
@@ -50,7 +49,6 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     cisimmodeli.h \
     tablowidget.h \
-    diagramItem.h \
     diagramScene.h \
     KMDiagramSahnesi.h \
     dosyaislemleri.h \

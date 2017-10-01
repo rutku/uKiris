@@ -144,7 +144,6 @@ void MomentEkle::tamamButonunaTiklandi()
 
     noktaKonumu = txtNoktaKonumu->text().toInt(&ok);
     moment = txtMoment->text().toInt(&ok) * yon;
-    qDebug() << yon;
     switch (kipim) {
     case DiagramScene::CisimGir:
         cisimModeli = new CisimModeli(CisimModeli::Moment,noktaKonumu,

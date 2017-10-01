@@ -63,9 +63,6 @@
 ****************************************************************************/
 
 #include "KMDiagramSahnesi.h"
-#include "diagramItem.h"
-
-#include <QDebug>
 
 KMDiagramSahnesi::KMDiagramSahnesi(QObject *parent)
     : QGraphicsScene(parent)

@@ -66,7 +66,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "diagramItem.h"
 #include "diagramScene.h"
 #include "KMDiagramSahnesi.h"
 

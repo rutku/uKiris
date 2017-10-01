@@ -64,10 +64,8 @@
 
 #include "tablowidget.h"
 #include "cisimmodeli.h"
-#include "diagramItem.h"
 #include "KMDiagramSahnesi.h"
 
-#include <QDebug>
 #include <QMouseEvent>
 
 TabloWidget::TabloWidget(QWidget *parent)

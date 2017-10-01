@@ -63,7 +63,6 @@
 ****************************************************************************/
 
 #include "cisimmodeli.h"
-#include "diagramItem.h"
 
 CisimModeli::CisimModeli(int tip, int noktaKonumu, int noktaKuvveti, int baslangicKonumu, int bitisKonumu, int baslangicKuvveti, int bitisKuvveti, int moment, QGraphicsItem *parent)
     : QGraphicsItem(parent)

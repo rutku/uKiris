@@ -64,7 +64,6 @@
 
 
 #include "hareketlimesnetCismi.h"
-#include <QDebug>
 
 HareketliMesnetCismi::HareketliMesnetCismi(CisimModeli *parent)
     : cisimModelim(parent)

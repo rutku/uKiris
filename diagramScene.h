@@ -66,7 +66,6 @@
 #ifndef DIAGRAMSCENE_H
 #define DIAGRAMSCENE_H
 
-#include "diagramItem.h"
 #include "cisimmodeli.h"
 #include "cisimler/kirisCismi.h"
 #include "cisimler/sabitmesnetcismi.h"
@@ -78,7 +77,6 @@
 
 
 #include <QGraphicsScene>
-#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 class QGraphicsSceneMouseEvent;
@@ -113,7 +111,6 @@ signals:
 
 private:
     CisimModeli *cisimModeli;
-    DiagramItem *diagramItem;
     KirisCismi *kirisCismi;
     SabitMesnetCismi *sabitMesnetCismi;
     HareketliMesnetCismi *hareketliMesnet;

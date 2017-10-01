@@ -66,7 +66,6 @@
 #include "kirisCismi.h"
 
 #include <QPainter>
-#include <QDebug>
 
 KirisCismi::KirisCismi(CisimModeli *parent)
     : cisimModelim(parent)

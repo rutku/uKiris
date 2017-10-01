@@ -66,7 +66,6 @@
 #ifndef KESMEDIAGRAMSAHNESI_H
 #define KESMEDIAGRAMSAHNESI_H
 
-#include "diagramItem.h"
 #include "cisimmodeli.h"
 
 #include <QGraphicsScene>
