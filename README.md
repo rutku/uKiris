@@ -14,6 +14,15 @@ Ne yapar?
 * [Kaynak Kodu .zip](https://github.com/rutku/uKiris/archive/1.0.zip)
 * [Kaynak Kodu .tar.gz](https://github.com/rutku/uKiris/archive/1.0.tar.gz)
 
+### Kaynak Koddan Kurulum:
+Sisteminizde Qt4 ve üzeri geliştirme sürümü kurulu olmalıdır.
+Projenin olduğu dizini konsoldan girin ve aşağıdaki komutları verin.
+```
+qmake
+make
+
+```
+
 ### Ekran Görüngüleri:
 ![](https://raw.githubusercontent.com/rutku/uKiris/master/uKirisAnaEkran.JPG)
 
