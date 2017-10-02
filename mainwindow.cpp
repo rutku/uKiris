@@ -285,6 +285,35 @@ void MainWindow::cisimDuzenle(CisimModeli *_cisimModeli)
     }
 }
 
+void MainWindow::closeEvent(QCloseEvent *olay)
+{
+    if (cisimTablosu->cisimModelListesiAl().size() == 0) {
+        return;
+    }
+    QMessageBox msgBox;
+    msgBox.setText("Programdan Çıkış Uyarısı");
+    msgBox.setInformativeText("Değişikliği kaydetmek ister misiniz?");
+    btnKaydet = msgBox.addButton(QMessageBox::Save);
+    btnKaydetme = msgBox.addButton(QMessageBox::Discard);
+    btnVazgec = msgBox.addButton(QMessageBox::Cancel);
+
+    btnKaydet->setText(tr("Kaydet"));
+    btnKaydetme->setText(tr("Kaydetme"));
+    btnVazgec->setText(tr("Vazgeç"));
+
+    msgBox.setDefaultButton(QMessageBox::Save);
+    msgBox.exec();
+
+    if (msgBox.clickedButton() == btnKaydet) {
+        dosyaKaydet();
+        olay->accept();
+    }else if (msgBox.clickedButton() == btnKaydetme) {
+        olay->accept();
+    }else {
+        olay->ignore();
+    }
+}
+
 void MainWindow::aracKutusuOlustur()
 {
     butonGrubu = new QButtonGroup(this); //Elemanlar ve Mesnetlerin dizisini oluşturuyoruz.
@@ -408,27 +437,27 @@ void MainWindow::eylemleriOlustur()
     kirisEkleme->setStatusTip(tr("Yüklerin konulanacağı kiriş"));
     connect(kirisEkleme,&QAction::triggered,this,&MainWindow::kirisEklemeTiklandi);
 
-    sabitMesnetEkleme = new QAction(tr("&Sabit Mesnet Ekle"));
+    sabitMesnetEkleme = new QAction(tr("&Sabit Mesnet Ekle"),this);
     sabitMesnetEkleme->setStatusTip(tr("Düşey yükleri taşıyan eleman"));
     connect(sabitMesnetEkleme,&QAction::triggered,this,&MainWindow::sabitMesnetEklemeTiklandi);
 
-    hareketliMesnetEkleme = new QAction(tr("&Hareketli Mesnet Ekle"));
+    hareketliMesnetEkleme = new QAction(tr("&Hareketli Mesnet Ekle"),this);
     hareketliMesnetEkleme->setStatusTip(tr("Düşey yükleri taşıyan kayıcı eleman"));
     connect(hareketliMesnetEkleme,&QAction::triggered,this,&MainWindow::hareketliMesnetEklemeTiklandi);
 
-    ankastreMesnetEkleme = new QAction(tr("&Ankastre Mesnet Ekle"));
+    ankastreMesnetEkleme = new QAction(tr("&Ankastre Mesnet Ekle"),this);
     ankastreMesnetEkleme->setStatusTip(tr("Düşey yükleri taşıyan eleman"));
     connect(ankastreMesnetEkleme,&QAction::triggered,this,&MainWindow::ankastreMesnetEklemeTiklandi);
 
-    tekilKuvvetEkleme = new QAction(tr("&Tekil Kuvvet Ekle"));
+    tekilKuvvetEkleme = new QAction(tr("&Tekil Kuvvet Ekle"),this);
     tekilKuvvetEkleme->setStatusTip(tr("Nokta birime etki eden kuvvet"));
     connect(tekilKuvvetEkleme,&QAction::triggered,this,&MainWindow::tekilKuvvetEklemeTiklandi);
 
-    yayiliYukEkleme = new QAction(tr("&Yayılı Kuvvet Ekle"));
+    yayiliYukEkleme = new QAction(tr("&Yayılı Kuvvet Ekle"),this);
     yayiliYukEkleme->setStatusTip(tr("Belirli bir alana etki eden kuvvet"));
     connect(yayiliYukEkleme,&QAction::triggered,this,&MainWindow::yayiliYukEklemeTiklandi);
 
-    momentEkleme = new QAction(tr("&Moment Ekle"));
+    momentEkleme = new QAction(tr("&Moment Ekle"),this);
     momentEkleme->setStatusTip(tr("Döndürme kuvveti"));
     connect(momentEkleme,&QAction::triggered,this,&MainWindow::momentEklemeTiklandi);
 

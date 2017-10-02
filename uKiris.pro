@@ -71,4 +71,6 @@ HEADERS  += mainwindow.h \
 RESOURCES += \
     simgeler.qrc
 
+RC_ICONS = simgeler/simge.ico
+
 DISTFILES +=

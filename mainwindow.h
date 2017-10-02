@@ -115,6 +115,9 @@ private slots:
     void projeGrubunaTiklandi(int id);
     void cisimDuzenle(CisimModeli *_cisimModeli);
 
+protected:
+    void closeEvent(QCloseEvent *olay);
+
 signals:
     void diagramCiz();
     void cisimEkle(CisimModeli *_cisimModeli);
@@ -140,7 +143,6 @@ private:
     void yayiliYukEklemeTiklandi() {emit butonGrubunaTiklandi(CisimModeli::YayiliKuvvet); }
     void momentEklemeTiklandi() {emit butonGrubunaTiklandi(CisimModeli::Moment); }
 
-
     QWidget *cisimHucresiOlustur(const QString &Yazi,
                                   CisimModeli::CisimTipi tip, const QString &simge);
     QToolButton *aracCubuguButonuOlustur(const QString &Yazi,
@@ -152,6 +154,9 @@ private:
     QGraphicsView *view;
     QGraphicsView *kesmeDiagramGorunumu;
     QGraphicsView *momenDiagramGorunumu;
+    QPushButton *btnKaydet;
+    QPushButton *btnKaydetme;
+    QPushButton *btnVazgec;
 
 
     int kirisUzunlugu;

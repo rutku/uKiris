@@ -79,8 +79,10 @@ UygulamaHakkinda::UygulamaHakkinda(QWidget *parent)
                                 "\nTürkçe yazılmasındaki amacım mümkün"
                                 "\nolduğunca tecrübesi az,insanlara yardımcı "
                                 "\nolabilmektir. İşleyiş hakkında daha iyin fikir"
-                                "\nsahibi olmalarını sağlamaktır."
-                                "\nBu uygulama BSD lisansı ile lisanlanmıştır.");
+                                "\nsahibi olmalarını sağlamaktır. Uygulama"
+                                "\ngüncellemeleri ve yeni uygulamalar için"
+                                "\ntakipte kalınız."
+                                "\nBu uygulama BSD lisansı ile lisanslanmıştır.");
 
     lblUygulamaIsmi = new QLabel(uygulamaIsmi,this);
     lblUygulamaIsmi->setStyleSheet("font-weight: bold");
@@ -155,7 +157,7 @@ UygulamaHakkinda::UygulamaHakkinda(QWidget *parent)
     setLayout(anaKatman);
     setWindowTitle(tr("Hakkında"));
     setFixedHeight(350);
-    setFixedWidth(400);
+    setFixedWidth(340);
 }
 UygulamaHakkinda::~UygulamaHakkinda()
 {

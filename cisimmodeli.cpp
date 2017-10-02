@@ -117,7 +117,7 @@ QRectF CisimModeli::boundingRect() const
 
 }
 
-void CisimModeli::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+void CisimModeli::paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *)
 {
 
 }
