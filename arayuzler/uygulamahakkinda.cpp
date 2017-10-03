@@ -82,7 +82,9 @@ UygulamaHakkinda::UygulamaHakkinda(QWidget *parent)
                                 "\nsahibi olmalarını sağlamaktır. Uygulama"
                                 "\ngüncellemeleri ve yeni uygulamalar için"
                                 "\ntakipte kalınız."
-                                "\nBu uygulama BSD lisansı ile lisanslanmıştır.");
+                                "\nBu uygulama BSD lisansı ile lisanslanmıştır."
+                                "\n\n                  2017 - "
+                                "\n                                            Ramazan Utku");
 
     lblUygulamaIsmi = new QLabel(uygulamaIsmi,this);
     lblUygulamaIsmi->setStyleSheet("font-weight: bold");
