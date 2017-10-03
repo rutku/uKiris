@@ -97,6 +97,9 @@ UygulamaHakkinda::UygulamaHakkinda(QWidget *parent)
 
     lblHakkinda = new QLabel(hakkindaYazisi,this);
     lblHakkinda->setFixedHeight(200);
+    QFont fontum;
+    fontum.setPixelSize(12);
+    lblHakkinda->setFont(fontum);
 
     btnKapat = new QPushButton(tr("Kapat"),this);
     btnKapat->setFixedWidth(70);
@@ -119,8 +122,6 @@ UygulamaHakkinda::UygulamaHakkinda(QWidget *parent)
     btnEPosta = new QToolButton(this);
     btnEPosta->setIcon(QIcon(":/simgeler/email.png"));
     btnEPosta->setIconSize(QSize(50,50));
-
-
 
     QVBoxLayout *butonKatmani = new QVBoxLayout();
     butonKatmani->addWidget(btnGitHub);
