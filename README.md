@@ -4,8 +4,9 @@ Basit kiriş üzerinde kesme ve moment diyagramı çizen uygulama.
 Ne yapar?
 * Bir kirişin üzerine birden fazla yük girebilrisiniz.
 * Sınırsızca verilenizi analiz edebilirsiniz.
+* Yüklemeleri ve sonuçlarını PNG formatında alabilirsiniz.
 * XML formatıyla kayıt yapabilir ayrıca açabilirsiniz.
-* Platform bağımsızıdır. 
+* Platformdan bağımsızdır. 
 * Açık kaynak kodludur. Her türlü değişikliği yapabilirsiniz.
 * Kaynak kodları Türkçe olduğu için okunabilirlik daha fazla.
 
