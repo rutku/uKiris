@@ -114,7 +114,8 @@ void CisimModeli::degerlerinIsimleriniOlustur()
 
 QRectF CisimModeli::boundingRect() const
 {
-
+    QRectF kare;
+    return kare;
 }
 
 void CisimModeli::paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *)

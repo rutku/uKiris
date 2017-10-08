@@ -82,7 +82,9 @@ UygulamaHakkinda::UygulamaHakkinda(QWidget *parent)
                                 "\nsahibi olmalarını sağlamaktır. Uygulama"
                                 "\ngüncellemeleri ve yeni uygulamalar için"
                                 "\ntakipte kalınız."
-                                "\nBu uygulama BSD lisansı ile lisanslanmıştır.");
+                                "\nBu uygulama BSD lisansı ile lisanslanmıştır."
+                                "\n\n                  2017 - "
+                                "\n                                            Ramazan Utku");
 
     lblUygulamaIsmi = new QLabel(uygulamaIsmi,this);
     lblUygulamaIsmi->setStyleSheet("font-weight: bold");
@@ -95,6 +97,9 @@ UygulamaHakkinda::UygulamaHakkinda(QWidget *parent)
 
     lblHakkinda = new QLabel(hakkindaYazisi,this);
     lblHakkinda->setFixedHeight(200);
+    QFont fontum;
+    fontum.setPixelSize(12);
+    lblHakkinda->setFont(fontum);
 
     btnKapat = new QPushButton(tr("Kapat"),this);
     btnKapat->setFixedWidth(70);
@@ -117,8 +122,6 @@ UygulamaHakkinda::UygulamaHakkinda(QWidget *parent)
     btnEPosta = new QToolButton(this);
     btnEPosta->setIcon(QIcon(":/simgeler/email.png"));
     btnEPosta->setIconSize(QSize(50,50));
-
-
 
     QVBoxLayout *butonKatmani = new QVBoxLayout();
     butonKatmani->addWidget(btnGitHub);

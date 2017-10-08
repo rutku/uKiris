@@ -6,6 +6,12 @@
 
 QT       += core gui widgets xml
 
+VERSION= 1.0.0
+QMAKE_TARGET_COMPANY = Ramazan Utku
+QMAKE_TARGET_PRODUCT = uKiris
+QMAKE_TARGET_DESCRIPTION = Kesme ve Moment Diyagrami Cizen Uygulama
+QMAKE_TARGET_COPYRIGHT = BSD
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = uKiris
