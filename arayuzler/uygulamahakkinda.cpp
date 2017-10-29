@@ -72,7 +72,7 @@ UygulamaHakkinda::UygulamaHakkinda(QWidget *parent)
 {
     btnKapat = new QPushButton(tr("Kapat"));
     QString uygulamaIsmi = tr("uKiriş");
-    QString uygulamaSurumu = "1.0";
+    QString uygulamaSurumu = "1.0.1";
     QString hakkindaYazisi = tr("Bu uygulama basit kirişin kesme ve moment"
                                 "\ndiyagramını çizer. Uygulama açık kaynak"
                                 "\nkodlu ve kod türkçe olarak yazılmıştır."

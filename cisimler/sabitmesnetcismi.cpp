@@ -80,11 +80,6 @@ QPainterPath SabitMesnetCismi::shape() const
     return yol;
 }
 
-void SabitMesnetCismi::konumuGuncelle()
-{
-//    setPos(x,y);
-}
-
 void SabitMesnetCismi::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     prepareGeometryChange();
@@ -94,11 +89,16 @@ void SabitMesnetCismi::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     y = 35;
     cisimModelim->tipAta(CisimModeli::SabitMesnet);
 
-    cisimAlani.setRect(x-50,y-25,150,50);
     QPainterPath yol;
+    cisimAlani.setRect(-50,-25,100,60);
     yol.addRect(-50,25,100,10);
     sabitMesnetim = yol.toFillPolygon();
     sabitMesnetim << QPointF(-40,25) << QPointF(40,25)
               << QPointF(0,-25) << QPointF(-40,25);
     painter->drawPolygon(sabitMesnetim);
+}
+
+SabitMesnetCismi::~SabitMesnetCismi()
+{
+    delete cisimModelim;
 }

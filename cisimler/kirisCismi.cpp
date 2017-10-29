@@ -96,7 +96,7 @@ void KirisCismi::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWid
     x = cisimModelim->baslangicKonumuAl();
     int uzunluk = cisimModelim->bitisKonumuAl() - cisimModelim->baslangicKonumuAl();
     y = 0;
-    cisimAlani.setRect(x-1,-11,uzunluk+3,23);
+    cisimAlani.setRect(x,-11,uzunluk,23);
     kirisim << QPointF(uzunluk, -10) << QPointF(0,-10)
               << QPointF(0,-5) << QPointF(10,-5)
               << QPointF(10,0) << QPointF(10,5)

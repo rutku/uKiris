@@ -77,6 +77,7 @@
 #include "dosyaislemleri.h"
 
 #include <QtWidgets>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), kipim(DiagramScene::CisimGir)
@@ -206,7 +207,9 @@ void MainWindow::butonGrubunaTiklandi(int id)
         break;
     }
     butonGrubu->button(id)->setChecked(false);
-    scene->update(0,0,1000,1000);
+    scene->update();
+    view->update();
+
 }
 
 void MainWindow::projeGrubunaTiklandi(int id)
@@ -235,6 +238,8 @@ void MainWindow::projeGrubunaTiklandi(int id)
     default:
         break;
     }
+    scene->update();
+    view->update();
 }
 
 
@@ -374,10 +379,8 @@ void MainWindow::aracKutusuOlustur()
 void MainWindow::diagramlariOlustur()
 {
     scene = new DiagramScene(this);
-    scene->setSceneRect(0,-100,width(),height()/2);
+    scene->setSceneRect(QRectF(0,0,width(),0));
     view = new QGraphicsView(scene);
-    view->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-
     kesmeDiagramSahnesi = new KMDiagramSahnesi(this);
     kesmeDiagramGorunumu = new QGraphicsView(kesmeDiagramSahnesi);
 
@@ -391,10 +394,7 @@ void MainWindow::diagramlariOlustur()
         isim = isim.replace(" ","\n");
         cisimTabloBasligi.append(isim);
     }
-//    cisimTabloBasligi << tr("Tip") << tr("Nokta\nKonumu (m)") << tr("Nokta Kuvveti\nkN veya kN-m")
-//                      <<tr("Başlangıç\nNoktası(m)")<<tr("Bitiş\nNoktası(m)")
-//                     <<tr("Başlangıç\nKuvveti(kN/m)")<<tr("Bitiş\nKuvveti(kN/m)")
-//                    <<tr("Moment\n(kN.m)");
+
 
     cisimTablosu->setFixedHeight(200);
     cisimTablosu->setColumnCount(cisimTabloBasligi.size());

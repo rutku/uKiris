@@ -80,14 +80,6 @@ QPainterPath HareketliMesnetCismi::shape() const
     return yol;
 }
 
-void HareketliMesnetCismi::konumuGuncelle()
-{
-//    qDebug() << "Değişti";
-
-//    QGraphicsItem *cisim = mapToItem(children().first(),cisimAlani.x(),cisimAlani.y(),cisimAlani.width(),cisimAlani.height());
-//    setParentItem(cisim);
-}
-
 void HareketliMesnetCismi::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     prepareGeometryChange();
@@ -97,7 +89,7 @@ void HareketliMesnetCismi::paint(QPainter *painter, const QStyleOptionGraphicsIt
     y = 60;
     cisimModelim->tipAta(CisimModeli::HareketliMesnet);
 
-    cisimAlani.setRect(x-50,y-25,150,50);
+    cisimAlani.setRect(-50,-25,150,50);
     QPainterPath yol;
     yol.arcTo(-25, 0, 50, -50, 90, 360);
     yol.addRect(-50,0,100,10);
@@ -105,11 +97,7 @@ void HareketliMesnetCismi::paint(QPainter *painter, const QStyleOptionGraphicsIt
     painter->drawPolygon(hareketliMesnetim);
 }
 
-QVariant HareketliMesnetCismi::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)
+HareketliMesnetCismi::~HareketliMesnetCismi()
 {
-    if (change == QGraphicsItem::ItemPositionChange) {
-        konumuGuncelle();
-    }
-
-    return value;
+    delete cisimModelim;
 }
