@@ -81,16 +81,15 @@ public:
     int type() const override { return Tip; }
     int tipAl() { return tipim; }
     int siraAl() { return siram; }
-    virtual QRectF boundingRect() const override { return cisimAlani; }
+    virtual QRectF boundingRect() const override { return cisimAlani.normalized(); }
     QPainterPath shape() const override;
     CisimModeli *cisimModeliAl(){ return cisimModelim; }
-    void konumuGuncelle();
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override;
-    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 
 private:
+    virtual ~HareketliMesnetCismi();
     CisimModeli *cisimModelim;
     qreal x;
     qreal y;
