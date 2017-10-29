@@ -92,7 +92,7 @@ UygulamaHakkinda::UygulamaHakkinda(QWidget *parent)
     lblUygulamaIsmi->setFixedHeight(20);
 
     lblUygulamaSurumu = new QLabel(uygulamaSurumu,this);
-    lblUygulamaSurumu->setFixedWidth(20);
+    lblUygulamaSurumu->setFixedWidth(35);
     lblUygulamaSurumu->setFixedHeight(20);
 
     lblHakkinda = new QLabel(hakkindaYazisi,this);
